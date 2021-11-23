@@ -45,7 +45,6 @@
           time_string += "0";
         if (time <= 300) {
           document.getElementById("time").innerHTML = "恭喜你在三秒内找到了唐可可！用时" + time_string + "秒。";
-          document.getElementById("niubi").style.display = "block";
         } else {
           //直接把整个table元素替换掉
           var res = document.getElementById("result");
@@ -63,7 +62,7 @@
   <body>
     <div>
       <div id="result" style="display: none;">
-        <table id="niubi" style="margin-bottom: 1em;">
+        <table id="niubi" style="margin: 0 auto 1em auto;">
           <tr>
             <td><h1 id="time" style="line-height: 60px;"></h1></td>
             <td><img src="niubi.jpg" width="203" height="103"></td>
@@ -80,20 +79,24 @@
         <img style="margin: auto;" src="bubu.gif">
       </div>
       <a href="debug" title="担心网络加载速度影响计时？点此前往测试加载速度" style="display: contents;" target="_blank">
-        <img style="margin: auto;" src="banner.jpg">
+        <div style="background-image: url(banner-extension.jpg);">
+          <img style="margin: auto;" src="banner.jpg">
+        </div>
       </a>
       <table style="margin: auto;">
         <script>
+          var rows = 14;
+          var cols = 14;
           var i, j, x, y;
           var board = new Array();
-          x = Math.floor(Math.random() * 14);
-          y = Math.floor(Math.random() * 10);
-          for (i = 0; i < 14; i++) {
-            board[i] = Array.from({length: 10}, v=> Math.floor(Math.random() * 2));
+          x = Math.floor(Math.random() * rows);
+          y = Math.floor(Math.random() * cols);
+          for (i = 0; i < rows; i++) {
+            board[i] = Array.from({length: cols}, v=> Math.floor(Math.random() * 2));
           }
-          for (i = 0; i < 14; i++) {
+          for (i = 0; i < rows; i++) {
             document.write("<tr>");
-            for (j = 0; j < 10; j++) {
+            for (j = 0; j < cols; j++) {
               document.write("<td>");
               if (i == x && j == y) {
                 document.write('<img onclick="finish()" src="keke.jpg">');
