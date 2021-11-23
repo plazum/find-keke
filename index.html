@@ -70,16 +70,24 @@
       <table>
         <script>
           var i, j, x, y;
+          var board = new Array();
           x = Math.floor(Math.random() * 14);
           y = Math.floor(Math.random() * 10);
+          for (i = 0; i < 14; i++) {
+            board[i] = Array.from({length:10}, v=> Math.floor(Math.random()*(2-0))+0);
+          }
           for (i = 0; i < 14; i++) {
             document.write("<tr>");
             for (j = 0; j < 10; j++) {
               document.write("<td>");
               if (i == x && j == y)
                 document.write('<img onclick="finish()" src="keke.jpg">');
-              else
+              else if (board[i][j] == 0) {
                 document.write('<img onclick="show_bubu()" src="kotori.jpg">');
+              }
+              else if (board[i][j] == 1) {
+                document.write('<img onclick="show_bubu()" src="6.jpg">');
+              }
               document.write("</td>");
             }
             document.write("</tr>");
