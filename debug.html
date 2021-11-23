@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>寻找唐可可（调试用）</title>
+    <meta name="author" content="Plazum Z.R. I">
+    <style>
+      body {
+        text-align: center;
+        margin: 0;
+      }
+      div {
+        display: inline-grid;
+      }
+      table {
+        border-collapse: collapse;
+      }
+      tr {
+        display: flex;
+      }
+      td{
+        display: contents;
+      }
+    </style>
+    <script>
+      var time = 0, d, time_string;
+<!--
+      function show_bubu() {
+        if (document.getElementById("result").style.display != "none")
+          return;
+        document.getElementById("bubu").style.display = "block";
+      }
+-->
+      function start_timing() {
+        d = new Date();
+        time = d.getTime();
+      }
+      function finish() {
+        d = new Date();
+        if (document.getElementById("result").style.display != "none")
+          return;
+        time = d.getTime() - time;
+        time = Math.floor(time / 10);
+        time_string = time / 100;
+        if (time % 100 == 0)
+            time_string += ".00";
+        else if (time % 10 == 0)
+          time_string += "0";
+        document.getElementById("time").innerHTML = "（调试用）恭喜你找到了唐可可！用时" + time_string + "秒。";
+        document.getElementById("result").style.display = "contents";
+        document.getElementById("bubu").style.display = "none";
+      }
+    </script>
+  </head>
+  <body>
+    <div>
+      <div id="result" style="display: none;">
+        <h1 id="time"></h1>
+        <button style="margin: 0 auto 1em auto; font-size: x-large;" onclick="location.reload()">再来一局</button>
+        <img style="margin: auto;" src="5.gif">
+      </div>
+      <img id="bubu" style="display: none; margin: auto;" src="4.gif">
+      <img src="3.jpg">
+      <table>
+        <script>
+          var i, j, x, y;
+          x = Math.floor(Math.random() * 14);
+          y = Math.floor(Math.random() * 10);
+          for (i = 0; i < 14; i++) {
+            document.write("<tr>");
+            for (j = 0; j < 10; j++) {
+              document.write("<td>");
+              if (i == x && j == y)
+                document.write('<img onclick="finish()" src="2.jpg">');
+              else
+                document.write('<img onclick="finish()" src="1.jpg">');
+              document.write("</td>");
+            }
+            document.write("</tr>");
+          }
+          start_timing();
+        </script>
+      </table>
+    </div>
+  </body>
+</html>
