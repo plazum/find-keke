@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8">
     <title>寻找唐可可（调试用）</title>
-    <meta name="author" content="Plazum Z.R. I">
     <style>
       body {
         text-align: center;
@@ -46,7 +45,7 @@
             time_string += ".00";
         else if (time % 10 == 0)
           time_string += "0";
-        document.getElementById("time").innerHTML = "（调试用）恭喜你找到了唐可可！用时" + time_string + "秒。";
+        document.getElementById("time").innerHTML = "（调试用）恭喜你在三秒内找到了唐可可！用时" + time_string + "秒。";
         document.getElementById("result").style.display = "contents";
         document.getElementById("bubu").style.display = "none";
       }
@@ -55,7 +54,12 @@
   <body>
     <div>
       <div id="result" style="display: none;">
-        <h1 id="time"></h1>
+        <table style="margin-bottom: 1em;">
+          <tr>
+            <td><h1 id="time" style="line-height: 60px;"></h1></td>
+            <td><img src="niubi.jpg" width="203" height="103"></td>
+          </tr>
+        </table>
         <button style="margin: 0 auto 0 auto; font-size: x-large;" onclick="location.reload()">再来一局</button>
         <a style="margin: 1em auto 1em auto;" href="https://github.com/plazum/find-keke" target="_blank">
           来GitHub上切克闹（指check it out）吧↗
@@ -66,22 +70,27 @@
         <h1>不是这个哦，请再试一次。</h1>
         <img style="margin: auto;" src="bubu.gif">
       </div>
-      <a href="debug" title="担心网络加载速度影响计时？点此前往测试加载速度" style="display: contents;" target="_blank">
-        <img src="banner.jpg">
-      </a>
-      <table>
+      <img style="margin: auto;" src="banner.jpg">
+      <table style="margin: auto;">
         <script>
           var i, j, x, y;
+          var board = new Array();
           x = Math.floor(Math.random() * 14);
           y = Math.floor(Math.random() * 10);
+          for (i = 0; i < 14; i++) {
+            board[i] = Array.from({length: 10}, v=> Math.floor(Math.random() * 2));
+          }
           for (i = 0; i < 14; i++) {
             document.write("<tr>");
             for (j = 0; j < 10; j++) {
               document.write("<td>");
-              if (i == x && j == y)
+              if (i == x && j == y) {
                 document.write('<img onclick="finish()" src="keke.jpg">');
-              else
-                document.write('<img onclick="finish()" src="kotori.jpg">');
+              } else if (board[i][j] == 0) {
+                document.write('<img onclick="show_bubu()" src="kotori.jpg">');
+              } else if (board[i][j] == 1) {
+                document.write('<img onclick="show_bubu()" src="you.jpg">');
+              }
               document.write("</td>");
             }
             document.write("</tr>");
