@@ -44,31 +44,62 @@
         else if (time % 10 == 0)
           time_string += "0";
         if (time <= 300) {
-          document.getElementById("time").innerHTML = "恭喜你在三秒内找到了唐可可！用时" + time_string + "秒。";
+          document.getElementById("time1").innerHTML = "恭喜你在三秒内找到了唐可可！用时" + time_string + "秒。";
+          document.getElementById("niubi").style.display = "block";
         } else {
-          //直接把整个table元素替换掉
-          var res = document.getElementById("result");
-          var h1 = document.createElement("h1");
-          var text = document.createTextNode("恭喜你找到了唐可可！用时" + time_string + "秒。");
-          var niubi = document.getElementById("niubi");
-          h1.appendChild(text);
-          res.replaceChild(h1, niubi);
+          document.getElementById("time2").innerHTML = "恭喜你找到了唐可可！用时" + time_string + "秒。";
+          document.getElementById("time2").style.display = "block";
         }
         document.getElementById("result").style.display = "contents";
         document.getElementById("bubu").style.display = "none";
+      }
+      function generate_map() {
+        var rows = 14;
+        var cols = 14;
+        var i, j, x, y;
+        var board = new Array();
+        var image = ["kotori.jpg", "you.jpg"];
+        var content = "";
+        x = Math.floor(Math.random() * rows);
+        y = Math.floor(Math.random() * cols);
+        for (i = 0; i < rows; i++) {
+          board[i] = Array.from({length: cols}, v=> Math.floor(Math.random() * 2));
+        }
+        for (i = 0; i < rows; i++) {
+          content += "<tr>";
+          for (j = 0; j < cols; j++) {
+            content += "<td>";
+            if (i == x && j == y) {
+              content += '<img onclick="finish()" src="keke.jpg">';
+            } else {
+              content += '<img onclick="show_bubu()" src="' + image[board[i][j]] + '">';
+            }
+            content += "</td>";
+          }
+          content += "</tr>";
+        }
+        document.getElementById("map").innerHTML = content;
+        start_timing();
+      }
+      function reset() {
+        document.getElementById("result").style.display = "none";
+        document.getElementById("niubi").style.display = "none";
+        document.getElementById("time2").style.display = "none";
+        generate_map();
       }
     </script>
   </head>
   <body>
     <div>
       <div id="result" style="display: none;">
-        <table id="niubi" style="margin: 0 auto 1em auto;">
+        <table id="niubi" style="display: none; margin: 1em auto 1em auto;">
           <tr>
-            <td><h1 id="time" style="line-height: 60px;"></h1></td>
+            <td><h1 id="time1" style="line-height: 60px;"></h1></td>
             <td><img src="niubi.jpg" width="203" height="103"></td>
           </tr>
         </table>
-        <button style="margin: 0 auto 0 auto; font-size: x-large;" onclick="location.reload()">再来一局</button>
+        <h1 id="time2" style="display: none; line-height: 60px;"></h1>
+        <button style="margin: 0 auto 0 auto; font-size: x-large;" onclick="reset()">再来一局</button>
         <a style="margin: 1em auto 1em auto;" href="https://github.com/plazum/find-keke" target="_blank">
           来GitHub上切克闹（指check it out）吧↗
         </a>
@@ -83,35 +114,11 @@
           <img style="margin: auto;" src="banner.jpg">
         </div>
       </a>
-      <table style="margin: auto;">
-        <script>
-          var rows = 14;
-          var cols = 14;
-          var i, j, x, y;
-          var board = new Array();
-          x = Math.floor(Math.random() * rows);
-          y = Math.floor(Math.random() * cols);
-          for (i = 0; i < rows; i++) {
-            board[i] = Array.from({length: cols}, v=> Math.floor(Math.random() * 2));
-          }
-          for (i = 0; i < rows; i++) {
-            document.write("<tr>");
-            for (j = 0; j < cols; j++) {
-              document.write("<td>");
-              if (i == x && j == y) {
-                document.write('<img onclick="finish()" src="keke.jpg">');
-              } else if (board[i][j] == 0) {
-                document.write('<img onclick="show_bubu()" src="kotori.jpg">');
-              } else if (board[i][j] == 1) {
-                document.write('<img onclick="show_bubu()" src="you.jpg">');
-              }
-              document.write("</td>");
-            }
-            document.write("</tr>");
-          }
-          start_timing();
-        </script>
+      <table id="map" style="margin: auto;">
       </table>
+      <script>
+        generate_map();
+      </script>
     </div>
   </body>
 </html>
