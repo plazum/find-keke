@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>寻找唐可可（调试用）</title>
+    <meta name="author" content="https://github.com/plazum/find-keke">
     <style>
       body {
         text-align: center;
@@ -121,6 +122,14 @@
         <button style="font-size: large;" onclick="generate_map(14, 10)">经典模式14×10</button>
         <button style="font-size: large;" onclick="generate_map(14, 14)">扩展模式14×14</button>
         <button style="font-size: large;" onclick="generate_map(20, 14)">困难模式20×14</button>
+        <input id="rows" style="width: 3em; font-size: large;" type="number" value="14" min="1">
+        ×
+        <input id="cols" style="width: 3em; font-size: large;" type="number" value="10" min="10">
+        <button style="font-size: large;"
+                onclick="generate_map(document.getElementById('rows').value,
+                                      document.getElementById('cols').value)">
+          自定义模式
+        </button>
       </span>
       <div id="banner" style="margin: auto; background-image: url(banner-extension.jpg);">
         <img style="margin: auto;" src="banner.jpg">
