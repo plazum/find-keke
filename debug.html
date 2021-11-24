@@ -56,18 +56,27 @@
         document.getElementById("good_video").play();
         document.getElementById("bubu").style.display = "none";
       }
+
+      var image = ["kotori.jpg", "you.jpg"];
       function generate_map(rows, cols) {
         var i, j, x, y;
-        var board = new Array();
-        var image = ["kotori.jpg", "you.jpg"];
+        var board = [];
         var content = "";
+        var selected = [];
         reset();
         last_rows = rows;
         last_cols = cols;
         x = Math.floor(Math.random() * rows);
         y = Math.floor(Math.random() * cols);
+        for (i = 0; i < 2; i++) {
+          if (document.getElementById(i).checked) {
+            selected.push(image[i]);
+          }
+        }
+        if (selected.length == 0)
+          return;
         for (i = 0; i < rows; i++) {
-          board[i] = Array.from({length: cols}, v=> Math.floor(Math.random() * 2));
+          board[i] = Array.from({length: cols}, v=> Math.floor(Math.random() * selected.length));
         }
         for (i = 0; i < rows; i++) {
           content += "<tr>";
@@ -76,7 +85,7 @@
             if (i == x && j == y) {
               content += '<img onclick="finish()" src="keke.jpg">';
             } else {
-              content += '<img onclick="finish()" src="' + image[board[i][j]] + '">';
+              content += '<img onclick="finish()" src="' + selected[board[i][j]] + '">';
             }
             content += "</td>";
           }
@@ -119,6 +128,9 @@
         <video id="bubu_video" style="margin: auto;" src="bubu.mp4" loop></video>
       </div>
       <span>
+        <label><input id="0" type="checkbox" checked onchange="generate_map(last_rows, last_cols)">南小鸟</label>
+        <label><input id="1" type="checkbox" checked onchange="generate_map(last_rows, last_cols)">渡边曜</label>
+        <br>
         <button style="font-size: large;" onclick="generate_map(14, 10)">经典模式14×10</button>
         <button style="font-size: large;" onclick="generate_map(14, 14)">扩展模式14×14</button>
         <button style="font-size: large;" onclick="generate_map(20, 14)">困难模式20×14</button>
