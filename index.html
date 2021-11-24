@@ -9,7 +9,7 @@
         margin: 0;
       }
       div {
-        display: inline-grid;
+        display: grid;
       }
       table {
         border-collapse: collapse;
@@ -22,7 +22,7 @@
       }
     </style>
     <script>
-      var time = 0, d, time_string;
+      var time = 0, d, time_string, last_rows, last_cols;
       function show_bubu() {
         if (document.getElementById("result").style.display != "none")
           return;
@@ -53,13 +53,14 @@
         document.getElementById("result").style.display = "contents";
         document.getElementById("bubu").style.display = "none";
       }
-      function generate_map() {
-        var rows = 14;
-        var cols = 14;
+      function generate_map(rows, cols) {
         var i, j, x, y;
         var board = new Array();
         var image = ["kotori.jpg", "you.jpg"];
         var content = "";
+        reset();
+        last_rows = rows;
+        last_cols = cols;
         x = Math.floor(Math.random() * rows);
         y = Math.floor(Math.random() * cols);
         for (i = 0; i < rows; i++) {
@@ -78,6 +79,7 @@
           }
           content += "</tr>";
         }
+        document.getElementById("banner").style.width = cols * 75 + "px";
         document.getElementById("map").innerHTML = content;
         start_timing();
       }
@@ -85,7 +87,7 @@
         document.getElementById("result").style.display = "none";
         document.getElementById("niubi").style.display = "none";
         document.getElementById("time2").style.display = "none";
-        generate_map();
+        document.getElementById("bubu").style.display = "none";
       }
     </script>
   </head>
@@ -99,7 +101,9 @@
           </tr>
         </table>
         <h1 id="time2" style="display: none; line-height: 60px;"></h1>
-        <button style="margin: 0 auto 0 auto; font-size: x-large;" onclick="reset()">再来一局</button>
+        <button style="margin: 0 auto 0 auto; font-size: x-large;" onclick="generate_map(last_rows, last_cols)">
+          再来一局
+        </button>
         <a style="margin: 1em auto 1em auto;" href="https://github.com/plazum/find-keke" target="_blank">
           来GitHub上切克闹（指check it out）吧↗
         </a>
@@ -109,15 +113,19 @@
         <h1>不是这个哦，请再试一次。</h1>
         <img style="margin: auto;" src="bubu.gif">
       </div>
+      <span>
+        <button style="font-size: large;" onclick="generate_map(14, 10)">经典模式14×10</button>
+        <button style="font-size: large;" onclick="generate_map(14, 14)">扩展模式14×14</button>
+      </span>
       <a href="debug" title="担心网络加载速度影响计时？点此前往测试加载速度" style="display: contents;" target="_blank">
-        <div style="background-image: url(banner-extension.jpg);">
+        <div id="banner" style="margin: auto; background-image: url(banner-extension.jpg);">
           <img style="margin: auto;" src="banner.jpg">
         </div>
       </a>
       <table id="map" style="margin: auto;">
       </table>
       <script>
-        generate_map();
+        generate_map(14, 14);
       </script>
     </div>
   </body>
