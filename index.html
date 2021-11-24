@@ -63,11 +63,6 @@
         var board = [];
         var content = "";
         var selected = [];
-        reset();
-        last_rows = rows;
-        last_cols = cols;
-        x = Math.floor(Math.random() * rows);
-        y = Math.floor(Math.random() * cols);
         for (i = 0; i < 2; i++) {
           if (document.getElementById(i).checked) {
             selected.push(image[i]);
@@ -75,6 +70,11 @@
         }
         if (selected.length == 0)
           return;
+        reset();
+        last_rows = rows;
+        last_cols = cols;
+        x = Math.floor(Math.random() * rows);
+        y = Math.floor(Math.random() * cols);
         for (i = 0; i < rows; i++) {
           board[i] = Array.from({length: cols}, v=> Math.floor(Math.random() * selected.length));
         }
