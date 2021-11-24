@@ -27,6 +27,7 @@
         if (document.getElementById("result").style.display != "none")
           return;
         document.getElementById("bubu").style.display = "contents";
+        document.getElementById("bubu_video").play();
       }
       function start_timing() {
         d = new Date();
@@ -51,6 +52,7 @@
           document.getElementById("time2").style.display = "block";
         }
         document.getElementById("result").style.display = "contents";
+        document.getElementById("good_video").play();
         document.getElementById("bubu").style.display = "none";
       }
       function generate_map(rows, cols) {
@@ -88,6 +90,8 @@
         document.getElementById("niubi").style.display = "none";
         document.getElementById("time2").style.display = "none";
         document.getElementById("bubu").style.display = "none";
+        document.getElementById("good_video").pause();
+        document.getElementById("bubu_video").pause();
       }
     </script>
   </head>
@@ -107,11 +111,11 @@
         <a style="margin: 1em auto 1em auto;" href="https://github.com/plazum/find-keke" target="_blank">
           来GitHub上切克闹（指check it out）吧↗
         </a>
-        <img style="margin: auto;" src="good.gif">
+        <video id="good_video" style="margin: auto;" src="good.mp4" loop></video>
       </div>
       <div id="bubu" style="display: none;">
         <h1>不是这个哦，请再试一次。</h1>
-        <img style="margin: auto;" src="bubu.gif">
+        <video id="bubu_video" style="margin: auto;" src="bubu.mp4" loop></video>
       </div>
       <span>
         <button style="font-size: large;" onclick="generate_map(14, 10)">经典模式14×10</button>
