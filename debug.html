@@ -82,7 +82,7 @@
           }
           content += "</tr>";
         }
-        document.getElementById("banner").style.width = cols * 75 + "px";
+        document.getElementById("banner").style.width = Math.max(cols * 75, 750) + "px";
         document.getElementById("map").innerHTML = content;
         start_timing();
       }
