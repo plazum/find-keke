@@ -27,6 +27,7 @@
      ```
      <label><input id="0" type="checkbox" checked onchange="generate_map(last_rows, last_cols)">南小鸟</label>
      <label><input id="1" type="checkbox" checked onchange="generate_map(last_rows, last_cols)">渡边曜</label>
+     ```
 
 4. 测试一下，然后就给本仓库创建拉取请求吧！
 
