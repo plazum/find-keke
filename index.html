@@ -66,6 +66,7 @@
         var board = [];
         var content = "";
         var selected = [];
+
         for (i = 0; i < 2; i++) {
           if (document.getElementById(i).checked) {
             selected.push(image[i]);
@@ -73,6 +74,7 @@
         }
         if (selected.length == 0)
           return;
+
         reset();
         last_rows = rows;
         last_cols = cols;
