@@ -18,9 +18,10 @@
 
 [url]:https://love-live.fandom.com/wiki/Category:Characters
 
+<s>
+
 2. 在`index.html`和`debug.html`的`<head>`部分的脚本的全局变量`image`中，在最后追加图片的文件名。
    - 示例：`var image = ["kotori.jpg", "you.jpg"];`
-
 
 3. 在`index.html`和`debug.html`的`<body>`部分的复选框部分中，在最后追加一行（建议直接复制粘贴），将复选框的`id`设为当前添加角色的序号（从0开始编号），将标签设为角色的中文名。
    - 示例：
@@ -28,8 +29,19 @@
      <label><input id="0" type="checkbox" checked onchange="generate_map(last_rows, last_cols)">南小鸟</label>
      <label><input id="1" type="checkbox" checked onchange="generate_map(last_rows, last_cols)">渡边曜</label>
      ```
+   
+</s>
 
-4. 测试一下，没有问题的话就可以给本仓库创建拉取请求了！
+2. 在`index.html`结尾处的字典`image`中，以显示名为键，图片名为值的形式添加。
+   - 示例：
+      ```
+      var image = {
+        "南小鸟": "kotori.jpg",
+        "渡边曜": "you.jpg",
+        };
+      ```
+
+3. 测试一下，没有问题的话就可以给本仓库创建拉取请求了！
 
 ## 在本页中寻找唐可可
 
