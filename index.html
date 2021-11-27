@@ -38,6 +38,7 @@
           return;
         document.getElementById("bubu").style.display = "contents";
         document.getElementById("bubu_video").play();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
       function start_timing() {
         d = new Date();
@@ -70,6 +71,7 @@
         document.getElementById("good_video").play();
         document.getElementById("bubu").style.display = "none";
         document.getElementById("keke").style.filter = "drop-shadow(2px 4px 6px black)";
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
       function generate_map(rows, cols) {
@@ -97,13 +99,11 @@
         for (i = 0; i < rows; i++) {
           content += "<tr>";
           for (j = 0; j < cols; j++) {
-            content += "<td>";
-            if (i == x && j == y) {
-              content += '<img id="keke" onclick="finish()" src="keke.jpg">';
-            } else {
-              content += '<img onclick="show_bubu()" src="' + selected[board[i][j]] + '">';
-            }
-            content += "</td>";
+            content += "<td>" + (i == x && j == y ?
+              '<img id="keke" onclick="finish()" src="keke.jpg">'
+              :
+              '<img onclick="show_bubu()" src="' + selected[board[i][j]] + '">'
+            ) + "</td>";
           }
           content += "</tr>";
         }
@@ -148,6 +148,9 @@
       </div>
       <div id="bubu" style="display: none;">
         <h1>不是这个哦，请再试一次。</h1>
+        <button style="margin: auto auto 1em auto; font-size: x-large;" onclick="generate_map(last_rows, last_cols)">
+          再来一局
+        </button>
         <video id="bubu_video" style="margin: auto;" src="bubu.mp4" loop></video>
       </div>
       <span style="margin: 1em auto 1em auto; font-size: larger;">
