@@ -27,6 +27,7 @@
       input[type="number"] {
         width: 3em;
         font-size: large;
+        margin-right: 0.25em;
       }
       button {
         font-size: large;
@@ -154,24 +155,24 @@
       </div>
       <div id="bubu" style="display: none;">
         <h1>不是这个哦，请再试一次。</h1>
-        <button id="hint" style="margin: auto auto 1em auto; font-size: larger;" onclick="hint()">来点提示</button>
         <button style="margin: auto auto 1em auto; font-size: x-large;" onclick="generate_map(last_rows, last_cols)">
           累了，我要重开（指游戏）
         </button>
         <video id="bubu_video" style="margin: auto;" src="bubu.mp4" loop></video>
       </div>
-      <div style="margin: 1em auto 1em auto; font-size: larger;">
+      <div style="margin: 1em auto 1.5em auto; font-size: larger;">
         <div style="display: block; margin-bottom: 0.5em;" id="filter"></div>
         <div style="display: block;">
           <button onclick="generate_map(14, 10)">经典模式14×10</button>
           <button onclick="generate_map(14, 14)">扩展模式14×14</button>
           <button onclick="generate_map(20, 14)">困难模式20×14</button>
-          <label><input id="rows" type="number" value="20" min="1"> 行</label>
+          <label><input id="rows" type="number" value="20" min="1">行</label>
           ×
-          <label><input id="cols" type="number" value="20" min="1"> 列</label>
+          <label><input id="cols" type="number" value="20" min="1">列</label>
           <button onclick="generate_map(document.getElementById('rows').value, document.getElementById('cols').value)">
             自定义模式
           </button>
+          <button id="hint" onclick="hint()">来点提示</button>
         </div>
       </div>
       <div id="banner" style="margin: auto; background-image: url(banner-extension.jpg);">
