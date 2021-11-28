@@ -76,6 +76,7 @@
         document.getElementById("good_video").play();
         document.getElementById("bubu").style.display = "none";
         document.getElementById("keke").style.filter = "drop-shadow(2px 4px 6px black)";
+        document.getElementById("hint").setAttribute("disabled", "");
         window.scrollTo({top: 0, behavior: 'smooth'});
       }
 
@@ -124,6 +125,7 @@
         document.getElementById("good_video").pause();
         document.getElementById("bubu_video").pause();
         document.getElementById("hint").innerText = "来点提示";
+        document.getElementById("hint").removeAttribute("disabled");
         hinted = false;
       }
       function hint() {
