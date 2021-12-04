@@ -1,0 +1,19 @@
+name: Find Comment
+
+on:
+  workflow_dispatch:
+
+jobs:
+  find-comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Find Comment
+        uses: peter-evans/find-comment@v1
+        id: fc
+        with:
+          issue-number: 5
+          comment-author: plazum
+      - run: |
+          echo ${{ steps.fc.outputs.comment-id }}
+          echo ${{ steps.fc.outputs.comment-body }}
+          echo ${{ steps.fc.outputs.comment-author }}
