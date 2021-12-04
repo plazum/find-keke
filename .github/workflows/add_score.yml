@@ -1,0 +1,28 @@
+# 在一条评论下面追加分数（即用时）
+
+name: 添加分数
+
+on:
+  workflow_dispatch:
+    inputs:
+      player:
+        description: '玩家名'
+        required: true
+      score:
+        description: '用时'
+        required: true
+      time:
+        description: '时间'
+        required: true
+
+jobs:
+  add_a_line:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 添加一行
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          comment-id: 1071290229
+          edit-mode: append
+          body: |
+            | ${{ github.event.inputs.player }} | ${{ github.event.inputs.score }} | ${{ github.event.inputs.time }} |
