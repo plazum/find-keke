@@ -12,7 +12,6 @@ jobs:
         id: fc
         with:
           issue-number: 5
-          comment-author: plazum
       - run: |
           echo ${{ steps.fc.outputs.comment-id }}
           echo ${{ steps.fc.outputs.comment-body }}
