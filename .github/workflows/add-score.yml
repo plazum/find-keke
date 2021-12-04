@@ -22,7 +22,7 @@ jobs:
       - name: 添加一行
         uses: peter-evans/create-or-update-comment@v1
         with:
-          comment-id: 1071290229
+          comment-id: 986094230
           edit-mode: append
           body: |
             | ${{ github.event.inputs.player }} | ${{ github.event.inputs.score }} | ${{ github.event.inputs.time }} |
