@@ -8,6 +8,12 @@ on:
       player:
         description: '玩家名'
         required: true
+      rows:
+        description: '行数'
+        required: true
+      cols:
+        description: '列数'
+        required: true
       score:
         description: '用时'
         required: true
@@ -25,4 +31,4 @@ jobs:
           comment-id: 986094230
           edit-mode: append
           body: |
-            | ${{ github.event.inputs.player }} | ${{ github.event.inputs.score }} | ${{ github.event.inputs.time }} |
+            | ${{ github.event.inputs.player }} | ${{ github.event.inputs.rows }} | ${{ github.event.inputs.cols }} | ${{ github.event.inputs.score }} | ${{ github.event.inputs.time }} |
