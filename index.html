@@ -45,10 +45,12 @@
         document.getElementById("bubu_video").play();
         window.scrollTo({top: 0, behavior: "smooth"});
       }
+
       function start_timing() {
         d = new Date();
         time = d.getTime();
       }
+
       function finish() {
         d = new Date();
         if (document.getElementById("result").style.display != "none")
@@ -76,8 +78,13 @@
         document.getElementById("good_video").play();
         document.getElementById("bubu").style.display = "none";
         document.getElementById("keke").style.filter = "drop-shadow(2px 4px 6px black)";
+        let hinted = document.getElementById("hint").hasAttribute("disabled");
         document.getElementById("hint").setAttribute("disabled", "");
         setTimeout(() => window.scrollTo({top: 0, behavior: "smooth"}), 1);
+        // 判断任意棋盘大小下的用时等效小于等于3秒的规则为(time / (rows * cols)) <= (3.00 / (14 * 10))
+        // 注意此时的time变量的单位为10毫秒；上文的公式中的time不是变量，只是表示时间而已
+        if (!hinted && time * 14 * 10 <= 300 * last_rows * last_cols)
+          upload_score();
       }
 
       function generate_map(rows, cols) {
@@ -117,18 +124,88 @@
         document.getElementById("map").innerHTML = content;
         start_timing();
       }
+
       function reset() {
         document.getElementById("result").style.display = "none";
         document.getElementById("niubi").style.display = "none";
         document.getElementById("time2").style.display = "none";
         document.getElementById("bubu").style.display = "none";
+        document.getElementById("upload_status").style.display = "none";
         document.getElementById("good_video").pause();
         document.getElementById("bubu_video").pause();
         document.getElementById("hint").removeAttribute("disabled");
       }
+
       function hint() {
         document.getElementById("keke").style.filter = "drop-shadow(2px 4px 6px black)";
         document.getElementById("hint").setAttribute("disabled", "");
+      }
+
+      var liella = ["涩谷香音", "唐可可", "岚千砂都", "平安名堇", "叶月恋"];
+
+      async function upload_score() {
+        var name = prompt("恭喜你本次的等效用时小于或等于3.00秒\n"
+          + "（等效用时指的是将用时按照棋盘大小按比例折算成14×10棋盘之后的时间）\n\n"
+          + "请输入你的玩家名（如果不想上传分数，请点击取消或留空）", liella[Math.floor(Math.random() * 5)]);
+        if (name == null || name == "")
+          return;
+        name = name.replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/\|/g, "\\|"); // 防止用户输入HTML代码和Markdown表格分列符
+        document.getElementById("upload_status").innerHTML = "上传中，请稍候……";
+        document.getElementById("upload_status").style.display = "";
+        var data = {
+          ref: "master",
+          inputs: {
+            player: name,
+            rows: last_rows.toString(),
+            cols: last_cols.toString(),
+            score: time_string.toString(),
+            time: d.toString()
+          }
+        };
+
+        var retry = true;
+        do {
+          let fetch_fail = false;
+          let response = await fetch(
+            "https://api.github.com/repos/plazum/find-keke/actions/workflows/add-score.yml/dispatches",
+            {
+              method: "POST",
+              headers: {
+                Accept: "application/vnd.github.v3+json",
+                Authorization: "token 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"
+              },
+              body: JSON.stringify(data)
+            }
+          )
+            .catch(error => {
+              fetch_fail = true;
+              retry = confirm("Fetch API遇到错误" + error + "，是否重试？");
+            });
+          if (fetch_fail) {
+            if (retry)
+              continue;
+            else
+              break;
+          }
+
+          let text = await response.text();
+          if (response.ok) {
+            name = name.replace(/\\\|/g, "|");
+            document.getElementById("upload_status").innerHTML = name + "；" + last_rows + "行×" + last_cols + "列；用时"
+              + time_string + "秒<br>" + d;
+            alert("上传成功\nGitHub REST API返回如下\n" + response.status + " " + response.statusText + "\n" + text);
+            retry = false;
+          } else {
+            retry = confirm("GitHub REST API失败，返回如下\n"
+              + response.status + " " + response.statusText + "\n"
+              + text
+              + "是否重试？");
+          }
+        } while (retry);
+        if (document.getElementById("upload_status").innerHTML == "上传中，请稍候……")
+          document.getElementById("upload_status").style.display = "none";
       }
     </script>
   </head>
@@ -141,11 +218,15 @@
             <td><img src="niubi.jpg" width="203" height="103"></td>
           </tr>
         </table>
-        <h1 id="time2" style="display: none; line-height: 60px;"></h1>
+        <h1 id="time2" style="display: none;"></h1>
+        <h1 id="upload_status" style="display: none;"></h1>
         <button style="margin: 0 auto 0 auto; font-size: x-large;" onclick="generate_map(last_rows, last_cols)">
           再来一局
         </button>
-        <a style="margin: 1em auto 1em auto;" href="https://github.com/plazum/find-keke" target="_blank">
+        <a style="margin: 1em auto 0.5em auto;" href="https://github.com/plazum/find-keke/issues/5" target="_blank">
+          查看计分板↗
+        </a>
+        <a style="margin: 0 auto 1em auto;" href="https://github.com/plazum/find-keke" target="_blank">
           来GitHub上切克闹（指check it out）吧↗
         </a>
         <video id="good_video" style="margin: auto;" src="good.mp4" loop></video>
