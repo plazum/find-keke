@@ -83,8 +83,8 @@
         setTimeout(() => window.scrollTo({top: 0, behavior: "smooth"}), 1);
         // 判断任意棋盘大小下的用时等效小于等于3秒的规则为(time / (rows * cols)) <= (3.00 / (14 * 10))
         // 注意此时的time变量的单位为10毫秒；上文的公式中的time不是变量，只是表示时间而已
-        if (!hinted && time * 14 * 10 <= 300 * last_rows * last_cols)
-          upload_score();
+        // if (!hinted && time * 14 * 10 <= 300 * last_rows * last_cols)
+        //   upload_score();
       }
 
       function generate_map(rows, cols) {
@@ -174,7 +174,7 @@
               method: "POST",
               headers: {
                 Accept: "application/vnd.github.v3+json",
-                Authorization: "token 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"
+                Authorization: "token ghp_"
               },
               body: JSON.stringify(data)
             }
