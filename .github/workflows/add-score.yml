@@ -30,8 +30,7 @@ jobs:
       - name: 添加一行
         uses: peter-evans/create-or-update-comment@v1
         with:
-          token: ${{ secrets.PAT }}
           comment-id: 986094230
           edit-mode: append
           body: |
-            | <pre>${{ github.event.inputs.player }}</pre> | ${{ github.event.inputs.rows }} | ${{ github.event.inputs.cols }} | ${{ github.event.inputs.score }} | ${{ github.event.inputs.time }} |
+            | ${{ github.event.inputs.player }} | ${{ github.event.inputs.rows }} | ${{ github.event.inputs.cols }} | ${{ github.event.inputs.score }} | ${{ github.event.inputs.time }} |
