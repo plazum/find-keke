@@ -198,9 +198,9 @@
           let text = await response.text();
           if (response.ok) {
             name = name.replace(/\\\|/g, "|");
-            document.getElementById("upload_status").innerHTML = name + "；" + last_rows + "行×" + last_cols + "列；用时"
-              + time_string + "秒<br>" + d;
-            alert("上传成功\nGitHub REST API返回如下\n" + response.status + " " + response.statusText + "\n" + text);
+            document.getElementById("upload_status").innerHTML = "分数已上传：" + name + "；"
+              + last_rows + "行×" + last_cols + "列；用时" + time_string + "秒<br>" + d;
+            alert("上传成功！\nGitHub REST API返回如下\n" + response.status + " " + response.statusText + "\n" + text);
             retry = false;
           } else {
             retry = confirm("GitHub REST API失败，返回如下\n"
