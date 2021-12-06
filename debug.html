@@ -169,18 +169,19 @@
             time: d.toString()
           }
         };
+        let header = {
+          Accept: "application/vnd.github.v3+json",
+          Authorization: get_token()
+        };
 
-        let retry = true, t = get_token();
+        let retry = true;
         do {
           let fetch_fail = false;
           let response = await fetch(
             "https://api.github.com/repos/plazum/find-keke/actions/workflows/add-score.yml/dispatches",
             {
               method: "POST",
-              headers: {
-                Accept: "application/vnd.github.v3+json",
-                Authorization: t
-              },
+              headers: header,
               body: JSON.stringify(data)
             }
           )
