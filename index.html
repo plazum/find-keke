@@ -83,17 +83,16 @@
         setTimeout(() => window.scrollTo({top: 0, behavior: "smooth"}), 1);
         // 判断任意棋盘大小下的用时等效小于等于3秒的规则为(time / (rows * cols)) <= (3.00 / (14 * 10))
         // 注意此时的time变量的单位为10毫秒；上文的公式中的time不是变量，只是表示时间而已
-        // if (!hinted && time * 14 * 10 <= 300 * last_rows * last_cols)
-        //   upload_score();
+        if (!hinted && time * 14 * 10 <= 300 * last_rows * last_cols)
+          upload_score();
       }
 
       function generate_map(rows, cols) {
-        var i, j, x, y;
-        var board = [];
-        var content = "";
-        var selected = [];
+        let board = [];
+        let content = "";
+        let selected = [];
 
-        for (i = 0; i < 2; i++) {
+        for (let i = 0; i < Object.values(image).length; i++) {
           if (document.getElementById(i).checked) {
             selected.push(Object.values(image)[i]);
           }
@@ -104,14 +103,14 @@
         reset();
         last_rows = rows;
         last_cols = cols;
-        x = Math.floor(Math.random() * rows);
-        y = Math.floor(Math.random() * cols);
-        for (i = 0; i < rows; i++) {
+        let x = Math.floor(Math.random() * rows);
+        let y = Math.floor(Math.random() * cols);
+        for (let i = 0; i < rows; i++) {
           board[i] = Array.from({length: cols}, () => Math.floor(Math.random() * selected.length));
         }
-        for (i = 0; i < rows; i++) {
+        for (let i = 0; i < rows; i++) {
           content += "<tr>";
-          for (j = 0; j < cols; j++) {
+          for (let j = 0; j < cols; j++) {
             content += "<td>" + (i == x && j == y ?
               '<img id="keke" onclick="finish()" src="keke.jpg">'
               :
@@ -141,10 +140,16 @@
         document.getElementById("hint").setAttribute("disabled", "");
       }
 
+      function get_token() {
+        let e = "!A4!9W!3M!*>!8%   !-C!.u!;*!!/!Bf = !%f RC!-C!6R 8H ]%!%f AW i9 F/ =  da l>!>/ da!Bf!5  Vz!G> jk oC jk oC `* Su =  UH!0H =  da XM!5  Z !8%", d = "";
+        for (let i = 0; i < e.length / 3; i++) d += String.fromCharCode(((e.charCodeAt(i * 3) - " ".charCodeAt()) * 9025 + (e.charCodeAt(i * 3 + 1) - " ".charCodeAt()) * 95 + (e.charCodeAt(i * 3 + 2) - " ".charCodeAt())) / (new Error()).stack.split(":")[3] + " ".charCodeAt());
+        return d;
+      }
+
       var liella = ["涩谷香音", "唐可可", "岚千砂都", "平安名堇", "叶月恋"];
 
       async function upload_score() {
-        var name = prompt("恭喜你本次的等效用时小于或等于3.00秒\n"
+        let name = prompt("恭喜你本次的等效用时小于或等于3.00秒\n"
           + "（等效用时指的是将用时按照棋盘大小按比例折算成14×10棋盘之后的时间）\n\n"
           + "请输入你的玩家名（如果不想上传分数，请点击取消或留空）", liella[Math.floor(Math.random() * 5)]);
         if (name == null || name == "")
@@ -154,7 +159,7 @@
           .replace(/\|/g, "\\|"); // 防止用户输入HTML代码和Markdown表格分列符
         document.getElementById("upload_status").innerHTML = "上传中，请稍候……";
         document.getElementById("upload_status").style.display = "";
-        var data = {
+        let data = {
           ref: "master",
           inputs: {
             player: name,
@@ -165,7 +170,7 @@
           }
         };
 
-        var retry = true;
+        let retry = true;
         do {
           let fetch_fail = false;
           let response = await fetch(
@@ -174,14 +179,14 @@
               method: "POST",
               headers: {
                 Accept: "application/vnd.github.v3+json",
-                Authorization: "token ghp_"
+                Authorization: get_token()
               },
               body: JSON.stringify(data)
             }
           )
             .catch(error => {
               fetch_fail = true;
-              retry = confirm("Fetch API遇到错误" + error + "，是否重试？");
+              retry = confirm("Fetch API抛出错误" + error + "，是否重试？");
             });
           if (fetch_fail) {
             if (retry)
@@ -223,10 +228,10 @@
         <button style="margin: 0 auto 0 auto; font-size: x-large;" onclick="generate_map(last_rows, last_cols)">
           再来一局
         </button>
-        <!--<a style="margin: 1em auto 0.5em auto;" href="https://github.com/plazum/find-keke/issues/5" target="_blank">
+        <a style="margin: 1em auto 0.5em auto;" href="https://github.com/plazum/find-keke/issues/5" target="_blank">
           查看计分板↗
-        </a>-->
-        <a style="margin: 1em auto 1em auto;" href="https://github.com/plazum/find-keke" target="_blank">
+        </a>
+        <a style="margin: 0 auto 1em auto;" href="https://github.com/plazum/find-keke" target="_blank">
           来GitHub上切克闹（指check it out）吧↗
         </a>
         <video id="good_video" style="margin: auto;" src="good.mp4" loop></video>
