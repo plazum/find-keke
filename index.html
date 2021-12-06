@@ -150,7 +150,8 @@
 
       async function upload_score() {
         let name = prompt("恭喜你本次的等效用时小于或等于3.00秒\n"
-          + "（等效用时指的是将用时按照棋盘大小按比例折算成14×10棋盘之后的时间）\n\n"
+          + "（等效用时指的是将用时按照棋盘大小按比例折算成14×10棋盘之后的时间）\n"
+          + "（本次用时为" + time_string + "秒，棋盘大小为" + last_rows + "×" + last_cols + "）\n\n"
           + "请输入你的玩家名（如果不想上传分数，请点击取消或留空）", liella[Math.floor(Math.random() * 5)]);
         if (name == null || name == "")
           return;
