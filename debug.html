@@ -170,7 +170,7 @@
           }
         };
 
-        let retry = true;
+        let retry = true, t = get_token();
         do {
           let fetch_fail = false;
           let response = await fetch(
@@ -179,7 +179,7 @@
               method: "POST",
               headers: {
                 Accept: "application/vnd.github.v3+json",
-                Authorization: get_token()
+                Authorization: t
               },
               body: JSON.stringify(data)
             }
@@ -231,7 +231,7 @@
         <a style="margin: 1em auto 0.5em auto;" href="https://github.com/plazum/find-keke/issues/5" target="_blank">
           查看计分板↗
         </a>
-        <a style="margin: 0 auto 1em auto;" href="https://github.com/plazum/find-keke" target="_blank">
+        <a style="margin: 0 auto 1.5em auto;" href="https://github.com/plazum/find-keke" target="_blank">
           来GitHub上切克闹（指check it out）吧↗
         </a>
         <video id="good_video" style="margin: auto;" src="good.mp4" loop></video>
