@@ -143,7 +143,7 @@
       }
 
       function get_token() {
-        let e = "!-C!.u!;*!!/ UH!0H ;M ;M f4!?a = !-C gf!0H!Bf @%!8% RC!;*!0H c/!5  ;M 9z AW jk!Ek mp C* oC!*> ;M f4 8H 9z Vz!5  xR!$4 Vz", d = "";
+        let e = '!.r!0G!<k!"N V/!1{ ;q ;q g1!AI =F!.r he!1{!DR @O!9b S&!<k!1{ d(!6Y ;q := B$ kn!G[ nw CX pL!+i ;q g1 8h := Wc!6Y yg!%W Wc', d = "";
         for (let i = 0; i < e.length / 3; i++) d += String.fromCharCode(((e.charCodeAt(i * 3) - " ".charCodeAt()) * 9025 + (e.charCodeAt(i * 3 + 1) - " ".charCodeAt()) * 95 + (e.charCodeAt(i * 3 + 2) - " ".charCodeAt())) / (new Error()).stack.split(":")[2] + " ".charCodeAt());
         return d;
       }
@@ -251,16 +251,16 @@
           查看计分板↗
         </a>
         <div style="display: block; margin-bottom: 0.75em;" id="filter"></div>
-        <div style="display: block;">
+        <div style="display: block ruby;">
           <button onclick="generate_map(14, 10)">经典模式14×10</button>
           <button onclick="generate_map(14, 14)">扩展模式14×14</button>
           <button onclick="generate_map(20, 14)">困难模式20×14</button>
-          <label><input id="rows" type="number" value="20" min="1">行</label>
-          ×
-          <label><input id="cols" type="number" value="20" min="1">列</label>
-          <button onclick="generate_map(document.getElementById('rows').value, document.getElementById('cols').value)">
-            自定义模式
-          </button>
+          <form onsubmit="generate_map(document.getElementById('rows').value, document.getElementById('cols').value); return false;">
+            <label><input id="rows" type="number" value="20" min="1">行</label>
+            ×
+            <label><input id="cols" type="number" value="20" min="1">列</label>
+            <button type="submit">自定义模式</button>
+          </form>
           <button id="hint" onclick="hint()">来点提示</button>
         </div>
       </div>
