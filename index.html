@@ -80,6 +80,7 @@
         document.getElementById("bubu").style.display = "none";
         document.getElementById("keke").style.filter = "drop-shadow(2px 4px 6px black)";
         document.getElementById("hint").setAttribute("disabled", "");
+        document.getElementById("scoreboard").style.display = "none";
         setTimeout(() => window.scrollTo({top: 0, behavior: "smooth"}), 1);
         // 判断任意棋盘大小下的用时等效小于等于3秒的规则为(time / (rows * cols)) <= (3.00 / (14 * 10))
         // 注意此时的time变量的单位为10毫秒；上文的公式中的time不是变量，只是表示时间而已
@@ -130,6 +131,7 @@
         document.getElementById("time2").style.display = "none";
         document.getElementById("bubu").style.display = "none";
         document.getElementById("upload_status").style.display = "none";
+        document.getElementById("scoreboard").style.display = "";
         document.getElementById("good_video").pause();
         document.getElementById("bubu_video").pause();
         document.getElementById("hint").removeAttribute("disabled");
@@ -180,7 +182,7 @@
               method: "POST",
               headers: {
                 Accept: "application/vnd.github.v3+json",
-                Authorization: get_token()
+                Authorization: "token " + get_token()
               },
               body: JSON.stringify(data)
             }
@@ -229,7 +231,7 @@
         <button style="margin: 0 auto 0 auto; font-size: x-large;" onclick="generate_map(last_rows, last_cols)">
           再来一局
         </button>
-        <a style="margin: 1em auto 0.5em auto;" href="https://github.com/plazum/find-keke/issues/5" target="_blank">
+        <a style="margin: 1em auto 0.5em auto; font-size: larger;" href="https://github.com/plazum/find-keke/issues/5" target="_blank">
           查看计分板↗
         </a>
         <a style="margin: 0 auto 1.5em auto;" href="https://github.com/plazum/find-keke" target="_blank">
@@ -244,8 +246,11 @@
         </button>
         <video id="bubu_video" style="margin: auto;" src="bubu.mp4" loop></video>
       </div>
-      <div style="margin: 1em auto 1.25em auto; font-size: larger;">
-        <div style="display: block; margin-bottom: 0.5em;" id="filter"></div>
+      <div style="margin: 1.25em auto 1.25em auto; font-size: larger;">
+        <a id="scoreboard" style="margin: 0 auto 0.5em auto;" href="https://github.com/plazum/find-keke/issues/5" target="_blank">
+          查看计分板↗
+        </a>
+        <div style="display: block; margin-bottom: 0.75em;" id="filter"></div>
         <div style="display: block;">
           <button onclick="generate_map(14, 10)">经典模式14×10</button>
           <button onclick="generate_map(14, 14)">扩展模式14×14</button>
