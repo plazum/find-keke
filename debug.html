@@ -62,7 +62,8 @@
           time_string += ".00";
         else if (time % 10 == 0)
           time_string += "0";
-        if (!document.getElementById("hint").hasAttribute("disabled")) {
+        let hinted = document.getElementById("hint").hasAttribute("disabled");
+        if (!hinted) {
           if (time <= 300) {
             document.getElementById("time1").innerHTML = "（调试用）恭喜你在三秒内找到了唐可可！用时" + time_string + "秒。";
             document.getElementById("niubi").style.display = "";
@@ -78,7 +79,6 @@
         document.getElementById("good_video").play();
         document.getElementById("bubu").style.display = "none";
         document.getElementById("keke").style.filter = "drop-shadow(2px 4px 6px black)";
-        let hinted = document.getElementById("hint").hasAttribute("disabled");
         document.getElementById("hint").setAttribute("disabled", "");
         setTimeout(() => window.scrollTo({top: 0, behavior: "smooth"}), 1);
         // 判断任意棋盘大小下的用时等效小于等于3秒的规则为(time / (rows * cols)) <= (3.00 / (14 * 10))
@@ -141,7 +141,7 @@
       }
 
       function get_token() {
-        let e = "!A4!9W!3M!*>!8%   !-C!.u!;*!!/!Bf = !%f RC!-C!6R 8H ]%!%f AW i9 F/ =  da l>!>/ da!Bf!5  Vz!G> jk oC jk oC `* Su =  UH!0H =  da XM!5  Z !8%", d = "";
+        let e = "!-C!.u!;*!!/ UH!0H ;M ;M f4!?a = !-C gf!0H!Bf @%!8% RC!;*!0H c/!5  ;M 9z AW jk!Ek mp C* oC!*> ;M f4 8H 9z Vz!5  xR!$4 Vz", d = "";
         for (let i = 0; i < e.length / 3; i++) d += String.fromCharCode(((e.charCodeAt(i * 3) - " ".charCodeAt()) * 9025 + (e.charCodeAt(i * 3 + 1) - " ".charCodeAt()) * 95 + (e.charCodeAt(i * 3 + 2) - " ".charCodeAt())) / (new Error()).stack.split(":")[2] + " ".charCodeAt());
         return d;
       }
