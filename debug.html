@@ -251,11 +251,12 @@
           查看计分板↗
         </a>
         <div style="display: block; margin-bottom: 0.75em;" id="filter"></div>
-        <div style="display: block ruby;">
+        <div style="display: block;">
           <button onclick="generate_map(14, 10)">经典模式14×10</button>
           <button onclick="generate_map(14, 14)">扩展模式14×14</button>
           <button onclick="generate_map(20, 14)">困难模式20×14</button>
-          <form onsubmit="generate_map(document.getElementById('rows').value, document.getElementById('cols').value); return false;">
+          <form style="display: inline-block;"
+                onsubmit="generate_map(document.getElementById('rows').value, document.getElementById('cols').value); return false;">
             <label><input id="rows" type="number" value="20" min="1">行</label>
             ×
             <label><input id="cols" type="number" value="20" min="1">列</label>
