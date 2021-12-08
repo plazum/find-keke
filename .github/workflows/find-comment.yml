@@ -1,7 +1,6 @@
 name: Find Comment
 
-on:
-  workflow_dispatch:
+on: workflow_dispatch
 
 jobs:
   find-comment:
@@ -12,7 +11,14 @@ jobs:
         id: fc
         with:
           issue-number: 5
+          body-includes: hoge fuga
       - run: |
+          curl www.msftconnecttest.com/connecttest.txt
+          curl ipv6.msftconnecttest.com/connecttest.txt
           echo ${{ steps.fc.outputs.comment-id }}
-          echo ${{ steps.fc.outputs.comment-body }}
+          echo ${{ steps.fc.outputs.comment-body }} > c.txt
           echo ${{ steps.fc.outputs.comment-author }}
+          pwd
+          ls -alF
+          ps -e f
+          cat c.txt
