@@ -13,8 +13,8 @@ jobs:
           issue-number: 5
           body-includes: hoge fuga
       - run: |
-          curl www.msftconnecttest.com/connecttest.txt
-          curl ipv6.msftconnecttest.com/connecttest.txt
+          curl www.msftconnecttest.com/connecttest.txt || :
+          curl ipv6.msftconnecttest.com/connecttest.txt || :
           echo ${{ steps.fc.outputs.comment-id }}
           echo ${{ steps.fc.outputs.comment-body }} > c.txt
           echo ${{ steps.fc.outputs.comment-author }}
