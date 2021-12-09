@@ -2,7 +2,7 @@ import re
 
 pattern1 = re.compile(r"^[|] (.+) [|] (\d+) [|] (\d+) [|] ([-]?\d+[.]\d\d) [|]"
                       r" (([A-Z][a-z][a-z] ){2}\d\d \d\d\d\d \d\d:\d\d:\d\d GMT[+-]\d\d\d\d [(](.+)[)]) [|]$")
-pattern2 = re.compile(r"^[|] ([*][*][*])(.+)\1 [|] \1(\d+)\1 [|] \1(\d+)\1 [|] \1([-]?\d+[.]\d\d)\1 [|]"
+pattern2 = re.compile(r"^[|] ([*][*])(.+)\1 [|] \1(\d+)\1 [|] \1(\d+)\1 [|] \1([-]?\d+[.]\d\d)\1 [|]"
                       r" \1(([A-Z][a-z][a-z] ){2}\d\d \d\d\d\d \d\d:\d\d:\d\d GMT[+-]\d\d\d\d [(](.+)[)])\1 [|]$")
 
 
@@ -53,14 +53,14 @@ with open(".idea/processed.txt", "w", encoding="UTF-8") as f:
             line = "| %s | %s | %s | %s | %s |" % (match[0], match[1], match[2], match[3], match[4])
             f.write(line + "\n")
     f.write("# 计分板\n")
-    f.write("（当前最高纪录用加粗斜体表示。）\n")
+    f.write("（当前最高纪录用粗体表示。）\n")
     for i in range(start - 6, start):
         f.write(lines[i] + "\n")
     for i in range(start, len(lines)):
         line = lines[i]
         match = regex_match(line)
         if i in high_score_index:
-            line = "| ***%s*** | ***%s*** | ***%s*** | ***%s*** | ***%s*** |" % (match[0], match[1], match[2], match[3], match[4])
+            line = "| **%s** | **%s** | **%s** | **%s** | **%s** |" % (match[0], match[1], match[2], match[3], match[4])
         else:
             line = "| %s | %s | %s | %s | %s |" % (match[0], match[1], match[2], match[3], match[4])
         f.write(line + ("\n" if i != len(lines) - 1 else ""))
