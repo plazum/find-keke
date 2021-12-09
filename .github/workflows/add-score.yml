@@ -27,6 +27,12 @@ jobs:
     permissions:
       issues: write
     steps:
+      - name: Find Comment
+        uses: peter-evans/find-comment@v1
+        id: fc
+        with:
+          issue-number: 5
+          body-includes: hoge fuga
       - name: 添加一行
         uses: peter-evans/create-or-update-comment@v1
         with:
@@ -34,16 +40,12 @@ jobs:
           edit-mode: append
           body: |
             | ${{ github.event.inputs.player }} | ${{ github.event.inputs.rows }} | ${{ github.event.inputs.cols }} | ${{ github.event.inputs.score }} | ${{ github.event.inputs.time }} |
-      - name: Find Comment
-        uses: peter-evans/find-comment@v1
-        id: fc
-        with:
-          issue-number: 5
-          body-includes: hoge fuga
       - env:
           COMMENT: ${{ steps.fc.outputs.comment-body }}
         run: |
-          echo "$COMMENT" > d.txt
+          echo "$COMMENT" > .idea/comment.txt
+          echo "| ${{ github.event.inputs.player }} | ${{ github.event.inputs.rows }} | ${{ github.event.inputs.cols }} | ${{ github.event.inputs.score }} | ${{ github.event.inputs.time }} |" >> .idea/comment.txt
+          cat .idea/comment.txt
       - uses: actions/checkout@v2
       - name: Set up Python
         uses: actions/setup-python@v2
