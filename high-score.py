@@ -41,7 +41,7 @@ with open(".idea/processed.txt", "w", encoding="UTF-8") as f:
                 % (match.group(2), match.group(3), match.group(4), match.group(5), match.group(6))
             f.write(line + "\n")
     f.write("# 计分板\n（当前最高纪录用加粗斜体表示。）\n")
-    for i in range(start - 6, 6):
+    for i in range(start - 6, start):
         f.write(lines[i] + "\n")
     for i in range(start, len(lines)):
         line = lines[i]
