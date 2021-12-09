@@ -35,12 +35,21 @@ with open(".idea/processed.txt", "w", encoding="UTF-8") as f:
     f.write("| --- | ---: | ---: | ---: | --- |\n")
     for i in range(start, len(lines)):
         if i in high_score_index:
-            f.write(lines[i] + "\n")
-    for i in range(start, len(lines)):
-        if i in high_score_index:
-            match = pattern.match(lines[i])
-            lines[i] = "| ***%s*** | ***%s*** | ***%s*** | ***%s*** | ***%s*** |" \
-                       % (match.group(2), match.group(3), match.group(4), match.group(5), match.group(6))
+            line = lines[i]
+            match = pattern.match(line)
+            line = "| %s | %s | %s | %s | %s |" \
+                % (match.group(2), match.group(3), match.group(4), match.group(5), match.group(6))
+            f.write(line + "\n")
     f.write("# 计分板\n（当前最高纪录用加粗斜体表示。）\n")
-    for i in range(start - 6, len(lines)):
-        f.write(lines[i] + ("\n" if i != len(lines) - 1 else ""))
+    for i in range(start - 6, 6):
+        f.write(lines[i] + "\n")
+    for i in range(start, len(lines)):
+        line = lines[i]
+        match = pattern.match(line)
+        if i in high_score_index:
+            line = "| ***%s*** | ***%s*** | ***%s*** | ***%s*** | ***%s*** |" \
+                % (match.group(2), match.group(3), match.group(4), match.group(5), match.group(6))
+        else:
+            line = "| %s | %s | %s | %s | %s |" \
+                % (match.group(2), match.group(3), match.group(4), match.group(5), match.group(6))
+        f.write(line + ("\n" if i != len(lines) - 1 else ""))
