@@ -34,3 +34,27 @@ jobs:
           edit-mode: append
           body: |
             | ${{ github.event.inputs.player }} | ${{ github.event.inputs.rows }} | ${{ github.event.inputs.cols }} | ${{ github.event.inputs.score }} | ${{ github.event.inputs.time }} |
+      - name: Find Comment
+        uses: peter-evans/find-comment@v1
+        id: fc
+        with:
+          issue-number: 5
+          body-includes: hoge fuga
+      - env:
+          COMMENT: ${{ steps.fc.outputs.comment-body }}
+        run: |
+          echo "$COMMENT" > d.txt
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+      - name: 生成新评论
+        run: |
+          python high-score.py
+      - id: get-comment-body
+        run: |
+          body="$(cat .idea/processed.txt)"
+          body="${body//'%'/'%25'}"
+          body="${body//$'\n'/'%0A'}"
+          body="${body//$'\r'/'%0D'}" 
+          echo "::set-output name=body::$body"
+          echo '$body'
