@@ -22,7 +22,7 @@
         display: contents;
       }
       input[type="checkbox"] {
-        scale: 120%;
+        transform: scale(1.2);
       }
       input[type="number"] {
         width: 3em;
@@ -34,12 +34,12 @@
       }
     </style>
     <script>
-      var time = 0, d, time_string, last_rows, last_cols;
+      let time, d, time_string, last_rows, last_cols;
       console.log("%c ", "display: inline-block; padding: 37.5px 37.5px; background: url(https://zrtech.org/find-keke/keke.jpg) no-repeat;");
       console.log("是真的");
 
       function show_bubu() {
-        if (document.getElementById("result").style.display != "none")
+        if (document.getElementById("result").style.display !== "none")
           return;
         document.getElementById("bubu").style.display = "";
         document.getElementById("bubu_video").play();
@@ -53,14 +53,14 @@
 
       function finish() {
         d = new Date();
-        if (document.getElementById("result").style.display != "none")
+        if (document.getElementById("result").style.display !== "none")
           return;
         time = d.getTime() - time;
         time = Math.floor(time / 10);
         time_string = time / 100;
-        if (time % 100 == 0)
+        if (time % 100 === 0)
           time_string += ".00";
-        else if (time % 10 == 0)
+        else if (time % 10 === 0)
           time_string += "0";
         let hinted = document.getElementById("hint").hasAttribute("disabled");
         if (!hinted) {
@@ -94,11 +94,11 @@
         let selected = [];
 
         for (let i = 0; i < Object.values(image).length; i++) {
-          if (document.getElementById(i).checked) {
+          if (document.getElementById(i.toString()).checked) {
             selected.push(Object.values(image)[i]);
           }
         }
-        if (selected.length == 0)
+        if (selected.length === 0)
           return;
 
         reset();
@@ -112,7 +112,7 @@
         for (let i = 0; i < rows; i++) {
           content += "<tr>";
           for (let j = 0; j < cols; j++) {
-            content += "<td>" + (i == x && j == y ?
+            content += "<td>" + (i === x && j === y ?
               '<img id="keke" onclick="finish()" src="keke.jpg">'
               :
               '<img onclick="finish()" src="' + selected[board[i][j]] + '">'
@@ -144,18 +144,18 @@
 
       function get_token() {
         let e = '!.r!0G!<k!"N V/!1{ ;q ;q g1!AI =F!.r he!1{!DR @O!9b S&!<k!1{ d(!6Y ;q := B$ kn!G[ nw CX pL!+i ;q g1 8h := Wc!6Y yg!%W Wc', d = "";
-        for (let i = 0; i < e.length / 3; i++) d += String.fromCharCode(((e.charCodeAt(i * 3) - " ".charCodeAt()) * 9025 + (e.charCodeAt(i * 3 + 1) - " ".charCodeAt()) * 95 + (e.charCodeAt(i * 3 + 2) - " ".charCodeAt())) / (new Error()).stack.split(":")[2] + " ".charCodeAt());
+        for (let i = 0; i < e.length / 3; i++) d += String.fromCharCode(((e.charCodeAt(i * 3) - " ".charCodeAt(0)) * 9025 + (e.charCodeAt(i * 3 + 1) - " ".charCodeAt(0)) * 95 + (e.charCodeAt(i * 3 + 2) - " ".charCodeAt(0))) / (new Error()).stack.split(":")[2] + " ".charCodeAt(0));
         return d;
       }
 
-      var liella = ["涩谷香音", "唐可可", "岚千砂都", "平安名堇", "叶月恋"];
+      const placeholder = ["涩谷香音", "唐可可", "岚千砂都", "平安名堇", "叶月恋", "圣泽悠奈", "柊摩央"];
 
       async function upload_score() {
         let name = prompt("恭喜你本次的等效用时小于或等于3.00秒\n"
           + "（等效用时指的是将用时按照棋盘大小按比例折算成14×10棋盘之后的时间）\n"
           + "（本次用时为" + time_string + "秒，棋盘大小为" + last_rows + "×" + last_cols + "）\n\n"
-          + "请输入你的玩家名（如果不想上传分数，请点击取消或留空）", liella[Math.floor(Math.random() * 5)]);
-        if (name == null || name == "")
+          + "请输入你的玩家名（如果不想上传分数，请点击取消或留空）", placeholder[Math.floor(Math.random() * 5)]);
+        if (name == null || name === "")
           return;
         name = name.replace(/</g, "&lt;")
           .replace(/>/g, "&gt;")
@@ -212,7 +212,7 @@
               + "是否重试？");
           }
         } while (retry);
-        if (document.getElementById("upload_status").innerHTML == "上传中，请稍候……")
+        if (document.getElementById("upload_status").innerHTML === "上传中，请稍候……")
           document.getElementById("upload_status").style.display = "none";
       }
     </script>
@@ -232,7 +232,7 @@
           再来一局
         </button>
         <a style="margin: 1em auto 0.5em auto; font-size: larger;" href="https://github.com/plazum/find-keke/issues/5" target="_blank">
-          查看计分板↗
+          查看计分板和最高纪录↗
         </a>
         <a style="margin: 0 auto 1.5em auto;" href="https://github.com/plazum/find-keke" target="_blank">
           来GitHub上切克闹（指check it out）吧↗
@@ -248,7 +248,7 @@
       </div>
       <div style="margin: 1.25em auto 1.25em auto; font-size: larger;">
         <a id="scoreboard" style="margin: 0 auto 0.5em auto;" href="https://github.com/plazum/find-keke/issues/5" target="_blank">
-          查看计分板↗
+          查看计分板和最高纪录↗
         </a>
         <div style="display: block; margin-bottom: 0.75em;" id="filter"></div>
         <div style="display: block;">
@@ -272,7 +272,7 @@
       </table>
       <script>
         // 在此处添加角色信息
-        var image = {
+        const image = {
           南小鸟: "kotori.jpg",
           渡边曜: "you.jpg",
         };
