@@ -1,6 +1,6 @@
-# 在一条评论下面追加分数（即用时）并更新最高纪录
+# 在一条评论下面追加分数（即用时）
 
-name: 更新计分板
+name: 添加分数
 
 on:
   workflow_dispatch:
@@ -33,6 +33,13 @@ jobs:
         with:
           issue-number: 5
           body-includes: hoge fuga
+      - name: 添加一行
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          comment-id: 986094230
+          edit-mode: append
+          body: |
+            | ${{ github.event.inputs.player }} | ${{ github.event.inputs.rows }} | ${{ github.event.inputs.cols }} | ${{ github.event.inputs.score }} | ${{ github.event.inputs.time }} |
       - uses: actions/checkout@v2
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -43,6 +50,7 @@ jobs:
           mkdir .idea
           echo "$COMMENT" > .idea/comment.txt
           echo "| ${{ github.event.inputs.player }} | ${{ github.event.inputs.rows }} | ${{ github.event.inputs.cols }} | ${{ github.event.inputs.score }} | ${{ github.event.inputs.time }} |" >> .idea/comment.txt
+          cat .idea/comment.txt
           python high-score.py
       - id: get-comment-body
         run: |
@@ -51,9 +59,4 @@ jobs:
           body="${body//$'\n'/'%0A'}"
           body="${body//$'\r'/'%0D'}" 
           echo "::set-output name=body::$body"
-      - name: 更新评论
-        uses: peter-evans/create-or-update-comment@v1
-        with:
-          comment-id: 986094230
-          edit-mode: replace
-          body: ${{ steps.get-comment-body.outputs.body }}
+          echo "$body"
