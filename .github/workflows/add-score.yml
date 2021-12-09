@@ -59,4 +59,4 @@ jobs:
           body="${body//$'\n'/'%0A'}"
           body="${body//$'\r'/'%0D'}" 
           echo "::set-output name=body::$body"
-          echo '$body'
+          echo "$body"
