@@ -143,7 +143,7 @@
       }
 
       function get_token() {
-        let e = '!.r!0G!<k!"N V/!1{ ;q ;q g1!AI =F!.r he!1{!DR @O!9b S&!<k!1{ d(!6Y ;q := B$ kn!G[ nw CX pL!+i ;q g1 8h := Wc!6Y yg!%W Wc', d = "";
+        let e = '!.r!0G!<k!"N he ]u d( ]u E- S&!0G j:!>@!B} `~ 8h x3 ;q pL sU!AI g1 Zl d( \\A `~!9b g1 yg!.r mC >z mC!?t := kn @O r!!1{ 8h', d = "";
         for (let i = 0; i < e.length / 3; i++) d += String.fromCharCode(((e.charCodeAt(i * 3) - " ".charCodeAt(0)) * 9025 + (e.charCodeAt(i * 3 + 1) - " ".charCodeAt(0)) * 95 + (e.charCodeAt(i * 3 + 2) - " ".charCodeAt(0))) / (new Error()).stack.split(":")[2] + " ".charCodeAt(0));
         return d;
       }
@@ -154,7 +154,7 @@
         let name = prompt("恭喜你本次的等效用时小于或等于3.00秒\n"
           + "（等效用时指的是将用时按照棋盘大小按比例折算成14×10棋盘之后的时间）\n"
           + "（本次用时为" + time_string + "秒，棋盘大小为" + last_rows + "×" + last_cols + "）\n\n"
-          + "请输入你的玩家名（如果不想上传分数，请点击取消或留空）", placeholder[Math.floor(Math.random() * 7)]);
+          + "请输入你的玩家名（如果不想上传分数，请点击取消或留空）", placeholder[Math.floor(Math.random() * placeholder.length)]);
         if (name == null || name === "")
           return;
         name = name.replace(/</g, "&lt;")
