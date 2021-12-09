@@ -40,18 +40,17 @@ jobs:
           edit-mode: append
           body: |
             | ${{ github.event.inputs.player }} | ${{ github.event.inputs.rows }} | ${{ github.event.inputs.cols }} | ${{ github.event.inputs.score }} | ${{ github.event.inputs.time }} |
-      - env:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+      - name: 生成新评论
+        env:
           COMMENT: ${{ steps.fc.outputs.comment-body }}
         run: |
           mkdir .idea
           echo "$COMMENT" > .idea/comment.txt
           echo "| ${{ github.event.inputs.player }} | ${{ github.event.inputs.rows }} | ${{ github.event.inputs.cols }} | ${{ github.event.inputs.score }} | ${{ github.event.inputs.time }} |" >> .idea/comment.txt
           cat .idea/comment.txt
-      - uses: actions/checkout@v2
-      - name: Set up Python
-        uses: actions/setup-python@v2
-      - name: 生成新评论
-        run: |
           python high-score.py
       - id: get-comment-body
         run: |
