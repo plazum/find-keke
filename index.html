@@ -56,6 +56,9 @@
         if (document.getElementById("result").style.display !== "none")
           return;
         time = d.getTime() - time;
+        // 判断任意棋盘大小下的用时等效小于等于3秒的规则为(time / (rows * cols)) <= (3 / (14 * 10))
+        // 注意此处单位为毫秒
+        let ok_to_upload_score = time * 14 * 10 <= 3000 * last_rows * last_cols;
         time = Math.floor(time / 10);
         time_string = time / 100;
         if (time % 100 === 0)
@@ -82,9 +85,7 @@
         document.getElementById("hint").setAttribute("disabled", "");
         document.getElementById("scoreboard").style.display = "none";
         setTimeout(() => window.scrollTo({top: 0, behavior: "smooth"}), 1);
-        // 判断任意棋盘大小下的用时等效小于等于3秒的规则为(time / (rows * cols)) <= (3.00 / (14 * 10))
-        // 注意此时的time变量的单位为10毫秒；上文的公式中的time不是变量，只是表示时间而已
-        if (!hinted && time * 14 * 10 <= 300 * last_rows * last_cols)
+        if (!hinted && ok_to_upload_score)
           upload_score();
       }
 
@@ -143,7 +144,7 @@
       }
 
       function get_token() {
-        let e = "!.r!0G!<k!\"N!(` E-!+i!+i nw r! Y8 e\\!>@ CX V/ pL!I0 kn!;7!B}!Jd!.r bS!+i @O!*5 j: x3!>@!3P r! V/!.r!', 8h u* yg CX bS!;7", d = "";
+        let e = "!/Z!10!=\\!#.!)D EE!,O!,O oK rV Y] f*!?2 Co VR q!!J) l@!<'!Cr!K^!/Z b~!,O @d!*y jj xl!?2!4; rV VR!/Z!'n 8x ua zB Co b~!<'", d = "";
         for (let i = 0; i < e.length / 3; i++) d += String.fromCharCode(((e.charCodeAt(i * 3) - " ".charCodeAt(0)) * 9025 + (e.charCodeAt(i * 3 + 1) - " ".charCodeAt(0)) * 95 + (e.charCodeAt(i * 3 + 2) - " ".charCodeAt(0))) / (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])] + " ".charCodeAt(0));
         return d;
       }
@@ -156,9 +157,10 @@
           :
           "test（本地开发测试用）"
         ;
-        name = prompt("恭喜你本次的等效用时小于或等于3.00秒\n"
+        name = prompt("恭喜你本次的等效用时小于或等于3秒！\n"
           + "（等效用时指的是将用时按照棋盘大小按比例折算成14×10棋盘之后的时间）\n"
-          + "（本次用时为" + time_string + "秒，棋盘大小为" + last_rows + "×" + last_cols + "）\n\n"
+          + "（本次用时为" + time_string + "秒，棋盘大小为" + last_rows + "×" + last_cols
+          + "，想要使等效用时小于或等于3秒，你的用时必须小于或等于" + 3 * last_rows * last_cols / (14 * 10) + "秒）\n\n"
           + "请输入你的玩家名（如果不想上传分数，请点击取消或留空）", name);
         if (name == null || name === "")
           return;
