@@ -143,18 +143,23 @@
       }
 
       function get_token() {
-        let e = '!.r!0G!<k!"N he ]u d( ]u E- S&!0G j:!>@!B} `~ 8h x3 ;q pL sU!AI g1 Zl d( \\A `~!9b g1 yg!.r mC >z mC!?t := kn @O r!!1{ 8h', d = "";
-        for (let i = 0; i < e.length / 3; i++) d += String.fromCharCode(((e.charCodeAt(i * 3) - " ".charCodeAt(0)) * 9025 + (e.charCodeAt(i * 3 + 1) - " ".charCodeAt(0)) * 95 + (e.charCodeAt(i * 3 + 2) - " ".charCodeAt(0))) / (new Error()).stack.split(":")[2] + " ".charCodeAt(0));
+        let e = "!.r!0G!<k!\"N!(` E-!+i!+i nw r! Y8 e\\!>@ CX V/ pL!I0 kn!;7!B}!Jd!.r bS!+i @O!*5 j: x3!>@!3P r! V/!.r!', 8h u* yg CX bS!;7", d = "";
+        for (let i = 0; i < e.length / 3; i++) d += String.fromCharCode(((e.charCodeAt(i * 3) - " ".charCodeAt(0)) * 9025 + (e.charCodeAt(i * 3 + 1) - " ".charCodeAt(0)) * 95 + (e.charCodeAt(i * 3 + 2) - " ".charCodeAt(0))) / (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])] + " ".charCodeAt(0));
         return d;
       }
 
       const placeholder = ["涩谷香音", "唐可可", "岚千砂都", "平安名堇", "叶月恋", "圣泽悠奈", "柊摩央"];
 
       async function upload_score() {
-        let name = prompt("恭喜你本次的等效用时小于或等于3.00秒\n"
+        let name = location.href.startsWith("https://zrtech.org/") ?
+          placeholder[Math.floor(Math.random() * placeholder.length)]
+          :
+          "test（本地开发测试用）"
+        ;
+        name = prompt("恭喜你本次的等效用时小于或等于3.00秒\n"
           + "（等效用时指的是将用时按照棋盘大小按比例折算成14×10棋盘之后的时间）\n"
           + "（本次用时为" + time_string + "秒，棋盘大小为" + last_rows + "×" + last_cols + "）\n\n"
-          + "请输入你的玩家名（如果不想上传分数，请点击取消或留空）", placeholder[Math.floor(Math.random() * placeholder.length)]);
+          + "请输入你的玩家名（如果不想上传分数，请点击取消或留空）", name);
         if (name == null || name === "")
           return;
         name = name.replace(/</g, "&lt;")
