@@ -16,7 +16,7 @@ def regex_match(line):
 
 with open(".idea/comment.txt", "r", encoding="UTF-8") as f:
     lines = f.readlines()
-lines = list(map(lambda l: l.strip(), lines))
+lines = list(map(lambda l: l.removesuffix("\n"), lines))
 high_score_index = set()
 start = lines.index("| --- | --- | --- | --- | --- |") + 1
 record = {}
