@@ -46,11 +46,11 @@ with open(".idea/processed.txt", "w", encoding="UTF-8") as f:
     f.write("# 最高纪录\n")
     f.write("（按照棋盘大小和用时排序。）\n")
     f.write("（当前最高纪录用粗体表示。）\n")
-    f.write("（对于每种棋盘大小，展示前![lagrida_latex_editor(ceil(ln(x+1))).png]"
+    f.write("（对于每种棋盘大小，显示前![lagrida_latex_editor(ceil(ln(x+1))).png]"
             "(https://user-images.githubusercontent.com/34277374/145692061-7013a8b3-5ce4-4e5a-9cc2-bfe2cb9dfee5.png)"
-            "名（用到的函数为`ceil(log1p(x))`）。）\n")
+            "名（用到的函数为`ceil(log1p(x))`）（分数相同时，先产生纪录者优先）。）\n")
     f.write("（小于0.1秒的分数有作弊的嫌疑，忽略不计。）\n")
-    f.write("（以999开头的分数是我怀疑其作弊而添加的用于标注的前缀。）\n")
+    f.write("（以999开头的分数是我怀疑其作弊而添加了用于标注的前缀。）\n")
     f.write("| 玩家名 | 行 | 列 | 用时/秒 | 时间 |\n")
     f.write("| --- | ---: | ---: | ---: | --- |\n")
     for record_of_a_map in record:
