@@ -43,7 +43,7 @@ jobs:
         uses: actions/setup-python@v2
       - name: 生成新评论
         env:
-          COMMENT: ${{ steps.get-comment.outputs.comment-body }}
+          COMMENT: ${{ steps.get-comment.outputs.result }}
         run: |
           mkdir .idea
           echo "$COMMENT" > .idea/comment.txt
