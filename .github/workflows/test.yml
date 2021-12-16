@@ -34,8 +34,8 @@ jobs:
         run: |
           body="$(cat .idea/processed.txt)"
           # body="${body//'%'/'%25'}"
-          # body="${body//$'\n'/'%0A'}"
-          # body="${body//$'\r'/'%0D'}"
+          body="${body//$'\n'/'\\n'}"
+          body="${body//$'\r'/'\\r'}"
           body="${body//'"'/'\\"'}"
           echo "::set-output name=body::$body"
       - name: 更新评论
