@@ -172,9 +172,12 @@
           + "请输入你的玩家名（如果不想上传分数，请点击取消或留空）", name);
         if (name == null || name === "")
           return;
+        const name_original = name;
         name = name.replace(/</g, "&lt;")
           .replace(/>/g, "&gt;")
-          .replace(/\|/g, "\\|"); // 防止用户输入HTML代码和Markdown表格分列符
+          .replace(/\|/g, "\\|")
+          .replace(/\$/g, "\\$")
+          .replace(/"/g, "\\\""); // 防止用户输入HTML代码、Markdown表格分列符和破坏Shell命令的字符
         document.getElementById("upload_status").innerHTML = "上传中，请稍候……";
         document.getElementById("upload_status").style.display = "";
         let data = {
@@ -215,8 +218,7 @@
 
           let text = await response.text();
           if (response.ok) {
-            name = name.replace(/\\\|/g, "|");
-            document.getElementById("upload_status").innerHTML = "分数已上传：" + name + "；"
+            document.getElementById("upload_status").innerHTML = "分数已上传：" + name_original + "；"
               + last_rows + "行×" + last_cols + "列；用时" + time_string + "秒<br>" + d;
             alert("上传成功！\nGitHub REST API返回如下\n" + response.status + " " + response.statusText + "\n" + text);
             retry = false;
