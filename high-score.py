@@ -43,7 +43,7 @@ for i in range(len(record)):
     high_score_index.add(record[i][0][5])
 
 with open(".idea/processed.txt", "w", encoding="UTF-8") as f:
-    f.write("# 最高纪录\n")
+    f.write("# 最高纪录（计分板2）\n")
     f.write("（按照棋盘大小和用时排序。）\n")
     f.write("（当前最高纪录用粗体表示。）\n")
     f.write("（对于每种棋盘大小，显示前![lagrida_latex_editor(ceil(ln(x+1))).png]"
