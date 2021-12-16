@@ -48,7 +48,7 @@ with open(".idea/processed.txt", "w", encoding="UTF-8") as f:
     f.write("（当前最高纪录用粗体表示。）\n")
     f.write("（对于每种棋盘大小，显示前![lagrida_latex_editor(ceil(ln(x+1))).png]"
             "(https://user-images.githubusercontent.com/34277374/145692061-7013a8b3-5ce4-4e5a-9cc2-bfe2cb9dfee5.png)"
-            "名（用到的函数为`ceil(log1p(x))`）（分数相同时，先产生纪录者优先）。）\n")
+            "名（用到的函数为`ceil(log1p(x))`）（分数相同时，先产生记录者优先）。）\n")
     f.write("（小于0.1秒的分数有作弊的嫌疑，忽略不计。）\n")
     f.write("（以999开头的分数是我怀疑其作弊而添加了用于标注的前缀。）\n")
     f.write("| 玩家名 | 行 | 列 | 用时/秒 | 时间 |\n")
@@ -64,8 +64,12 @@ with open(".idea/processed.txt", "w", encoding="UTF-8") as f:
                       record_of_a_map[i][4])
             f.write(line + "\n")
     f.write("# 计分板2\n")
-    for i in range(start - 6, start):
-        f.write(lines[i] + "\n")
+    f.write("| 玩家名 | 行 | 列 | 用时/秒 | 时间 |\n")
+    f.write("| --- | ---: | ---: | ---: | --- |\n")
+    f.write("| player name | 14 | 10 | 0.00 | Thu Jan 01 1970 08:00:00 GMT+0800 (中国标准时间) |\n")
+    f.write("| test | 14 | 10 | 0.00 | Thu Jan 01 1970 01:00:00 GMT+0100 (格林尼治标准时间) |\n")
+    f.write("| hoge fuga | 14 | 10 | 0.00 | Thu Jan 01 1970 09:00:00 GMT+0900 (日本标准时间) |\n")
+    f.write("| --- | --- | --- | --- | --- |\n")
     for i in range(start, len(lines)):
         match = lines[i]
         if i in high_score_index:
