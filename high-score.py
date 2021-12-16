@@ -63,7 +63,7 @@ with open(".idea/processed.txt", "w", encoding="UTF-8") as f:
                    % (record_of_a_map[i][0], record_of_a_map[i][1], record_of_a_map[i][2], record_of_a_map[i][3],
                       record_of_a_map[i][4])
             f.write(line + "\n")
-    f.write("# 计分板\n")
+    f.write("# 计分板2\n")
     for i in range(start - 6, start):
         f.write(lines[i] + "\n")
     for i in range(start, len(lines)):
