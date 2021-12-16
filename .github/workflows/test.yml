@@ -15,7 +15,7 @@ jobs:
             return (await github.rest.issues.getComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              comment_id: 995780464
+              comment_id: 996055496
             })).data.body;
           result-encoding: string
       - run: echo "${{ steps.get-comment.outputs.result }}"
