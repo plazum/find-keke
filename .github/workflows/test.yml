@@ -28,7 +28,7 @@ jobs:
         run: |
           mkdir .idea
           echo "$COMMENT" > .idea/comment.txt
-          echo "| t"es't | 14 | 10 | 0.00 | Thu Jan 01 1970 08:00:00 GMT+0800 (中国标准时间) |" >> .idea/comment.txt
+          echo "| t\"es't | 14 | 10 | 0.00 | Thu Jan 01 1970 08:00:00 GMT+0800 (中国标准时间) |" >> .idea/comment.txt
           python high-score.py
       - id: get-comment-body
         run: |
