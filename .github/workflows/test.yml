@@ -12,13 +12,11 @@ jobs:
         id: get-comment
         with:
           script: |
-            const comment = await github.rest.issues.getComment({
+            return await github.rest.issues.getComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: 995780464
-            });
-            console.log(comment);
-            return comment.body;
+            }).data.body;
           result-encoding: string
       - run: echo "${{ steps.get-comment.outputs.result }}"
       - uses: actions/checkout@v2
