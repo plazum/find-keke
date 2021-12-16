@@ -45,5 +45,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: 996055496,
-              body: ${{ steps.get-comment-body.outputs.body }}
+              body: "${{ steps.get-comment-body.outputs.body }}"
             })
