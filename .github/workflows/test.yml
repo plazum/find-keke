@@ -12,9 +12,9 @@ jobs:
         id: get-comment
         with:
           script: |
-            return github.rest.issues.getComment({
-              owner: "plazum",
-              repo: "find-keke",
+            return await github.rest.issues.getComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
               comment_id: 995780464
             }).body
           result-encoding: string
@@ -42,8 +42,8 @@ jobs:
         with:
           script: |
             github.rest.issues.updateComment({
-              owner: "plazum",
-              repo: "find-keke",
+              owner: context.repo.owner,
+              repo: context.repo.repo,
               comment_id: 996055496,
               body: ${{ steps.get-comment-body.outputs.body }}
             })
