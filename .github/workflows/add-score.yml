@@ -32,7 +32,7 @@ jobs:
         id: fc
         with:
           issue-number: 5
-          body-includes: 新计分板
+          body-includes: 计分板2
       - uses: actions/checkout@v2
       - name: Set up Python
         uses: actions/setup-python@v2
