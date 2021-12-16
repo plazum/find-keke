@@ -69,9 +69,9 @@
         time = Math.floor(time / 10);
         // 判断任意棋盘大小下的用时等效小于等于3秒的规则为(time / (rows * cols)) <= (3 / (14 * 10))
         // 注意此处单位为10毫秒
-        let in_time_limit = time * 14 * 10 <= 300 * last_rows * last_cols;
+        const in_time_limit = time * 14 * 10 <= 300 * last_rows * last_cols;
         time_string = time_to_string(time);
-        let hinted = document.getElementById("hint").hasAttribute("disabled");
+        const hinted = document.getElementById("hint").hasAttribute("disabled");
         if (!hinted) {
           if (time <= 300) {
             document.getElementById("time1").innerHTML = "（调试用）恭喜你在三秒内找到了唐可可！用时" + time_string + "秒。";
@@ -91,7 +91,7 @@
         document.getElementById("hint").setAttribute("disabled", "");
         document.getElementById("scoreboard").style.display = "none";
         setTimeout(() => window.scrollTo({top: 0, behavior: "smooth"}), 1);
-        // if (!hinted && ok_to_upload_score)
+        // if (!hinted && in_time_limit)
         //   upload_score();
       }
 
@@ -111,8 +111,8 @@
         reset();
         last_rows = rows;
         last_cols = cols;
-        let x = Math.floor(Math.random() * rows);
-        let y = Math.floor(Math.random() * cols);
+        const x = Math.floor(Math.random() * rows);
+        const y = Math.floor(Math.random() * cols);
         for (let i = 0; i < rows; i++) {
           board[i] = Array.from({length: cols}, () => Math.floor(Math.random() * selected.length));
         }
@@ -163,8 +163,8 @@
           :
           "test（本地开发测试用）"
         ;
-        let time_limit = Math.floor(300 * last_rows * last_cols / (14 * 10));
-        let time_limit_string = time_to_string(time_limit);
+        const time_limit = Math.floor(300 * last_rows * last_cols / (14 * 10));
+        const time_limit_string = time_to_string(time_limit);
         name = prompt("恭喜你本次的等效用时小于或等于3秒！\n"
           + "（等效用时指的是将用时按照棋盘大小按比例折算成14×10棋盘之后的时间）\n"
           + "（本次用时为" + time_string + "秒，棋盘大小为" + last_rows + "×" + last_cols
@@ -180,7 +180,7 @@
           .replace(/"/g, "\\\""); // 防止用户输入HTML代码、Markdown表格分列符和破坏Shell命令的字符
         document.getElementById("upload_status").innerHTML = "上传中，请稍候……";
         document.getElementById("upload_status").style.display = "";
-        let data = {
+        const data = {
           ref: "master",
           inputs: {
             player: name,
@@ -194,7 +194,7 @@
         let retry = true;
         do {
           let fetch_fail = false;
-          let response = await fetch(
+          const response = await fetch(
             "https://api.github.com/repos/plazum/find-keke/actions/workflows/add-score.yml/dispatches",
             {
               method: "POST",
@@ -216,7 +216,7 @@
               break;
           }
 
-          let text = await response.text();
+          const text = await response.text();
           if (response.ok) {
             document.getElementById("upload_status").innerHTML = "分数已上传：" + name_original + "；"
               + last_rows + "行×" + last_cols + "列；用时" + time_string + "秒<br>" + d;
