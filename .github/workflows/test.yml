@@ -1,4 +1,4 @@
-name: Find Comment
+name: Test
 
 on: workflow_dispatch
 
@@ -41,9 +41,9 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            return github.rest.issues.updateComment({
+            github.rest.issues.updateComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: 996055496,
               body: ${{ steps.get-comment-body.outputs.body }}
-            }).body
+            })
