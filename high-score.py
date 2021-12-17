@@ -63,7 +63,7 @@ with open(".idea/processed.txt", "w", encoding="UTF-8") as f:
                    % (record_of_a_map[i][0], record_of_a_map[i][1], record_of_a_map[i][2], record_of_a_map[i][3],
                       record_of_a_map[i][4])
             f.write(line + "\n")
-    f.write("# 计分板" + lines[start - 7][5] + "\n")
+    f.write("# 计分板" + lines[start - 9][5] + "\n")
     f.write("<!--<details><summary>展开%d条记录</summary>\n-->\n" % (len(lines) - start))
     f.write("| 玩家名 | 行 | 列 | 用时/秒 | 时间 |\n")
     f.write("| --- | ---: | ---: | ---: | --- |\n")
