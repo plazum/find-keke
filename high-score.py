@@ -23,7 +23,6 @@ record = {}
 
 for i in range(start, len(lines)):
     match = regex_match(lines[i])
-    match.append(i)
     lines[i] = match
     time = float(match[3])
     # 小于0.1秒的分数不计
@@ -43,7 +42,7 @@ for i in range(len(record)):
     high_score_index.add(record[i][0][5])
 
 with open(".idea/processed.txt", "w", encoding="UTF-8") as f:
-    f.write("# 最高纪录（计分板2）\n")
+    f.write("# 最高纪录（计分板" + lines[0][10] + "）\n")
     f.write("（按照棋盘大小和用时排序。）\n")
     f.write("（当前最高纪录用粗体表示。）\n")
     f.write("（对于每种棋盘大小，显示前![lagrida_latex_editor(ceil(ln(x+1))).png]"
@@ -63,7 +62,7 @@ with open(".idea/processed.txt", "w", encoding="UTF-8") as f:
                    % (record_of_a_map[i][0], record_of_a_map[i][1], record_of_a_map[i][2], record_of_a_map[i][3],
                       record_of_a_map[i][4])
             f.write(line + "\n")
-    f.write("# 计分板2\n")
+    f.write("# 计分板" + lines[start - 7][5] + "\n")
     f.write("| 玩家名 | 行 | 列 | 用时/秒 | 时间 |\n")
     f.write("| --- | ---: | ---: | ---: | --- |\n")
     f.write("| player name | 14 | 10 | 0.00 | Thu Jan 01 1970 08:00:00 GMT+0800 (中国标准时间) |\n")
