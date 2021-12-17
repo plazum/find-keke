@@ -53,7 +53,7 @@
 
       // 从以10毫秒为单位的整数转换成以秒为单位的精确到两位小数的字符串
       function time_to_string(time) {
-        let time_string = time / 100;
+        let time_string = (time / 100).toString();
         if (time % 100 === 0)
           time_string += ".00";
         else if (time % 10 === 0)
@@ -172,7 +172,7 @@
           + "请输入你的玩家名（如果不想上传分数，请点击取消或留空）", name);
         if (name == null || name === "")
           return;
-        const name_original = name;
+        const name_original = name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
         name = name.replace(/</g, "&lt;")
           .replace(/>/g, "&gt;")
           .replace(/\|/g, "\\|")
@@ -186,7 +186,7 @@
             player: name,
             rows: last_rows.toString(),
             cols: last_cols.toString(),
-            score: time_string.toString(),
+            score: time_string,
             time: d.toString()
           }
         };
