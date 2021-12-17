@@ -23,6 +23,7 @@ record = {}
 
 for i in range(start, len(lines)):
     match = regex_match(lines[i])
+    match.append(i)
     lines[i] = match
     time = float(match[3])
     # 小于0.1秒的分数不计
