@@ -23,7 +23,7 @@ record = {}
 
 for i in range(start, len(lines)):
     match = regex_match(lines[i])
-    match.append(i)  # 后面high_score_index要用到
+    match.append(i)  # 用于后面的high_score_index
     lines[i] = match
     time = float(match[3])
     # 小于0.1秒的分数不计
@@ -63,7 +63,7 @@ with open(".idea/processed.txt", "w", encoding="UTF-8") as f:
                    % (record_of_a_map[i][0], record_of_a_map[i][1], record_of_a_map[i][2], record_of_a_map[i][3],
                       record_of_a_map[i][4])
             f.write(line + "\n")
-    f.write("# 计分板" + lines[start - 9][5] + "\n")
+    f.write("# 计分板" + lines[0][10] + "\n")
     f.write("<!--<details><summary>展开%d条记录</summary>\n-->\n" % (len(lines) - start))
     f.write("| 玩家名 | 行 | 列 | 用时/秒 | 时间 |\n")
     f.write("| --- | ---: | ---: | ---: | --- |\n")
