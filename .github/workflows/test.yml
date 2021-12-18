@@ -24,7 +24,7 @@ jobs:
       - name: 生成新评论
         env:
           COMMENT: ${{ steps.get-comment.outputs.result }}
-          PLAYER_NAME: $$t"e's%t\\|`uname -a`
+          PLAYER_NAME: $$t"e's%25t\\|`uname -a`
         run: |
           mkdir .idea
           echo "$COMMENT" > .idea/comment.txt
@@ -41,7 +41,7 @@ jobs:
       - name: 更新评论
         uses: actions/github-script@v5
         env:
-          BODY: "${{ steps.get-comment-body.outputs.body }}"
+          BODY: '${{ steps.get-comment-body.outputs.body }}'
         with:
           script: |
             github.rest.issues.updateComment({
