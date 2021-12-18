@@ -41,7 +41,7 @@ jobs:
       - name: 更新评论
         uses: actions/github-script@v5
         env:
-          BODY: ${{ steps.get-comment-body.outputs.body }}
+          BODY: "${{ steps.get-comment-body.outputs.body }}"
         with:
           script: |
             github.rest.issues.updateComment({
