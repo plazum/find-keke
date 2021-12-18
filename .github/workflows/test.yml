@@ -42,7 +42,7 @@ jobs:
         env:
           BODY: ${{ steps.get-comment-body.outputs.body }}
         with:
-          debug: true
+          # debug: true
           script: |
             console.log(process.env.BODY);
             let body = process.env.BODY.replace(/\\n/g, "\n");
