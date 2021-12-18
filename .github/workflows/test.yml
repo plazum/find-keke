@@ -44,11 +44,12 @@ jobs:
         with:
           debug: true
           script: |
+            console.log(process.env.BODY);
             let body = process.env.BODY.replace(/\\n/g, "\n");
+            console.log(body);
             github.rest.issues.updateComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: 996055496,
               body: body
             });
-            # console.log(body);
