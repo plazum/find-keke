@@ -44,9 +44,9 @@ jobs:
         with:
           # debug: true
           script: |
-            console.log(process.env.BODY);
+            # console.log(process.env.BODY);
             let body = process.env.BODY.replace(/\\n/g, "\n");
-            console.log(body);
+            # console.log(body);
             github.rest.issues.updateComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
