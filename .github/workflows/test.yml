@@ -42,14 +42,14 @@ jobs:
         env:
           BODY: ${{ steps.get-comment-body.outputs.body }}
         with:
-          # debug: true
+          debug: true
           script: |
             # console.log(process.env.BODY);
-            # let body = process.env.BODY.replace(/\\n/g, "\n");
+            let body = process.env.BODY.replace(/\\n/g, "\n").replace(/\\r/g, "\r");
             # console.log(body);
             github.rest.issues.updateComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: 996055496,
-              body: process.env.BODY.replace(/\\n/g, "\n").replace(/\\r/g, "\r")
+              body: body
             });
