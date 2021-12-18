@@ -41,12 +41,13 @@ jobs:
       - name: 更新评论
         uses: actions/github-script@v5
         env:
-          BODY: "${{ steps.get-comment-body.outputs.body }}"
+          BODY: aa\nbb\r\ncc%0Add
+          BODY2: "aa\nbb\r\ncc%0Add"
         with:
           script: |
             github.rest.issues.updateComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: 996055496,
-              body: process.env.BODY
+              body: process.env.BODY + "\n\n--------\n\n\n" + process.env.BODY2
             });
