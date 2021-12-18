@@ -48,5 +48,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: 996055496,
-              body: "aa\nbb\r\ncc%0Add"
+              body: process.env.BODY
             });
