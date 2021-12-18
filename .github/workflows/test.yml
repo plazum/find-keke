@@ -34,20 +34,27 @@ jobs:
         run: |
           body="$(cat .idea/processed.txt)"
           # body="${body//'%'/'%25'}"
+          echo "::set-output name=body::$body"
           body="${body//$'\n'/'\n'}"
           # body="${body//$'\r'/'\r'}"
           # body="${body//'"'/'\"'}"
-          echo "::set-output name=body::$body"
+          echo "::set-output name=body2::$body"
       - name: 更新评论
         uses: actions/github-script@v5
         env:
           BODY: aa\nbb\r\ncc%0Add
           BODY2: "aa\nbb\r\ncc%0Add"
+          B3: ${{ steps.get-comment-body.outputs.body }}
+          B4: "${{ steps.get-comment-body.outputs.body }}"
+          B5: ${{ steps.get-comment-body.outputs.body2 }}
+          B6: "${{ steps.get-comment-body.outputs.body2 }}"
         with:
           script: |
             github.rest.issues.updateComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: 996055496,
-              body: process.env.BODY + "\n\n--------\n\n\n" + process.env.BODY2
+              body: process.env.BODY + "\n--------\n" + process.env.BODY2
+                + "\n--------\n" + process.env.B3 + "\n--------\n" + process.env.B4
+                + "\n--------\n" + process.env.B5 + "\n--------\n" + process.env.B6
             });
