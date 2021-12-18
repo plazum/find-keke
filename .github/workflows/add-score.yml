@@ -5,7 +5,7 @@ name: 更新计分板
 on:
   workflow_dispatch:
     inputs:
-      player:
+      player_name:
         description: '玩家名'
         required: true
       rows:
@@ -44,10 +44,15 @@ jobs:
       - name: 生成新评论
         env:
           COMMENT: ${{ steps.get-comment.outputs.result }}
+          PLAYER_NAME: ${{ github.event.inputs.player_name }}
+          ROWS: ${{ github.event.inputs.rows }}
+          COLS: ${{ github.event.inputs.cols }}
+          SCORE: ${{ github.event.inputs.score }}
+          TIME: ${{ github.event.inputs.time }}
         run: |
           mkdir .idea
           echo "$COMMENT" > .idea/comment.txt
-          echo "| ${{ github.event.inputs.player }} | ${{ github.event.inputs.rows }} | ${{ github.event.inputs.cols }} | ${{ github.event.inputs.score }} | ${{ github.event.inputs.time }} |" >> .idea/comment.txt
+          echo "| $PLAYER_NAME | $ROWS | $COLS | $SCORE | $TIME |" >> .idea/comment.txt
           python high-score.py
       - id: get-comment-body
         run: |
