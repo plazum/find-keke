@@ -54,7 +54,11 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: 996055496,
-              body: process.env.BODY + "\n--------\n" + process.env.BODY2
-                + "\n--------\n" + process.env.B3 + "\n--------\n" + process.env.B4
-                + "\n--------\n" + process.env.B5 + "\n--------\n" + process.env.B6
+              body: process.env.BODY + "\n\n---\n\n" + process.env.BODY2
+                + "\n\n---\n\n" + process.env.B3 + "\n\n---\n\n" + process.env.B4
+                + "\n\n---\n\n" + process.env.B5 + "\n\n---\n\n" + process.env.B6
             });
+            console.log(process.env.B3);
+            console.log(process.env.B4);
+            console.log(process.env.B5);
+            console.log(process.env.B6);
