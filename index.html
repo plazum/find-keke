@@ -173,12 +173,8 @@
         if (name == null || name === "")
           return;
         name_default = name;
-        const name_safe_for_html = name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        name = name.replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/\|/g, "\\|")
-          .replace(/\$/g, "\\$")
-          .replace(/"/g, "\\\""); // 防止用户输入HTML代码、Markdown表格分列符和破坏Shell命令的字符
+        const name_safe_for_html = name.replace(/</g, "&lt;").replace(/>/g, "&gt;"); // 防止用户输入HTML代码
+        name = name_safe_for_html.replace(/\\/g, "\\").replace(/\|/g, "\\|"); // 防止用户输入Markdown表格分列符和反斜杠
         document.getElementById("upload_status").innerHTML = "上传中，请稍候……";
         document.getElementById("upload_status").style.display = "";
         const data = {
