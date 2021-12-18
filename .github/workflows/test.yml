@@ -35,21 +35,21 @@ jobs:
           body="$(cat .idea/processed.txt)"
           # body="${body//'%'/'%25'}"
           body="${body//$'\n'/'\n'}"
-          # body="${body//$'\r'/'\r'}"
+          body="${body//$'\r'/'\r'}"
           echo "::set-output name=body::$body"
       - name: 更新评论
         uses: actions/github-script@v5
         env:
           BODY: ${{ steps.get-comment-body.outputs.body }}
         with:
-          debug: true
+          # debug: true
           script: |
-            console.log(process.env.BODY);
-            let body = process.env.BODY.replace(/\\n/g, "\n");
-            console.log(body);
+            # console.log(process.env.BODY);
+            # let body = process.env.BODY.replace(/\\n/g, "\n");
+            # console.log(body);
             github.rest.issues.updateComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: 996055496,
-              body: body
+              body: process.env.BODY.replace(/\\n/g, "\n").replace(/\\r/g, "\r")
             });
