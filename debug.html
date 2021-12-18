@@ -150,29 +150,30 @@
       }
 
       function get_token() {
-        let e = "!4)!5d!Ba!',!D= C_ |F!Ru g? _5 oI oI @H!-Z!?J bL wS C_!*C Xf!Ex l2!8{ hz r` wS!0q!=n!8{!=n =1 C_ ZB =1 >l!D= l2!N#!7@!?J", d = "";
+        let e = "!4)!5d!Ba!',!D= W+!-Z C_ Xf l2!D=!2M!2M UO!I0!7@ uw W+ ]Y!O^ ec W+!:W!Q:!8{ B$ wS!+~!Jk l2!4) E;!O^!?J @H bL 9y!2M oI W+", d = "";
         for (let i = 0; i < e.length / 3; i++) d += String.fromCharCode(((e.charCodeAt(i * 3) - " ".charCodeAt(0)) * 9025 + (e.charCodeAt(i * 3 + 1) - " ".charCodeAt(0)) * 95 + (e.charCodeAt(i * 3 + 2) - " ".charCodeAt(0))) / (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])] + " ".charCodeAt(0));
         return d;
       }
 
       const placeholder = ["涩谷香音", "唐可可", "岚千砂都", "平安名堇", "叶月恋", "圣泽悠奈", "柊摩央"];
+      let name_default = location.href.startsWith("https://zrtech.org/") ?
+        placeholder[Math.floor(Math.random() * placeholder.length)]
+        :
+        "test（本地开发测试用）"
+      ;
 
       async function upload_score() {
-        let name = location.href.startsWith("https://zrtech.org/") ?
-          placeholder[Math.floor(Math.random() * placeholder.length)]
-          :
-          "test（本地开发测试用）"
-        ;
         const time_limit = Math.floor(300 * last_rows * last_cols / (14 * 10));
         const time_limit_string = time_to_string(time_limit);
-        name = prompt("恭喜你本次的等效用时小于或等于3秒！\n"
+        let name = prompt("恭喜你本次的等效用时小于或等于3秒！\n"
           + "（等效用时指的是将用时按照棋盘大小按比例折算成14×10棋盘之后的时间）\n"
           + "（本次用时为" + time_string + "秒，棋盘大小为" + last_rows + "×" + last_cols
           + "，想要使等效用时小于或等于3秒，你的用时必须小于或等于" + time_limit_string + "秒）\n\n"
-          + "请输入你的玩家名（如果不想上传分数，请点击取消或留空）", name);
+          + "请输入你的玩家名（如果不想上传分数，请点击取消或留空）", name_default);
         if (name == null || name === "")
           return;
-        const name_original = name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        name_default = name;
+        const name_safe_for_html = name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
         name = name.replace(/</g, "&lt;")
           .replace(/>/g, "&gt;")
           .replace(/\|/g, "\\|")
@@ -218,10 +219,10 @@
 
           const text = await response.text();
           if (response.ok) {
-            document.getElementById("upload_status").innerHTML = "分数已上传：" + name_original + "；"
+            document.getElementById("upload_status").innerHTML = "分数已上传：" + name_safe_for_html + "；"
               + last_rows + "行×" + last_cols + "列；用时" + time_string + "秒<br>" + d;
             alert("上传成功！\nGitHub REST API返回如下\n" + response.status + " " + response.statusText + "\n" + text);
-            retry = false;
+            break;
           } else {
             retry = confirm("GitHub REST API失败，返回如下\n"
               + response.status + " " + response.statusText + "\n"
