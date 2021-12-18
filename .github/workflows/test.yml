@@ -35,7 +35,7 @@ jobs:
           body="$(cat .idea/processed.txt)"
           # body="${body//'%'/'%25'}"
           body="${body//$'\n'/'\n'}"
-          body="${body//$'\r'/'\r'}"
+          # body="${body//$'\r'/'\r'}"
           echo "::set-output name=body::$body"
       - name: 更新评论
         uses: actions/github-script@v5
@@ -43,7 +43,7 @@ jobs:
           BODY: ${{ steps.get-comment-body.outputs.body }}
         with:
           script: |
-            body = process.env.BODY.replace(/\\n/g, "\n").replace(/\\r/g, "\r");
+            body = process.env.BODY.replace(/\\n/g, "\n");
             github.rest.issues.updateComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
