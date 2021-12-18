@@ -2,6 +2,8 @@
 
 name: 更新计分板
 
+concurrency: updating-scoreboard
+
 on:
   workflow_dispatch:
     inputs:
