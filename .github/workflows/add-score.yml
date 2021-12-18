@@ -79,9 +79,9 @@ jobs:
           BODY: ${{ steps.get-comment-body.outputs.body }}
         with:
           script: |
-            # console.log(process.env.BODY); // 这一行绝对不能去掉，否则运行报错，不知道为什么
+            console.log(process.env.BODY); // 这一行绝对不能去掉，否则运行报错，不知道为什么
             let body = process.env.BODY.replace(/\\n/g, "\n").replace(/\\r/g, "\r");
-            # console.log(body); // 这一行绝对不能去掉，否则运行报错，不知道为什么
+            console.log(body); // 这一行绝对不能去掉，否则运行报错，不知道为什么
             github.rest.issues.updateComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
