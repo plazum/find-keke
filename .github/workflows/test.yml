@@ -45,10 +45,10 @@ jobs:
           script: |
             console.log(process.env.BODY); // 这一行绝对不能去掉，否则运行报错，不知道为什么
             let body = process.env.BODY.replace(/\\n/g, "\n").replace(/\\r/g, "\r");
-            console.log(body); // 这一行绝对不能去掉，否则运行报错，不知道为什么
             github.rest.issues.updateComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: 996055496,
               body: body
             });
+            console.log(body); // 这一行绝对不能去掉，否则运行报错，不知道为什么
