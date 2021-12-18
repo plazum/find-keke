@@ -24,10 +24,11 @@ jobs:
       - name: 生成新评论
         env:
           COMMENT: ${{ steps.get-comment.outputs.result }}
+          PLAYER_NAME: $$t"e's%t\\|`uname -a`
         run: |
           mkdir .idea
           echo "$COMMENT" > .idea/comment.txt
-          echo "| t\"es't | 14 | 10 | 0.00 | Thu Jan 01 1970 08:00:00 GMT+0800 (中国标准时间) |" >> .idea/comment.txt
+          echo "| $PLAYER_NAME | 14 | 10 | 0.00 | Thu Jan 01 1970 08:00:00 GMT+0800 (中国标准时间) |" >> .idea/comment.txt
           python high-score.py
       - id: get-comment-body
         run: |
@@ -39,11 +40,14 @@ jobs:
           echo "::set-output name=body::$body"
       - name: 更新评论
         uses: actions/github-script@v5
+        env:
+          BODY: ${{ steps.get-comment-body.outputs.body }}
         with:
           script: |
-            github.rest.issues.updateComment({
+            /*github.rest.issues.updateComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: 996055496,
-              body: "${{ steps.get-comment-body.outputs.body }}"
-            })
+              body: 
+            })*/
+            console.log(process.env);
