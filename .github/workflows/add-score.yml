@@ -22,7 +22,7 @@ on:
         required: true
 
 jobs:
-  add_a_line:
+  add-a-line:
     runs-on: ubuntu-latest
     permissions:
       issues: write
@@ -67,7 +67,8 @@ jobs:
 #           comment-id: 995780464
 #           edit-mode: replace
 #           body: ${{ steps.get-comment-body.outputs.body }}
-      - id: get-comment-body
+      - name: Get Comment Body
+        id: get-comment-body
         run: |
           body="$(cat .idea/processed.txt)"
           body="${body//$'\n'/'\n'}"
