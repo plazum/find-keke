@@ -34,14 +34,14 @@ jobs:
         run: |
           body="$(cat .idea/processed.txt)"
           # body="${body//'%'/'%25'}"
-          # body="${body//$'\n'/'\n'}"
+          body="${body//$'\n'/'\n'}"
           # body="${body//$'\r'/'\r'}"
           # body="${body//'"'/'\"'}"
           echo "::set-output name=body::$body"
       - name: 更新评论
         uses: actions/github-script@v5
         env:
-          BODY: '${{ steps.get-comment-body.outputs.body }}'
+          BODY: ${{ steps.get-comment-body.outputs.body }}
         with:
           script: |
             github.rest.issues.updateComment({
