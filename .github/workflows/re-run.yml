@@ -1,0 +1,25 @@
+# 重试被取消的workflow run
+
+name: 重试更新计分板
+
+on:
+  workflow_dispatch:
+
+jobs:
+  re-run:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 重试
+      uses: actions/github-script@v5
+      with:
+        script: |
+          const r = await github.rest.actions.listWorkflowRuns({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            workflow_id: "add-score.yml",
+            status: "cancelled",
+            per_page: 1,
+            page: 0
+          });
+          console.log(r);
