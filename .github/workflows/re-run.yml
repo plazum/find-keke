@@ -4,11 +4,15 @@ name: 重试更新计分板
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "5 * * * *"
+
+permissions:
+  actions: write
 
 jobs:
   re-run:
     runs-on: ubuntu-latest
-
     steps:
     - name: 重试
       uses: actions/github-script@v5
