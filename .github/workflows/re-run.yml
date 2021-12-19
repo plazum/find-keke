@@ -22,5 +22,12 @@ jobs:
             per_page: 100,
             page: 1
           })).data;
-          console.log(r);
+          console.log(r.total_count);
           console.log(r.workflow_runs[r.total_count - 1]);
+          const id = r.workflow_runs[r.total_count - 1].id;
+          console.log(id);
+          await github.request('POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun', {
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            run_id: id
+          });
