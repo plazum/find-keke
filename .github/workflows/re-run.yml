@@ -5,7 +5,7 @@ name: 重试更新计分板
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: '*/6 * * * *'
 
 permissions:
   actions: write
@@ -27,6 +27,8 @@ jobs:
             page: 1
           })).data;
           console.log(r.total_count);
+          if (r.total_count == 0)
+            return;
           console.log(r.workflow_runs[r.total_count - 1]);
           const id = r.workflow_runs[r.total_count - 1].id;
           console.log(id);
