@@ -174,7 +174,7 @@
           return;
         name_default = name;
         const name_safe_for_html = name.replace(/</g, "&lt;").replace(/>/g, "&gt;"); // 防止用户输入HTML代码
-        name = name_safe_for_html.replace(/%/g, "\%25")
+        name = name_safe_for_html.replace(/%/g, "&#37;")
           .replace(/\\/g, "\\\\")
           .replace(/\|/g, "\\|"); // 防止用户输入Markdown表格分列符、反斜杠和百分号
         document.getElementById("upload_status").innerHTML = "上传中，请稍候……";
