@@ -4,6 +4,9 @@ name: 更新计分板
 
 concurrency: updating-scoreboard
 
+permissions:
+  issues: write
+
 on:
   workflow_dispatch:
     inputs:
@@ -26,8 +29,6 @@ on:
 jobs:
   add-a-line:
     runs-on: ubuntu-latest
-    permissions:
-      issues: write
     steps:
       - name: Get Comment
         uses: actions/github-script@v5
