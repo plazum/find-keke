@@ -14,13 +14,13 @@ jobs:
       uses: actions/github-script@v5
       with:
         script: |
-          const r = await github.rest.actions.listWorkflowRuns({
+          const r = (await github.rest.actions.listWorkflowRuns({
             owner: context.repo.owner,
             repo: context.repo.repo,
             workflow_id: "add-score.yml",
             status: "cancelled",
             per_page: 1,
             page: 0
-          }).data;
+          })).data;
           console.log(r);
           console.log(r.workflow_runs);
