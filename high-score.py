@@ -1,3 +1,4 @@
+import csv
 import re
 from math import ceil, log1p
 
@@ -14,7 +15,7 @@ def regex_match(line):
     return tuple(match.group(i) for i in (2, 3, 4, 5, 6))
 
 
-with open(".idea/comment.txt", "r", encoding="UTF-8") as f:
+with open(".idea/comment.txt", "r", encoding="utf-8") as f:
     lines = f.readlines()
 lines = list(map(lambda l: l.removesuffix("\n"), lines))
 high_score_index = set()
@@ -35,6 +36,16 @@ for i in range(start, len(lines)):
         record_dict[(rows, cols)] = [match]
     else:
         record_dict[(rows, cols)].append(match)
+
+# # 生成CSV文件，取消注释以使用
+# with open("scoreboard-1.csv", "w", newline="") as csvfile:
+#     fieldnames = ("玩家名", "行", "列", "用时/秒", "时间")
+#     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+#     writer.writeheader()
+#     for record in lines[start:]:
+#         writer.writerow({"玩家名": record[0], "行": record[1], "列": record[2], "用时/秒": "'" + record[3], "时间": record[4]})
+# exit()
+
 # 给记录排序并给每种棋盘大小保留前ceil(ln(x + 1))项
 record_list = [record_dict[map_size] for map_size in sorted(record_dict.keys(), key=lambda x: (x[0] * x[1], x[1]))]
 for i in range(len(record_list)):
@@ -42,7 +53,7 @@ for i in range(len(record_list)):
     record_list[i] = record_list[i][:ceil(log1p(len(record_list[i])))]
     high_score_index.add(record_list[i][0][5])
 
-with open(".idea/processed.txt", "w", encoding="UTF-8") as f:
+with open(".idea/processed.txt", "w", encoding="utf-8") as f:
     board_num = next(l for l in lines if l.startswith("# 计分板"))[5]
     f.write("<!--\n# 请看下方的新计分板（[点我跳转](#issuecomment-996055496)）\n")
     f.write("本计分板已经达到长度限制，无法继续更新。感谢大家的热情支持！\n-->\n")
@@ -56,15 +67,15 @@ with open(".idea/processed.txt", "w", encoding="UTF-8") as f:
     f.write("（部分分数开头的999是我怀疑其作弊而添加的用于标注的前缀。）\n")
     f.write("| 玩家名 | 行 | 列 | 用时/秒 | 时间 |\n")
     f.write("| --- | ---: | ---: | ---: | --- |\n")
-    for record_of_a_map in record_list:
+    for records_of_a_map in record_list:
         line = "| **%s** | **%s** | **%s** | **%s** | **%s** |" \
-               % (record_of_a_map[0][0], record_of_a_map[0][1], record_of_a_map[0][2], record_of_a_map[0][3],
-                  record_of_a_map[0][4])
+               % (records_of_a_map[0][0], records_of_a_map[0][1], records_of_a_map[0][2], records_of_a_map[0][3],
+                  records_of_a_map[0][4])
         f.write(line + "\n")
-        for i in range(1, len(record_of_a_map)):
+        for i in range(1, len(records_of_a_map)):
             line = "| %s | %s | %s | %s | %s |" \
-                   % (record_of_a_map[i][0], record_of_a_map[i][1], record_of_a_map[i][2], record_of_a_map[i][3],
-                      record_of_a_map[i][4])
+                   % (records_of_a_map[i][0], records_of_a_map[i][1], records_of_a_map[i][2], records_of_a_map[i][3],
+                      records_of_a_map[i][4])
             f.write(line + "\n")
     f.write("# 计分板" + board_num + "\n")
     f.write("<!--\n<details><summary>展开%d条记录</summary>\n\n-->\n" % (len(lines) - start))
@@ -75,9 +86,9 @@ with open(".idea/processed.txt", "w", encoding="UTF-8") as f:
     f.write("| hoge fuga | 14 | 10 | 0.00 | Thu Jan 01 1970 09:00:00 GMT+0900 (日本标准时间) |\n")
     f.write("| --- | --- | --- | --- | --- |\n")
     for i in range(start, len(lines)):
-        match = lines[i]
+        record = lines[i]
         if i in high_score_index:
-            line = "| **%s** | **%s** | **%s** | **%s** | **%s** |" % (match[0], match[1], match[2], match[3], match[4])
+            line = "| **%s** | **%s** | **%s** | **%s** | **%s** |" % (record[0], record[1], record[2], record[3], record[4])
         else:
-            line = "| %s | %s | %s | %s | %s |" % (match[0], match[1], match[2], match[3], match[4])
+            line = "| %s | %s | %s | %s | %s |" % (record[0], record[1], record[2], record[3], record[4])
         f.write(line + ("\n" if i != len(lines) - 1 else ""))
