@@ -37,8 +37,9 @@ for i in range(start, len(lines)):
     else:
         record_dict[(rows, cols)].append(match)
 
+board_num = next(l for l in lines if l.startswith("# 计分板"))[5]
 # # 生成CSV文件，取消注释以使用
-# with open("scoreboard-1.csv", "w", newline="") as csvfile:
+# with open("scoreboard-" + board_num + ".csv", "w", newline="") as csvfile:
 #     fieldnames = ("玩家名", "行", "列", "用时/秒", "时间")
 #     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 #     writer.writeheader()
@@ -54,7 +55,6 @@ for i in range(len(record_list)):
     high_score_index.add(record_list[i][0][5])
 
 with open(".idea/processed.txt", "w", encoding="utf-8") as f:
-    board_num = next(l for l in lines if l.startswith("# 计分板"))[5]
     f.write("<!--\n# 请看下方的新计分板（[点我跳转](#issuecomment-996055496)）\n")
     f.write("本计分板已经达到长度限制，无法继续更新。感谢大家的热情支持！\n-->\n")
     f.write("# 最高纪录（计分板" + board_num + "）\n")
