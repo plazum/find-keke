@@ -24,7 +24,7 @@
 2. 在`index.html`和`debug.html`结尾处的字典`image`中追加一个元素，以角色的中文名为键，以图片的文件名为值。
    - 示例：
      ```javascript
-     var image = {
+     const image = {
        南小鸟: "kotori.jpg",
        渡边曜: "you.jpg",
      };
