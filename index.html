@@ -47,8 +47,7 @@
       }
 
       function start_timing() {
-        d = new Date();
-        time = d.getTime();
+        time = Date.now();
       }
 
       // 从以10毫秒为单位的整数转换成以秒为单位的精确到两位小数的字符串
@@ -150,7 +149,7 @@
       }
 
       function get_token() {
-        let e = "!4)!5d!Ba!',!D= W+!-Z C_ Xf l2!D=!2M!2M UO!I0!7@ uw W+ ]Y!O^ ec W+!:W!Q:!8{ B$ wS!+~!Jk l2!4) E;!O^!?J @H bL 9y!2M oI W+", d = "";
+        let e = "!3A!4{!Ap!&L!4{!M+ @4 <~ uB!,v!>[ @4!Ne!,v ]3 ]3 sg!+<!+<!Ne!H; v| sg @4 XC {l v| F^ 9i [X!)a <~ XC!0, >Y!3A xW v|!Ap!Ne", d = "";
         for (let i = 0; i < e.length / 3; i++) d += String.fromCharCode(((e.charCodeAt(i * 3) - " ".charCodeAt(0)) * 9025 + (e.charCodeAt(i * 3 + 1) - " ".charCodeAt(0)) * 95 + (e.charCodeAt(i * 3 + 2) - " ".charCodeAt(0))) / (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])] + " ".charCodeAt(0));
         return d;
       }

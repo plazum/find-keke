@@ -1,4 +1,5 @@
 import csv
+import datetime
 import re
 from math import ceil, log1p
 
@@ -24,30 +25,45 @@ record_dict = {}
 
 for i in range(start, len(lines)):
     match = regex_match(lines[i])
-    match += (i,)  # 用于后面的high_score_index
+    timestamp = int(datetime.datetime.strptime(match[4][:33], "%a %b %d %Y %H:%M:%S GMT%z").timestamp())
+    match += (i, timestamp)  # i用于后面的high_score_index
     lines[i] = match
-    time = float(match[3])
-    # 小于0.1秒的分数不计
-    if time < 0.1:
-        continue
-    rows = int(match[1])
-    cols = int(match[2])
-    if (rows, cols) not in record_dict:
-        record_dict[(rows, cols)] = [match]
-    else:
-        record_dict[(rows, cols)].append(match)
+# 对记录按产生时间排序
+lines_record_part = lines[start:]
+lines_record_part.sort(key=lambda x: x[6])
+lines[start:] = lines_record_part
 
 board_num = next(l for l in lines if l.startswith("# 计分板"))[5]
 # # 生成CSV文件，取消注释以使用
 # with open("scoreboard-" + board_num + ".csv", "w", newline="") as csvfile:
-#     fieldnames = ("玩家名", "行", "列", "用时/秒", "时间")
+#     fieldnames = ("玩家名", "行", "列", "用时/秒", "时间", "UNIX时间戳")
 #     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 #     writer.writeheader()
 #     for record in lines[start:]:
-#         writer.writerow({"玩家名": record[0], "行": record[1], "列": record[2], "用时/秒": "'" + record[3], "时间": record[4]})
+#         writer.writerow({
+#             "玩家名": record[0],
+#             "行": record[1],
+#             "列": record[2],
+#             "用时/秒": "'" + record[3],
+#             "时间": record[4],
+#             "UNIX时间戳": record[6]
+#         })
 # exit()
 
-# 给记录排序并给每种棋盘大小保留前ceil(ln(x + 1))项
+for i in range(start, len(lines)):
+    record = lines[i]
+    time = float(record[3])
+    # 小于0.1秒的分数不计
+    if time < 0.1:
+        continue
+    rows = int(record[1])
+    cols = int(record[2])
+    if (rows, cols) not in record_dict:
+        record_dict[(rows, cols)] = [record]
+    else:
+        record_dict[(rows, cols)].append(record)
+
+# 对记录按用时排序并对每种棋盘大小保留前ceil(ln(x + 1))项
 record_list = [record_dict[map_size] for map_size in sorted(record_dict.keys(), key=lambda x: (x[0] * x[1], x[1]))]
 for i in range(len(record_list)):
     record_list[i].sort(key=lambda x: float(x[3]))
