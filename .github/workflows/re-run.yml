@@ -5,7 +5,7 @@ name: 重试更新计分板
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/6 * * * *'
+    - cron: '*/10 * * * *'
 
 permissions:
   actions: write
