@@ -55,6 +55,7 @@ jobs:
         run: |
           mkdir .idea
           echo "$COMMENT" > .idea/comment.txt
+          echo "| $PLAYER_NAME | $ROWS | $COLS | $SCORE | $TIME |"
           echo "| $PLAYER_NAME | $ROWS | $COLS | $SCORE | $TIME |" >> .idea/comment.txt
           python high-score.py
 #       - id: get-comment-body
