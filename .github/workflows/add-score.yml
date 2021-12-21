@@ -38,7 +38,7 @@ jobs:
             return (await github.rest.issues.getComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              comment_id: 995780464
+              comment_id: 996055496
             })).data.body;
           result-encoding: string
       - uses: actions/checkout@v2
@@ -90,6 +90,6 @@ jobs:
             github.rest.issues.updateComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              comment_id: 995780464,
+              comment_id: 996055496,
               body: body
             });
