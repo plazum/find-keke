@@ -41,7 +41,7 @@ jobs:
               comment_id: 996055496
             })).data.body;
           result-encoding: string
-      - uses: actions/checkout@v2
+      - run: wget https://raw.githubusercontent.com/plazum/find-keke/master/high-score.py
       - name: Set up Python
         uses: actions/setup-python@v2
       - name: 生成新评论
@@ -58,19 +58,7 @@ jobs:
           echo "| $PLAYER_NAME | $ROWS | $COLS | $SCORE | $TIME |"
           echo "| $PLAYER_NAME | $ROWS | $COLS | $SCORE | $TIME |" >> .idea/comment.txt
           python high-score.py
-#       - id: get-comment-body
-#         run: |
-#           body="$(cat .idea/processed.txt)"
-#           body="${body//'%'/'%25'}"
-#           body="${body//$'\n'/'%0A'}"
-#           body="${body//$'\r'/'%0D'}"
-#           echo "::set-output name=body::$body"
-#       - name: 更新评论
-#         uses: peter-evans/create-or-update-comment@v1
-#         with:
-#           comment-id: 995780464
-#           edit-mode: replace
-#           body: ${{ steps.get-comment-body.outputs.body }}
+          ls -alFR
       - name: Get Comment Body
         id: get-comment-body
         run: |
@@ -84,9 +72,7 @@ jobs:
           BODY: ${{ steps.get-comment-body.outputs.body }}
         with:
           script: |
-            console.log(process.env.BODY); // 这一行绝对不能去掉，否则运行报错，不知道为什么
             let body = process.env.BODY.replace(/\\n/g, "\n").replace(/\\r/g, "\r");
-            console.log(body); // 这一行绝对不能去掉，否则运行报错，不知道为什么
             github.rest.issues.updateComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
