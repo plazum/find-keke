@@ -32,16 +32,19 @@ jobs:
     steps:
       - name: Get Comment
         uses: actions/github-script@v5
-        id: get-comment
         with:
           script: |
-            return (await github.rest.issues.getComment({
+            const fs = require("fs");
+            const body = (await github.rest.issues.getComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: 996055496
             })).data.body;
-          result-encoding: string
-      - run: wget https://raw.githubusercontent.com/plazum/find-keke/master/high-score.py
+            await io.mkdirP(".idea");
+            fs.writeFileSync(".idea/comment.txt", body + "\n");
+      - run: |
+          wget https://raw.githubusercontent.com/plazum/find-keke/master/high-score.py
+          ls -alFR
       - name: Set up Python
         uses: actions/setup-python@v2
       - name: 生成新评论
@@ -51,29 +54,18 @@ jobs:
           COLS: ${{ github.event.inputs.cols }}
           SCORE: ${{ github.event.inputs.score }}
           TIME: ${{ github.event.inputs.time }}
-          COMMENT: ${{ steps.get-comment.outputs.result }}
         run: |
-          mkdir .idea
-          echo "$COMMENT" > .idea/comment.txt
           echo "| $PLAYER_NAME | $ROWS | $COLS | $SCORE | $TIME |"
           echo "| $PLAYER_NAME | $ROWS | $COLS | $SCORE | $TIME |" >> .idea/comment.txt
           python high-score.py
           ls -alFR
-      - name: Get Comment Body
-        id: get-comment-body
-        run: |
-          body="$(cat .idea/processed.txt)"
-          body="${body//$'\n'/'\n'}"
-          body="${body//$'\r'/'\r'}"
-          echo "::set-output name=body::$body"
       - name: 更新评论
         uses: actions/github-script@v5
-        env:
-          BODY: ${{ steps.get-comment-body.outputs.body }}
         with:
           script: |
-            let body = process.env.BODY.replace(/\\n/g, "\n").replace(/\\r/g, "\r");
-            github.rest.issues.updateComment({
+            const fs = require("fs");
+            let body = fs.readFileSync(".idea/processed.txt", "utf8");
+            await github.rest.issues.updateComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: 996055496,
