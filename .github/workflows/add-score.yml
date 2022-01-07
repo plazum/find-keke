@@ -40,23 +40,23 @@ jobs:
               repo: context.repo.repo,
               comment_id: 996055496
             })).data.body;
+            const line = "| " + context.payload.inputs.player_name
+              + " | " + context.payload.inputs.rows
+              + " | " + context.payload.inputs.cols
+              + " | " + context.payload.inputs.score
+              + " | " + context.payload.inputs.time + " |";
+            console.log(context.payload.inputs);
+            console.log(context.repo);
+            console.log(line);
+            console.log(context);
             await io.mkdirP(".idea");
-            fs.writeFileSync(".idea/comment.txt", body + "\n");
-      - run: |
-          wget https://raw.githubusercontent.com/plazum/find-keke/master/high-score.py
-          ls -alFR
+            fs.writeFileSync(".idea/comment.txt", body + "\n" + line);
       - name: Set up Python
         uses: actions/setup-python@v2
       - name: 生成新评论
-        env:
-          PLAYER_NAME: ${{ github.event.inputs.player_name }}
-          ROWS: ${{ github.event.inputs.rows }}
-          COLS: ${{ github.event.inputs.cols }}
-          SCORE: ${{ github.event.inputs.score }}
-          TIME: ${{ github.event.inputs.time }}
         run: |
-          echo "| $PLAYER_NAME | $ROWS | $COLS | $SCORE | $TIME |"
-          echo "| $PLAYER_NAME | $ROWS | $COLS | $SCORE | $TIME |" >> .idea/comment.txt
+          wget https://raw.githubusercontent.com/plazum/find-keke/master/high-score.py
+          ls -alFR
           python high-score.py
           ls -alFR
       - name: 更新评论
