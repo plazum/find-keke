@@ -180,7 +180,16 @@
         ja: ["澁谷かのん", "唐可可", "嵐千砂都", "平安名すみれ", "葉月恋", "聖澤悠奈", "柊摩央"],
         en: ["Shibuya Kanon", "Tang Keke", "Arashi Chisato", "Heanna Sumire", "Hazuki Ren", "Hijirisawa Yuuna", "Hiiragi Mao"]
       };
-      let name_default;
+      let name_default, name_safe_for_html;
+
+      function write_upload_status() {
+        const text_uploaded = {
+          zh: `分数已上传：${name_safe_for_html}；${last_rows}行×${last_cols}列；用时${time_string}秒<br>${d}`,
+          ja: `${name_safe_for_html}${last_rows}×${last_cols}${time_string}<br>${d}`,
+          en: `Score uploaded: ${name_safe_for_html}; ${last_rows} rows × ${last_cols} columns; ${time_string} seconds spent<br>${d}`
+        };
+        document.getElementById("upload_status").innerHTML = text_uploaded[language];
+      }
 
       async function upload_score() {
         const time_limit = Math.floor(300 * last_rows * last_cols / (14 * 10));
@@ -207,7 +216,7 @@
           return;
 
         name_default = name;
-        const name_safe_for_html = name.replace(/</g, "&lt;").replace(/>/g, "&gt;"); // 防止用户输入HTML代码
+        name_safe_for_html = name.replace(/</g, "&lt;").replace(/>/g, "&gt;"); // 防止用户输入HTML代码
         name = name_safe_for_html.replace(/%/g, "&#37;")
           .replace(/\\/g, "\\\\")
           .replace(/\|/g, "\\|"); // 防止用户输入Markdown表格分列符、反斜杠和百分号
@@ -261,12 +270,7 @@
 
           const text = await response.text();
           if (response.ok) {
-            const text_uploaded = {
-              zh: `分数已上传：${name_safe_for_html}；${last_rows}行×${last_cols}列；用时${time_string}秒<br>${d}`,
-              ja: `${name_safe_for_html}${last_rows}×${last_cols}${time_string}<br>${d}`,
-              en: `Score uploaded: ${name_safe_for_html}; ${last_rows} rows × ${last_cols} columns; ${time_string} seconds spent<br>${d}`
-            };
-            document.getElementById("upload_status").innerHTML = text_uploaded[language];
+            write_upload_status();
             const text_github_rest_api_succeeded = {
               zh: `上传成功！\nGitHub REST API返回如下\n${response.status} ${response.statusText}\n${text}`,
               ja: `\nGitHub REST API\n${response.status} ${response.statusText}\n${text}`,
@@ -385,6 +389,8 @@
         ;
         if (document.getElementById("result").style.display !== "none")
           write_result();
+        if (document.getElementById("upload_status").style.display !== "none")
+          write_upload_status();
       }
     </script>
   </head>
