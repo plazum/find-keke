@@ -65,6 +65,7 @@ jobs:
           script: |
             const fs = require("fs");
             const body = fs.readFileSync(".idea/processed.txt", "utf8");
+            console.log(body);
             await github.rest.issues.updateComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
