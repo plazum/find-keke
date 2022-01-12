@@ -66,7 +66,7 @@
           if (time <= 300) {
             const text1 = {
               zh: `（调试用）恭喜你在三秒内找到了唐可可！用时${time_string}秒。`,
-              ja: `（デバッグ用）3秒以内で唐可可を見つけました！おめでとうございます！${time_string}秒かかりました。`,
+              ja: `（デバッグ用）おめでとうございます！三秒以内で唐可可を見つけました。${time_string}秒かかりました。`,
               en: `(Debug) Congratulations! You have found Tang Keke within three seconds. ${time_string} seconds taken.`
             };
             document.getElementById("time1").innerHTML = text1[language];
@@ -74,7 +74,7 @@
           } else {
             const text2 = {
               zh: `（调试用）恭喜你找到了唐可可！用时${time_string}秒。`,
-              ja: `（デバッグ用）唐可可を見つけました！おめでとうございます！${time_string}秒かかりました。`,
+              ja: `（デバッグ用）おめでとうございます！唐可可を見つけました。${time_string}秒かかりました。`,
               en: `(Debug) Congratulations! You have found Tang Keke. ${time_string} seconds taken.`
             };
             document.getElementById("time2").innerHTML = text2[language];
@@ -185,7 +185,7 @@
       function write_upload_status() {
         const text_uploaded = {
           zh: `分数已上传：${name_safe_for_html}；${last_rows}行×${last_cols}列；用时${time_string}秒<br>${d}`,
-          ja: `点数がアップロードしました：${name_safe_for_html}; ${last_rows}行×${last_cols}列; ${time_string}秒かかりました<br>${d}`,
+          ja: `点数がアップロードしました：${name_safe_for_html}；${last_rows}行×${last_cols}列；${time_string}秒かかりました<br>${d}`,
           en: `Score uploaded: ${name_safe_for_html}; ${last_rows} rows × ${last_cols} columns; ${time_string} seconds taken<br>${d}`
         };
         document.getElementById("upload_status").innerHTML = text_uploaded[language];
@@ -200,7 +200,7 @@
             + `（本次用时为${time_string}秒，棋盘大小为${last_rows}×${last_cols}，`
             + `想要使等效用时小于或等于3秒，你的用时必须小于或等于${time_limit_string}秒。）\n\n`
             + "请输入你的玩家名（如果不想上传分数，请点击取消或留空）",
-            ja: "おめでとうございます！等価時間は3秒以下です！\n"
+          ja: "おめでとうございます！等価時間は3秒以下です。\n"
             + "（等価時間というのは、かかった時間にボードのサイズに対する14×10ボードのサイズの比率をかけた時間です。）\n"
             + `（今回かかった時間は${time_string}秒、ボードのサイズは${last_rows}×${last_cols}で、`
             + `等価時間が3秒以下になる場合、かかった時間が${time_limit_string}秒以下にならなければなりません。）\n\n`
@@ -273,7 +273,7 @@
             write_upload_status();
             const text_github_rest_api_succeeded = {
               zh: `上传成功！\nGitHub REST API返回如下\n${response.status} ${response.statusText}\n${text}`,
-              ja: `アップロードできました！\nGitHub REST APIの戻り値は以下になります\n${response.status} ${response.statusText}\n${text}`,
+              ja: `アップロード成功しました！\nGitHub REST APIの戻り値は以下になります\n${response.status} ${response.statusText}\n${text}`,
               en: `Successfully uploaded! \nGitHub REST API returns as follows\n${response.status} ${response.statusText}\n${text}`
             };
             alert(text_github_rest_api_succeeded[language]);
@@ -294,12 +294,12 @@
       const UI_text = {
         title: {
           zh: "寻找唐可可（调试用）",
-          ja: "唐可可探し（デバッグ用）",
+          ja: "唐可可を探せ（デバッグ用）",
           en: "Find out Tang Keke (Debug)"
         },
         scoreboard: {
           zh: "查看计分板和最高纪录↗",
-          ja: "ランキングボードとハイスコア↗",
+          ja: "スコアボードとハイスコア↗",
           en: "See the scoreboard and top records↗"
         },
         classic_mode: {
@@ -349,12 +349,12 @@
         },
         github: {
           zh: "来GitHub上切克闹（指check it out）吧↗",
-          ja: "GitHubにチェックイットアウト↗",
+          ja: "GitHubでチェケラッ（check it out）↗",
           en: "Check it out on GitHub↗"
         },
         wrong: {
           zh: "不是这个哦，请再试一次。",
-          ja: "間違ったよ。もう一回試してください。",
+          ja: "間違ったよ。もう一度お試しください。",
           en: "Wrong. Please try again."
         },
         give_up: {
