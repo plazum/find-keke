@@ -16,18 +16,35 @@
 1. 准备一张与游戏棋盘中的图片除了角色之外内容完全一致的图片。
    1. 确保其分辨率为75×75。（你可以使用[这个网站](https://www.iloveimg.com/zh-cn/crop-image)对图片进行裁剪。）
    2. 确保图片和原有图片对齐（可以通过在浏览器的两个标签页中打开两张图片并来回切换以确定图片是否对齐）。
-   3. 将文件的基本名（文件名由基本名和扩展名两部分组成）设置为角色的名（即，不包括姓）的罗马字写法（可以参考[https://love-live.fandom.com/wiki/Category:Characters][url]）（对于中文名，使用拼音）。
+   3. 将文件的基本名（文件名由基本名和扩展名两部分组成）设置为角色的名（即，不包括姓）的罗马字写法（可以参考[1][1]、[2][2]、[3][3]、[4][4]）（对于中文名，使用拼音）。
       - 示例：`keke.jpg`；`kotori.jpg`；`you.jpg`
 
-[url]:https://love-live.fandom.com/wiki/Category:Characters
+[1]:https://en.wikipedia.org/wiki/Love_Live!_School_Idol_Project#μ's
+[2]:https://en.wikipedia.org/wiki/Love_Live!_Sunshine!!#Aqours
+[3]:https://en.wikipedia.org/wiki/Love_Live!_Nijigasaki_High_School_Idol_Club#Nijigasaki_High_School_Idol_Club
+[4]:https://en.wikipedia.org/wiki/Love_Live!_Superstar!!#Liella!
 
-2. 在`index.html`和`debug.html`结尾处的字典`image`中追加一个元素，以角色的中文名为键，以图片的文件名为值。
+2. 在`index.html`和`debug.html`结尾处的数组`image`中追加一个元素，按照格式填入图片的文件名和角色的中文名、日文名和日文名的罗马字写法（为了避免格式错误，可以先复制一个已有的元素然后再修改）。
    - 示例：
      ```javascript
-     const image = {
-       南小鸟: "kotori.jpg",
-       渡边曜: "you.jpg",
-     };
+     const image = [
+       {
+         filename: "kotori.jpg",
+         name: {
+           zh: "南小鸟",
+           ja: "南ことり",
+           en: "Minami Kotori"
+         }
+       },
+       {
+         filename: "you.jpg",
+         name: {
+           zh: "渡边曜",
+           ja: "渡辺曜",
+           en: "Watanabe You"
+         }
+       },
+     ];
      ```
 
 3. 测试一下，没有问题的话就可以给本仓库发起拉取请求了！
