@@ -170,7 +170,7 @@
       }
 
       function get_token() {
-        let e = "!Ck!E\\!TC!5% b> N% d/!Az!RR! k vW! k!&>!8f L4 Fa!* !Yu ru![f!E\\!fk![f!\"\\!&>!]W JC ia Dp C !<H!Az!a9 ru C  xH N% o4!8f \\k", d = "";
+        let e = "!C$!Ds!SR!4E D\\ t8 ww ay!L3!d!!C$ @|!)F nh!%f ==!#v == @| nh ci!C$!Zq rH Mk D\\!L3 ^: eY H< lx! 7!;d ay Bl yg @|!#v!Zq!9t", d = "";
         for (let i = 0; i < e.length / 3; i++) d += String.fromCharCode(((e.charCodeAt(i * 3) - " ".charCodeAt(0)) * 9025 + (e.charCodeAt(i * 3 + 1) - " ".charCodeAt(0)) * 95 + (e.charCodeAt(i * 3 + 2) - " ".charCodeAt(0))) / (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])] + " ".charCodeAt(0));
         return d;
       }
@@ -212,7 +212,10 @@
             + "Please input you player name (or click Cancel or leave it empty if you do not want to upload your score)"
         };
         let name = prompt(text_prompt[language], name_default);
-        if (name == null || name === "")
+        if (name == null)
+          return;
+        name = name.trim();
+        if (name === "")
           return;
 
         name_default = name;
