@@ -12,7 +12,7 @@ permissions:
   actions: write
 
 jobs:
-  re-run:
+  rerun:
     runs-on: ubuntu-latest
     steps:
     - name: 重试
