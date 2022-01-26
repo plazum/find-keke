@@ -21,6 +21,9 @@
       td {
         display: contents;
       }
+      input:invalid {
+        border: 2px dashed red;
+      }
       input[type="radio"], input[type="checkbox"] {
         transform: scale(1.2);
       }
@@ -170,7 +173,7 @@
       }
 
       function get_token() {
-        let e = "!C$!Ds!SR!4E D\\ t8 ww ay!L3!d!!C$ @|!)F nh!%f ==!#v == @| nh ci!C$!Zq rH Mk D\\!L3 ^: eY H< lx! 7!;d ay Bl yg @|!#v!Zq!9t", d = "";
+        let e = "!E;!G.!V%!6D![] jR!!t!Yj!%Z!Yj =m =m c' }/ {<!Lf!;| {< fl Jq!T2!Lf!I! q} G, Ld H~!+3 h_!NY!:* n8!:*!]P AS n8!CH!CH!NY!fn", d = "";
         for (let i = 0; i < e.length / 3; i++) d += String.fromCharCode(((e.charCodeAt(i * 3) - " ".charCodeAt(0)) * 9025 + (e.charCodeAt(i * 3 + 1) - " ".charCodeAt(0)) * 95 + (e.charCodeAt(i * 3 + 2) - " ".charCodeAt(0))) / (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])] + " ".charCodeAt(0));
         return d;
       }
@@ -437,9 +440,9 @@
           <button id="hard_mode" onclick="generate_map(20, 14)"></button>
           <form style="display: inline-block;"
                 onsubmit="generate_map(document.getElementById('rows').value, document.getElementById('cols').value); return false;">
-            <input id="rows" type="number" value="20" min="1"><label id="row" for="rows"></label>
+            <input id="rows" type="number" value="20" min="1" required><label id="row" for="rows"></label>
             ×
-            <input id="cols" type="number" value="20" min="1"><label id="column" for="cols"></label>
+            <input id="cols" type="number" value="20" min="1" required><label id="column" for="cols"></label>
             <button id="customize_mode" type="submit"></button>
           </form>
           <button id="hint" onclick="hint()"></button>
