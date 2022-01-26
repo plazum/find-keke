@@ -46,6 +46,7 @@ jobs:
             core.exportVariable("id1", id);
             core.exportVariable("id2", id_list[2]);
             core.exportVariable("id_list_body", id_list_body);
+
             let body = (await github.rest.issues.getComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
