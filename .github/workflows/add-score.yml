@@ -55,7 +55,6 @@ jobs:
       - name: 生成新评论
         run: |
           wget https://raw.githubusercontent.com/plazum/find-keke/master/high-score.py
-          ls -alFR
           python high-score.py
           ls -alFR
       - name: 更新评论
