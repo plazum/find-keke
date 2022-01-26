@@ -36,6 +36,7 @@ jobs:
             console.log(r.workflow_runs[r.total_count - 1]);
             const id = r.workflow_runs[r.total_count - 1].id;
             console.log(id);
+            console.log(r.workflow_runs[r.total_count - 1].run_number);
             await github.request('POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun', {
               owner: context.repo.owner,
               repo: context.repo.repo,
