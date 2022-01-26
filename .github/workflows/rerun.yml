@@ -33,7 +33,6 @@ jobs:
             console.log(r.total_count);
             if (r.total_count === 0)
               return;
-            console.log(r.workflow_runs[r.total_count - 1]);
             const id = r.workflow_runs[r.total_count - 1].id;
             console.log(id);
             console.log(r.workflow_runs[r.total_count - 1].run_number);
