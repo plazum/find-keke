@@ -46,9 +46,8 @@ jobs:
               + " | " + context.payload.inputs.score
               + " | " + context.payload.inputs.time + " |";
             console.log(context.payload.inputs);
-            console.log(context.repo);
             console.log(line);
-            console.log(context);
+            console.log((new TextEncoder()).encode(body).length);
             await io.mkdirP(".idea");
             fs.writeFileSync(".idea/comment.txt", body + "\n" + line);
       - name: Set up Python
@@ -65,6 +64,7 @@ jobs:
           script: |
             const fs = require("fs");
             const body = fs.readFileSync(".idea/processed.txt", "utf8");
+            console.log((new TextEncoder()).encode(body).length);
             console.log(body);
             await github.rest.issues.updateComment({
               owner: context.repo.owner,
