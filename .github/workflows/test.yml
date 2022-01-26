@@ -60,6 +60,7 @@ jobs:
               + " | " + context.payload.inputs.time + " |";
             console.log(context.payload.inputs);
             console.log(line);
+            core.exportVariable("line", line);
             const encoder = new TextEncoder();
             console.log(encoder.encode(body).length);
             body += "\n" + line;
