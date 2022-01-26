@@ -35,7 +35,7 @@ jobs:
         with:
           script: |
             const fs = require("fs");
-            const body = (await github.rest.issues.getComment({
+            let body = (await github.rest.issues.getComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: 996055496
@@ -47,9 +47,12 @@ jobs:
               + " | " + context.payload.inputs.time + " |";
             console.log(context.payload.inputs);
             console.log(line);
-            console.log((new TextEncoder()).encode(body).length);
+            const encoder = new TextEncoder();
+            console.log(encoder.encode(body).length);
+            body += "\n" + line;
+            console.log(encoder.encode(body).length);
             await io.mkdirP(".idea");
-            fs.writeFileSync(".idea/comment.txt", body + "\n" + line);
+            fs.writeFileSync(".idea/comment.txt", body);
       - name: Set up Python
         uses: actions/setup-python@v2
       - name: 生成新评论
