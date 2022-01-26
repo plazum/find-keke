@@ -1,0 +1,44 @@
+# 重试被取消的workflow run
+
+name: 重试更新计分板
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/10 2-16 * * *'
+    - cron: '30 0-1,17-23 * * *'
+
+permissions:
+  actions: write
+
+jobs:
+  re-run:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 重试
+      uses: actions/github-script@v5
+      with:
+        script: |
+          for (let i = 0; i < 3; i++) {
+            if (i !== 0)
+              await new Promise(resolve => setTimeout(resolve, 30000));
+            const r = (await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: "add-score.yml",
+              status: "cancelled",
+              per_page: 100,
+              page: 1
+            })).data;
+            console.log(r.total_count);
+            if (r.total_count === 0)
+              return;
+            console.log(r.workflow_runs[r.total_count - 1]);
+            const id = r.workflow_runs[r.total_count - 1].id;
+            console.log(id);
+            await github.request('POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun', {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: id
+            });
+          }
