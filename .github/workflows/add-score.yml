@@ -35,10 +35,21 @@ jobs:
         with:
           script: |
             const fs = require("fs");
+            const id_list_body = (await github.rest.issues.getComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: 998955288
+            })).data.body;
+            const id_list = id_list_body.split("\n", 3);
+            console.log(id_list);
+            const id = id_list[1];
+            core.exportVariable("id1", id);
+            core.exportVariable("id2", id_list[2]);
+            core.exportVariable("id_list_body", id_list_body);
             let body = (await github.rest.issues.getComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              comment_id: 996055496
+              comment_id: id
             })).data.body;
             const line = "| " + context.payload.inputs.player_name
               + " | " + context.payload.inputs.rows
@@ -47,6 +58,7 @@ jobs:
               + " | " + context.payload.inputs.time + " |";
             console.log(context.payload.inputs);
             console.log(line);
+            core.exportVariable("line", line);
             const encoder = new TextEncoder();
             console.log(encoder.encode(body).length);
             body += "\n" + line;
@@ -66,11 +78,40 @@ jobs:
           script: |
             const fs = require("fs");
             const body = fs.readFileSync(".idea/processed.txt", "utf8");
-            console.log((new TextEncoder()).encode(body).length);
+            const body_length = (new TextEncoder()).encode(body).length;
+            console.log(body_length);
             console.log(body);
-            await github.rest.issues.updateComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              comment_id: 996055496,
-              body: body
-            });
+            if (body_length <= 262144) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: process.env.id1,
+                body: body
+              });
+            } else {
+              const board_num = parseInt(body.split("\n", 500).find(s => s.startsWith("# 计分板"))[5]) + 1;
+              const new_body = "# 计分板" + board_num + "\n| --- | --- | --- | --- | --- |\n" + process.env.line;
+              console.log(new_body);
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: process.env.id2,
+                body: new_body
+              });
+              let id_list_body = process.env.id_list_body.split("\n");
+              id_list_body.splice(1, 1);
+              const new_id_list_body = id_list_body.join("\n");
+              console.log(new_id_list_body);
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: 998955288,
+                body: new_id_list_body
+              });
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: process.env.id1,
+                body: body
+              });
+            }
