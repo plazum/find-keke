@@ -5,7 +5,7 @@ name: 重试更新计分板
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/10 2-16 * * *'
+    - cron: '*/12 2-16 * * *'
     - cron: '30 0-1,17-23 * * *'
 
 permissions:
@@ -19,7 +19,7 @@ jobs:
       uses: actions/github-script@v5
       with:
         script: |
-          for (let i = 0; i < 3; i++) {
+          for (let i = 0; i < 4; i++) {
             if (i !== 0)
               await new Promise(resolve => setTimeout(resolve, 30000));
             const r = (await github.rest.actions.listWorkflowRuns({
