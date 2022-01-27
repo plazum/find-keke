@@ -33,7 +33,7 @@ lines_record_part = lines[start:]
 lines_record_part.sort(key=lambda x: x[6])
 lines[start:] = lines_record_part
 
-board_num = next(l for l in lines if l.startswith("# 计分板"))[5]
+board_num = next(l for l in lines if l.startswith("# 计分板"))[5:]
 # # 生成CSV文件，取消注释以使用
 # with open("scoreboard-" + board_num + ".csv", "w", newline="") as csvfile:
 #     fieldnames = ("玩家名", "行", "列", "用时/秒", "时间", "UNIX时间戳")

@@ -17,6 +17,7 @@
       }
       tr {
         display: flex;
+        background-image: url(image-background.png);
       }
       td {
         display: contents;
@@ -48,6 +49,14 @@
         document.getElementById("bubu").style.display = "";
         document.getElementById("bubu_video").play();
         window.scrollTo({top: 0, behavior: "smooth"});
+      }
+
+      function bainian() {
+        if (typeof document.getElementById("bainian").showModal === "function") {
+          document.getElementById("bainian").showModal();
+        } else {
+          alert("The dialog API is not supported by this browser.");
+        }
       }
 
       function start_timing() {
@@ -143,7 +152,11 @@
             content += "<td>" + (i === x && j === y ?
               '<img id="keke" onclick="finish()" src="keke.jpg">'
               :
-              '<img onclick="show_bubu()" src="' + selected[board[i][j]] + '">'
+              (selected[board[i][j]] === "fu.png" ?
+                '<img onclick="bainian()" src="fu.png"' + (Math.random() > 0.5 ? ' style="transform: rotate(180deg);"' : '') + '>'
+                :
+                '<img onclick="show_bubu()" src="' + selected[board[i][j]] + '">'
+              )
             ) + "</td>";
           }
           content += "</tr>";
@@ -404,7 +417,7 @@
     <div>
       <div id="result" style="display: none;">
         <table id="niubi" style="display: none; margin: 1em auto 1em auto;">
-          <tr>
+          <tr style="background-image: none;">
             <td><h1 id="time1" style="margin: auto;"></h1></td>
             <td><img src="niubi.jpg" width="203" height="103"></td>
           </tr>
@@ -474,6 +487,14 @@
               en: "Watanabe You"
             }
           },
+          {
+            filename: "fu.png",
+            name: {
+              zh: "福",
+              ja: "福",
+              en: "Fu (福)"
+            }
+          },
         ];
         document.getElementById("filter").innerHTML = image.map(
           (val, idx) => '<input id="' + idx + '" type="checkbox" checked onchange="generate_map(last_rows, last_cols)">'
@@ -487,5 +508,11 @@
         generate_map(14, 10);
       </script>
     </div>
+    <dialog id="bainian" style="padding: 0 0 1em 0;">
+      <div style="color: yellow; background-color: red; padding: 0 2em 0 2em; margin-bottom: 1em;">
+        <h1>本游戏开发者恭祝各位玩家新春大吉！</h1>
+      </div>
+      <button style="font-size: 300px;" onclick="document.getElementById('bainian').close()">🧧</button>
+    </dialog>
   </body>
 </html>
