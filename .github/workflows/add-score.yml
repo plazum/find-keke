@@ -40,7 +40,7 @@ jobs:
               repo: context.repo.repo,
               comment_id: 998955288
             })).data.body;
-            const id_list = id_list_body.split("\n", 3);
+            const id_list = id_list_body.split("\r\n", 3);
             console.log(id_list);
             const id = id_list[1];
             core.exportVariable("id1", id);
