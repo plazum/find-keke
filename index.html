@@ -37,9 +37,11 @@
         font-size: large;
       }
     </style>
+    <link rel="icon" href="fu.png">
     <script>
       "use strict";
       let time, d, time_string, last_rows, last_cols, hinted, language = navigator.language.substring(0, 2).toLowerCase();
+      const dialog_supported = "showModal" in document.createElement("dialog");
       console.log("%c ", "display: inline-block; padding: 37.5px 37.5px; background: url(https://zrtech.org/find-keke/keke.jpg) no-repeat;");
       console.log("是真的");
 
@@ -52,10 +54,20 @@
       }
 
       function bainian() {
-        if (typeof document.getElementById("bainian").showModal === "function") {
+        if (dialog_supported) {
           document.getElementById("bainian").showModal();
         } else {
-          alert("The dialog API is not supported by this browser.");
+          document.getElementById("bainian").setAttribute("open", "");
+          document.getElementById("bainian").setAttribute("modal", "");
+        }
+      }
+
+      function close_bainian() {
+        if (dialog_supported) {
+          document.getElementById("bainian").close();
+        } else {
+          document.getElementById("bainian").removeAttribute("open", "");
+          document.getElementById("bainian").removeAttribute("modal", "");
         }
       }
 
@@ -153,7 +165,7 @@
               '<img id="keke" onclick="finish()" src="keke.jpg">'
               :
               (selected[board[i][j]] === "fu.png" ?
-                '<img onclick="bainian()" src="fu.png"' + (Math.random() > 0.5 ? ' style="transform: rotate(180deg);"' : '') + '>'
+                '<img onclick="bainian()" src="fu.png"' + (Math.random() < 0.5 ? ' style="transform: rotate(180deg);"' : '') + '>'
                 :
                 '<img onclick="show_bubu()" src="' + selected[board[i][j]] + '">'
               )
@@ -186,7 +198,7 @@
       }
 
       function get_token() {
-        let e = "!O !Q !a !? !g  p !) !e !- !e  @  @  h !% !# !W !E !#  l  N !_ !W !S  x  J  P  L !3  n !Y !C  t !C !i  D  t !M !M !Y !s ", d = "";
+        let e = "!W|!Z)!k*!F{!qN u%!/V!oB!3n!oB B\" B\" lT!+>!)2!`M!M@!)2 pl Pv!h}!`M!\\5 }U L^ S# Nj!:3 rx!bY!K4 y=!K4!sZ F: y=!Up!Up!bY!~7", d = "";
         for (let i = 0; i < e.length / 3; i++) d += String.fromCharCode(((e.charCodeAt(i * 3) - " ".charCodeAt(0)) * 9025 + (e.charCodeAt(i * 3 + 1) - " ".charCodeAt(0)) * 95 + (e.charCodeAt(i * 3 + 2) - " ".charCodeAt(0))) / (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])] + " ".charCodeAt(0));
         return d;
       }
@@ -468,51 +480,56 @@
       </a>
       <table id="map" style="margin: auto;">
       </table>
-      <script>
-        // 在此处添加角色信息
-        const image = [
-          {
-            filename: "kotori.jpg",
-            name: {
-              zh: "南小鸟",
-              ja: "南ことり",
-              en: "Minami Kotori"
-            }
-          },
-          {
-            filename: "you.jpg",
-            name: {
-              zh: "渡边曜",
-              ja: "渡辺曜",
-              en: "Watanabe You"
-            }
-          },
-          {
-            filename: "fu.png",
-            name: {
-              zh: "福",
-              ja: "福",
-              en: "Fu (福)"
-            }
-          },
-        ];
-        document.getElementById("filter").innerHTML = image.map(
-          (val, idx) => '<input id="' + idx + '" type="checkbox" checked onchange="generate_map(last_rows, last_cols)">'
-            + '<label id="label_' + idx + '" for="' + idx + '"></label>'
-        ).join(" ");
-        if (!["zh", "ja", "en"].includes(language))
-          language = "en";
-        document.getElementById(language).click();
-        set_language(language);
-
-        generate_map(14, 10);
-      </script>
     </div>
     <dialog id="bainian" style="padding: 0 0 1em 0;">
       <div style="color: yellow; background-color: red; padding: 0 2em 0 2em; margin-bottom: 1em;">
         <h1>本游戏开发者恭祝各位玩家新春大吉！</h1>
       </div>
-      <button style="font-size: 300px;" onclick="document.getElementById('bainian').close()">🧧</button>
+      <button style="font-size: 300px;" onclick="close_bainian()">🧧</button>
     </dialog>
+    <div class="backdrop" style="z-index: 10000;"></div>
+    <script>
+      // 在此处添加角色信息
+      const image = [
+        {
+          filename: "kotori.jpg",
+          name: {
+            zh: "南小鸟",
+            ja: "南ことり",
+            en: "Minami Kotori"
+          }
+        },
+        {
+          filename: "you.jpg",
+          name: {
+            zh: "渡边曜",
+            ja: "渡辺曜",
+            en: "Watanabe You"
+          }
+        },
+        {
+          filename: "fu.png",
+          name: {
+            zh: "福",
+            ja: "福",
+            en: "Fu (福)"
+          }
+        },
+      ];
+      document.getElementById("filter").innerHTML = image.map(
+        (val, idx) => '<input id="' + idx + '" type="checkbox" checked onchange="generate_map(last_rows, last_cols)">'
+          + '<label id="label_' + idx + '" for="' + idx + '"></label>'
+      ).join(" ");
+      if (!["zh", "ja", "en"].includes(language))
+        language = "en";
+      document.getElementById(language).click();
+      set_language(language);
+      if (!dialog_supported) {
+        document.head.innerHTML += '<link rel="stylesheet" href="dialog.css">';
+        document.getElementById("bainian").style.zIndex = "10001";
+      }
+
+      generate_map(14, 10);
+    </script>
   </body>
 </html>
