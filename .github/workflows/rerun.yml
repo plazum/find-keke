@@ -19,7 +19,7 @@ jobs:
       uses: actions/github-script@v5
       with:
         script: |
-          for (let i = 0; i < 4; i++) {
+          for (let i = 0; i < 10; i++) {
             if (i !== 0)
               await new Promise(resolve => setTimeout(resolve, 30000));
             const r = (await github.rest.actions.listWorkflowRuns({
