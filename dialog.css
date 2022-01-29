@@ -30,7 +30,7 @@ dialog[modal] {
     max-height: calc(100% - 6px - 2em);
 }
 
-dialog[modal] + .backdrop {
+dialog[modal] ~ .backdrop {
     position: fixed;
     top: 0;
     right: 0;
