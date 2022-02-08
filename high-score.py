@@ -71,10 +71,10 @@ for i in range(len(record_list)):
     high_score_index.add(record_list[i][0][5])
 
 with open(".idea/processed.txt", "w", encoding="utf-8") as f:
-    f.write("# 查看其他计分板：<!--[下一个](#issuecomment-1022028712)、-->[上一个](#issuecomment-996055496)\n")
+    f.write("# 查看其他计分板：<!--[下一个](#issuecomment-1032919981)、-->[上一个](#issuecomment-996055496)\n")
     f.write("<!--\n本计分板已经达到长度限制，无法继续更新。感谢大家的热情支持！\n")
-    f.write("为了供有需要的人更方便地研究数据，在此提供以CSV格式存储的数据，文件编码为GBK，可以直接在Excel中打开："
-            "https://zrtech.org/find-keke/scoreboard-3.csv\n-->\n")
+    f.write("为了供有需要的人更方便地研究数据，在此提供以CSV格式存储的数据，文件编码为GBK，可以直接在Excel中打开：")
+    f.write("https://zrtech.org/find-keke/scoreboard-" + board_num + ".csv\n-->\n")
     f.write("# 最高纪录（计分板" + board_num + "）\n")
     f.write("（按照棋盘大小和用时排序。）\n")
     f.write("（当前最高纪录用粗体表示。）\n")
