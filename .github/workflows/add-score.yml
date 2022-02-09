@@ -52,6 +52,7 @@ jobs:
               repo: context.repo.repo,
               comment_id: id
             })).data.body;
+            core.exportVariable("old_body", body);
             const line = "| " + context.payload.inputs.player_name
               + " | " + context.payload.inputs.rows
               + " | " + context.payload.inputs.cols
@@ -91,7 +92,8 @@ jobs:
               });
             } else {
               const board_num = parseInt(body.split("\n", 500).find(s => s.startsWith("# 计分板")).slice(5)) + 1;
-              const new_body = "# 计分板" + board_num + "\n| --- | --- | --- | --- | --- |\n" + process.env.line;
+              const new_body = "0 " + process.env.id1
+                + "\n# 计分板" + board_num + "\n| --- | --- | --- | --- | --- |\n" + process.env.line;
               console.log(new_body);
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
@@ -99,6 +101,7 @@ jobs:
                 comment_id: process.env.id2,
                 body: new_body
               });
+
               let id_list_body = process.env.id_list_body.split("\n");
               id_list_body.splice(1, 1);
               const new_id_list_body = id_list_body.join("\n");
@@ -110,10 +113,15 @@ jobs:
                 body: new_id_list_body
               });
 
+              let old_body = process.env.old_body.split("\n");
+              old_body[0] = old_body[0].replaceAll(/<!--|-->/g, "");
+              [old_body[1], old_body[2]] = [old_body[2], old_body[1]];
+              const new_old_body = old_body.join("\n");
+              console.log(new_old_body);
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 comment_id: process.env.id1,
-                body: body
+                body: new_old_body
               });
             }
