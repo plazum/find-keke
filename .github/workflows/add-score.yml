@@ -52,7 +52,7 @@ jobs:
               repo: context.repo.repo,
               comment_id: id
             })).data.body;
-            core.exportVariable("old_body", body);
+            fs.writeFileSync("old-body.txt", body);
             const line = "| " + context.payload.inputs.player_name
               + " | " + context.payload.inputs.rows
               + " | " + context.payload.inputs.cols
@@ -113,7 +113,7 @@ jobs:
                 body: new_id_list_body
               });
 
-              let old_body = process.env.old_body.split("\n");
+              let old_body = fs.readFileSync("old-body.txt", "utf8").split("\n");
               old_body[0] = old_body[0].replaceAll(/<!--|-->/g, "");
               [old_body[1], old_body[2]] = [old_body[2], old_body[1]];
               const new_old_body = old_body.join("\n");
