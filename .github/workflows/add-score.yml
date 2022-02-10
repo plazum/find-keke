@@ -116,6 +116,10 @@ jobs:
               let old_body = fs.readFileSync("old-body.txt", "utf8").split("\n");
               old_body[0] = old_body[0].replaceAll(/<!--|-->/g, "").replace("next_id", process.env.id2);
               [old_body[1], old_body[2]] = [old_body[2], old_body[1]];
+              const details_index = old_body.findIndex(s => s.startsWith("# 计分板"));
+              old_body.splice(details_index + 4, 1); // 如果先删前面的，后面的坐标会偏移
+              old_body.splice(details_index + 1, 1);
+              old_body.push("</details>");
               const new_old_body = old_body.join("\n");
               console.log(new_old_body);
               await github.rest.issues.updateComment({
