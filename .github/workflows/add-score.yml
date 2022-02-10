@@ -92,7 +92,7 @@ jobs:
               });
             } else {
               let old_body = fs.readFileSync("old-body.txt", "utf8").split("\n");
-              old_body[0] = old_body[0].replaceAll(/<!--|-->/g, "").replace("next_id", process.env.id2);
+              old_body[0] = old_body[0].replace(/<!--|-->/g, "").replace("next_id", process.env.id2);
               [old_body[1], old_body[2]] = [old_body[2], old_body[1]];
               const details_index = old_body.findIndex(s => s.startsWith("# 计分板")); // 其实是“# 计分板”一行的index
               const board_num = parseInt(old_body[details_index].slice(5)) + 1;
