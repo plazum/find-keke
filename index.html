@@ -247,10 +247,10 @@
           return;
 
         name_default = name;
-        name_safe_for_html = name.replace(/</g, "&lt;").replace(/>/g, "&gt;"); // 防止用户输入HTML代码
-        name = name_safe_for_html.replace(/%/g, "&#37;")
-          .replace(/\\/g, "\\\\")
-          .replace(/\|/g, "\\|"); // 防止用户输入Markdown表格分列符、反斜杠和百分号
+        name_safe_for_html = name.replaceAll("<", "&lt;").replaceAll(">", "&gt;"); // 防止用户输入HTML代码
+        name = name_safe_for_html.replaceAll("%", "&#37;")
+          .replaceAll("\\", "\\\\")
+          .replaceAll("|", "\\|"); // 防止用户输入Markdown表格分列符、反斜杠和百分号
         upload_score.text_uploading = upload_score.text_uploading || {
           zh: "上传中，请稍候……",
           ja: "アップロード中です。お待ちください…",
