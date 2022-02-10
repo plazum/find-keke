@@ -91,9 +91,18 @@ jobs:
                 body: body
               });
             } else {
-              const board_num = parseInt(body.split("\n", 500).find(s => s.startsWith("# 计分板")).slice(5)) + 1;
-              const new_body = "0 " + process.env.id1
-                + "\n# 计分板" + board_num + "\n| --- | --- | --- | --- | --- |\n" + process.env.line;
+              let old_body = fs.readFileSync("old-body.txt", "utf8").split("\n");
+              old_body[0] = old_body[0].replaceAll(/<!--|-->/g, "").replace("next_id", process.env.id2);
+              [old_body[1], old_body[2]] = [old_body[2], old_body[1]];
+              const details_index = old_body.findIndex(s => s.startsWith("# 计分板")); // 其实是“# 计分板”一行的index
+              const board_num = parseInt(old_body[details_index].slice(5)) + 1;
+              old_body.splice(details_index + 4, 1); // 如果先删前面的，后面的坐标会偏移
+              old_body.splice(details_index + 1, 1);
+              old_body.push("</details>");
+              const new_old_body = old_body.join("\n");
+
+              const new_body = "<!--" + process.env.id1
+                + "-->\n# 计分板" + board_num + "\n| --- | --- | --- | --- | --- |\n" + process.env.line;
               console.log(new_body);
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
@@ -113,14 +122,6 @@ jobs:
                 body: new_id_list_body
               });
 
-              let old_body = fs.readFileSync("old-body.txt", "utf8").split("\n");
-              old_body[0] = old_body[0].replaceAll(/<!--|-->/g, "").replace("next_id", process.env.id2);
-              [old_body[1], old_body[2]] = [old_body[2], old_body[1]];
-              const details_index = old_body.findIndex(s => s.startsWith("# 计分板"));
-              old_body.splice(details_index + 4, 1); // 如果先删前面的，后面的坐标会偏移
-              old_body.splice(details_index + 1, 1);
-              old_body.push("</details>");
-              const new_old_body = old_body.join("\n");
               console.log(new_old_body);
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
