@@ -19,7 +19,7 @@ def regex_match(line):
 with open(".idea/comment.txt", "r", encoding="utf-8") as f:
     lines = f.readlines()
 lines = list(map(lambda l: l.removesuffix("\n"), lines))
-high_score_index = set()
+top_score_index = set()
 start = lines.index("| --- | --- | --- | --- | --- |") + 1
 record_dict = {}
 
@@ -34,7 +34,7 @@ lines_record_part.sort(key=lambda x: x[6])
 lines[start:] = lines_record_part
 
 board_num = next(l for l in lines if l.startswith("# 计分板"))[5:]
-# # 生成CSV文件，取消注释以使用
+# # 生成CSV文件，取消注释即可使用
 # with open("scoreboard-" + board_num + ".csv", "w", newline="") as csvfile:
 #     fieldnames = ("玩家名", "行", "列", "用时/秒", "时间", "UNIX时间戳")
 #     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -68,7 +68,7 @@ record_list = [record_dict[map_size] for map_size in sorted(record_dict.keys(), 
 for i in range(len(record_list)):
     record_list[i].sort(key=lambda x: float(x[3]))
     record_list[i] = record_list[i][:ceil(log1p(len(record_list[i])))]
-    high_score_index.add(record_list[i][0][5])
+    top_score_index.add(record_list[i][0][5])
 
 with open(".idea/processed.txt", "w", encoding="utf-8") as f:
     prev_id = re.search(r"\d+", lines[0]).group()
@@ -106,7 +106,7 @@ with open(".idea/processed.txt", "w", encoding="utf-8") as f:
     f.write("| --- | --- | --- | --- | --- |\n")
     for i in range(start, len(lines)):
         record = lines[i]
-        if i in high_score_index:
+        if i in top_score_index:
             line = "| **%s** | **%s** | **%s** | **%s** | **%s** |" % (record[0], record[1], record[2], record[3], record[4])
         else:
             line = "| %s | %s | %s | %s | %s |" % (record[0], record[1], record[2], record[3], record[4])

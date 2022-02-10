@@ -82,6 +82,28 @@ jobs:
             const body = fs.readFileSync(".idea/processed.txt", "utf8");
             const body_length = (new TextEncoder()).encode(body).length;
             console.log(body_length);
+
+            if (body_length >= 240000 && isNaN(process.env.id2)) {
+              const new_comment = (await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: 5,
+                body: "<!-->"
+              })).data;
+              console.log(new_comment);
+
+              let id_list_body = process.env.id_list_body.split("\r\n");
+              id_list_body.splice(2, 0, new_comment.id);
+              const new_id_list_body = id_list_body.join("\r\n");
+              console.log(new_id_list_body);
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: 998955288,
+                body: new_id_list_body
+              });
+            }
+
             console.log(body);
             if (body_length <= 262144) {
               await github.rest.issues.updateComment({
