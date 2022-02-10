@@ -114,7 +114,7 @@ jobs:
               });
 
               let old_body = fs.readFileSync("old-body.txt", "utf8").split("\n");
-              old_body[0] = old_body[0].replaceAll(/<!--|-->/g, "");
+              old_body[0] = old_body[0].replaceAll(/<!--|-->/g, "").replace(/\d+/, process.env.id2);
               [old_body[1], old_body[2]] = [old_body[2], old_body[1]];
               const new_old_body = old_body.join("\n");
               console.log(new_old_body);
