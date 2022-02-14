@@ -34,6 +34,7 @@ lines_record_part.sort(key=lambda x: x[6])
 lines[start:] = lines_record_part
 
 board_num = next(l for l in lines if l.startswith("# 计分板"))[5:]
+
 # # 生成CSV文件，取消注释即可使用
 # with open("scoreboard-" + board_num + ".csv", "w", newline="") as csvfile:
 #     fieldnames = ("玩家名", "行", "列", "用时/秒", "时间", "UNIX时间戳")
@@ -48,6 +49,23 @@ board_num = next(l for l in lines if l.startswith("# 计分板"))[5:]
 #             "时间": record[4],
 #             "UNIX时间戳": record[6]
 #         })
+# exit()
+
+# # 统计各内置玩家名出现次数
+# names = ["涩谷香音", "唐可可", "岚千砂都", "平安名堇", "叶月恋", "圣泽悠奈", "柊摩央",
+#          "澁谷かのん", "嵐千砂都", "平安名すみれ", "葉月恋", "聖澤悠奈",
+#          "Shibuya Kanon", "Tang Keke", "Arashi Chisato", "Heanna Sumire", "Hazuki Ren", "Hijirisawa Yuuna", "Hiiragi Mao"]
+# name_count = {name: 0 for name in names}
+# total = 0
+# for i in range(start, len(lines)):
+#     if lines[i][0] in names:
+#         name_count[lines[i][0]] += 1
+#         total += 1
+# print(name_count)
+# print(" 计分板%s |\n ---: |" % board_num)
+# for name in names:
+#     print("%-18s\t| %d |" % (name, name_count[name]))
+# print(" %d |\n %d |" % (total, len(lines) - start))
 # exit()
 
 for i in range(start, len(lines)):
