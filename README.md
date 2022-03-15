@@ -24,7 +24,7 @@
 [3]:https://en.wikipedia.org/wiki/Love_Live!_Nijigasaki_High_School_Idol_Club#Nijigasaki_High_School_Idol_Club
 [4]:https://en.wikipedia.org/wiki/Love_Live!_Superstar!!#Liella!
 
-2. 在`index.html`和`debug.html`结尾处的数组`image`中追加一个元素，按照格式填入图片的文件名和角色的中文名、日文名和日文名的罗马字写法（为了避免格式错误，可以先复制一个已有的元素然后再修改）。
+2. 在`script-in-body.js`的数组`image`中追加一个元素，按照格式填入图片的文件名和角色的中文名、日文名和日文名的罗马字写法（为了避免格式错误，可以先复制一个已有的元素然后再修改）。
    - 示例：
      ```javascript
      const image = [
