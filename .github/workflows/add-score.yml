@@ -2,7 +2,7 @@
 
 name: 更新计分板
 
-concurrency: updating-scoreboard
+concurrency: update-scoreboard
 
 permissions:
   issues: write
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get Comment
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             const fs = require("fs");
@@ -68,14 +68,14 @@ jobs:
             await io.mkdirP(".idea");
             fs.writeFileSync(".idea/comment.txt", body);
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
       - name: 生成新评论
         run: |
           wget https://raw.githubusercontent.com/plazum/find-keke/master/high-score.py
           python high-score.py
           ls -alFR
       - name: 更新评论
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             const fs = require("fs");
@@ -114,7 +114,7 @@ jobs:
               });
             } else {
               let old_body = fs.readFileSync("old-body.txt", "utf8").split("\n");
-              old_body[0] = old_body[0].replace(/<!--|-->/g, "").replace("next_id", process.env.id2);
+              old_body[0] = old_body[0].replaceAll(/<!--|-->/g, "").replace("next_id", process.env.id2);
               [old_body[1], old_body[2]] = [old_body[2], old_body[1]];
               const details_index = old_body.findIndex(s => s.startsWith("# 计分板")); // 其实是“# 计分板”一行的index
               const board_num = parseInt(old_body[details_index].slice(5)) + 1;

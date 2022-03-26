@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 重试
-      uses: actions/github-script@v5
+      uses: actions/github-script@v6
       with:
         script: |
           for (let i = 0; i < 10; i++) {

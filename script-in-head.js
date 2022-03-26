@@ -1,7 +1,7 @@
 "use strict";
 let time, d, time_string, last_rows, last_cols, hinted, language = navigator.language.substring(0, 2).toLowerCase();
 const dialog_supported = "showModal" in document.createElement("dialog");
-const debug = document.getElementById("script").dataset.debug === "1";
+const debug = JSON.parse(document.getElementById("script").dataset.debug);
 console.log("%c ", "display: inline-block; padding: 37.5px 37.5px; background: url(https://zrtech.org/find-keke/keke.jpg) no-repeat;");
 console.log("是真的");
 
@@ -13,21 +13,21 @@ function show_bubu() {
     window.scrollTo({top: 0, behavior: "smooth"});
 }
 
-function bainian() {
+function open_dialog(id) {
     if (dialog_supported) {
-        document.getElementById("bainian").showModal();
+        document.getElementById(id).showModal();
     } else {
-        document.getElementById("bainian").setAttribute("open", "");
-        document.getElementById("bainian").setAttribute("modal", "");
+        document.getElementById(id).setAttribute("open", "");
+        document.getElementById(id).setAttribute("modal", "");
     }
 }
 
-function close_bainian() {
+function close_dialog(id) {
     if (dialog_supported) {
-        document.getElementById("bainian").close();
+        document.getElementById(id).close();
     } else {
-        document.getElementById("bainian").removeAttribute("open");
-        document.getElementById("bainian").removeAttribute("modal");
+        document.getElementById(id).removeAttribute("open");
+        document.getElementById(id).removeAttribute("modal");
     }
 }
 
@@ -90,7 +90,7 @@ function finish() {
     document.getElementById("scoreboard").style.display = "none";
     setTimeout(() => window.scrollTo({top: 0, behavior: "smooth"}), 1);
     if (!debug && !hinted && in_time_limit)
-        upload_score();
+        upload_score(arguments);
 }
 
 function generate_map(rows, cols) {
@@ -118,10 +118,10 @@ function generate_map(rows, cols) {
         content += "<tr>";
         for (let j = 0; j < cols; j++) {
             content += "<td>" + (i === x && j === y ?
-                '<img id="keke" onclick="finish()" src="keke.jpg">'
+                '<img id="keke" onclick="finish(arguments)" src="keke.jpg">'
                 :
                 (selected[board[i][j]] === "fu.png" ?
-                    '<img onclick="bainian()" src="fu.png"' + (Math.random() < 0.5 ? ' style="transform: rotate(180deg);"' : '') + '>'
+                    '<img onclick="open_dialog(\'bainian\')" src="fu.png"' + (Math.random() < 0.5 ? ' style="transform: rotate(180deg);"' : '') + '>'
                     :
                     '<img onclick="' + (debug ? "finish()" : "show_bubu()") + '" src="' + selected[board[i][j]] + '">'
                 )
@@ -175,7 +175,11 @@ function write_upload_status() {
     document.getElementById("upload_status").innerHTML = text_uploaded[language];
 }
 
-async function upload_score() {
+async function upload_score(arg) {
+    const trusted = arg.length > 0 && arg[0].length > 0 && arg[0][0].isTrusted;
+    if (!trusted)
+        return console.log("检测到作弊");
+
     const time_limit = Math.floor(300 * last_rows * last_cols / (14 * 10));
     const time_limit_string = time_to_string(time_limit);
     const text_prompt = {
