@@ -322,10 +322,10 @@ const UI_text = {
         ja: "列",
         en: "Columns"
     },
-    customize_mode: {
+    custom_mode: {
         zh: "自定义模式",
-        ja: "カスタマイズモード",
-        en: "Customize Mode"
+        ja: "カスタムモード",
+        en: "Custom Mode"
     },
     hint: {
         zh: "来点提示",
@@ -356,22 +356,26 @@ const UI_text = {
         zh: "累了，我要重开（指游戏）",
         ja: "もういい、やり直しだ",
         en: "Give Up and New Game"
+    },
+    add_image: {
+        zh: "添加自定义图片",
+        ja: "カスタム画像を追加する",
+        en: "Add custom image"
     }
 };
+const UI_element_id = Object.keys(UI_text).filter(val => val !== "title" && val !== "debug_link");
+const UI_element_id2 = ["scoreboard", "add_image"];
 
 function set_language(value) {
     language = value;
 
-    const UI = [
-        "scoreboard", "classic_mode", "extended_mode", "hard_mode",
-        "row", "column", "customize_mode", "hint",
-        "new_game", "github", "wrong", "give_up"
-    ];
     document.title = UI_text.title[language];
-    for (let i = 0; i < UI.length; i++) {
-        document.getElementById(UI[i]).innerHTML = UI_text[UI[i]][language];
+    for (let id of UI_element_id) {
+        document.getElementById(id).innerHTML = UI_text[id][language];
     }
-    document.getElementById("scoreboard2").innerHTML = UI_text.scoreboard[language];
+    for (let id of UI_element_id2) {
+        document.getElementById(id + "2").innerHTML = UI_text[id][language];
+    }
     if (!debug)
         document.getElementById("debug_link").title = UI_text.debug_link[language];
     for (let i = 0; i < image.length; i++) {

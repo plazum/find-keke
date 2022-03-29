@@ -20,7 +20,8 @@
         background-image: url(image-background.png);
       }
       td {
-        display: contents;
+        display: flex;
+        padding: 0;
       }
       input:invalid {
         border: 2px dashed red;
@@ -45,16 +46,16 @@
   </head>
   <body>
     <div>
-      <div id="result">
-        <table id="niubi" style="margin: 1em auto 1em auto;">
+      <div id="result" style="display: none;">
+        <table id="niubi" style="margin: 1em auto;">
           <tr style="background-image: none;">
             <td><h1 id="time1" style="margin: auto;"></h1></td>
             <td><img src="niubi.jpg" width="203" height="103"></td>
           </tr>
         </table>
         <h1 id="time2"></h1>
-        <h1 id="upload_status"></h1>
-        <button id="new_game" style="margin: 0 auto 0 auto; font-size: x-large;" onclick="generate_map(last_rows, last_cols)"></button>
+        <h2 id="upload_status" style="display: none;"></h2>
+        <button id="new_game" style="margin: 0 auto; font-size: x-large;" onclick="generate_map(last_rows, last_cols)"></button>
         <a id="scoreboard2" class="link" style="margin: 1em auto 0.5em auto; font-size: larger;" href="https://github.com/plazum/find-keke/issues/5" target="_blank"></a>
         <a id="github" class="link" style="margin: 0 auto 1.5em auto;" href="https://github.com/plazum/find-keke" target="_blank"></a>
         <video id="good_video" style="margin: auto;" src="good.mp4" loop></video>
@@ -65,13 +66,16 @@
         <video id="bubu_video" style="margin: auto;" src="bubu.mp4" loop></video>
       </div>
       <div style="margin: 1.5em auto 1.25em auto; font-size: larger;">
-        <div style="display: block; margin-bottom: 0.5em;">
+        <div style="display: block; margin-bottom: 0.75em;">
           <label><input id="zh" type="radio" name="language" onchange="set_language('zh')">中文</label>
           <label><input id="ja" type="radio" name="language" onchange="set_language('ja')">日本語</label>
           <label><input id="en" type="radio" name="language" onchange="set_language('en')">English</label>
         </div>
-        <a id="scoreboard" class="link" style="margin: 0 auto 0.5em auto;" href="https://github.com/plazum/find-keke/issues/5" target="_blank"></a>
-        <div id="filter" style="display: block; margin-bottom: 0.75em;"></div>
+        <a id="scoreboard" class="link" style="margin: 0 auto 0.75em auto;" href="https://github.com/plazum/find-keke/issues/5" target="_blank"></a>
+        <div style="display: block; margin-bottom: 0.75em;">
+          <span id="filter"></span>
+          <button id="add_image" onclick="open_dialog('add_image3')" hidden></button>
+        </div>
         <div style="display: block;">
           <button id="classic_mode" onclick="generate_map(14, 10)"></button>
           <button id="extended_mode" onclick="generate_map(14, 14)"></button>
@@ -81,7 +85,7 @@
             <input id="rows" type="number" value="20" min="1" required><label id="row" for="rows"></label>
             ×
             <input id="cols" type="number" value="20" min="1" required><label id="column" for="cols"></label>
-            <button id="customize_mode" type="submit"></button>
+            <button id="custom_mode" type="submit"></button>
           </form>
           <button id="hint" onclick="hint()"></button>
         </div>
@@ -94,10 +98,13 @@
       <table id="map" style="margin: auto;"></table>
     </div>
     <dialog id="bainian" style="padding: 0 0 1em 0;">
-      <div style="color: yellow; background-color: red; padding: 0 2em 0 2em; margin-bottom: 1em;">
+      <div style="color: yellow; background-color: red; padding: 0 2em; margin-bottom: 1em;">
         <h1>本游戏开发者恭祝各位玩家新春大吉！</h1>
       </div>
       <button style="font-size: 300px;" onclick="close_dialog('bainian')">🧧</button>
+    </dialog>
+    <dialog id="add_image3">
+      <h2 id="add_image2"></h2>
     </dialog>
     <script src="script-in-body.js"></script>
   </body>
