@@ -11,17 +11,22 @@
       }
       div {
         display: grid;
+        justify-items: center;
       }
-      table {
+      table#map {
         border-collapse: collapse;
       }
-      tr {
-        display: flex;
+      tr:not(.default) {
         background-image: url(image-background.png);
       }
-      td {
-        display: flex;
+      td:not(.default) {
         padding: 0;
+      }
+      img {
+        display: block;
+      }
+      input {
+        font-size: large;
       }
       input:invalid {
         border: 2px dashed red;
@@ -31,8 +36,7 @@
       }
       input[type="number"] {
         width: 3em;
-        font-size: large;
-        margin-right: 0.25em;
+        margin-right: 0.20em;
       }
       button {
         font-size: large;
@@ -48,16 +52,16 @@
     <div>
       <div id="result" style="display: none;">
         <table id="niubi" style="margin: 1em auto;">
-          <tr style="background-image: none;">
-            <td><h1 id="time1" style="margin: auto;"></h1></td>
-            <td><img src="niubi.jpg" width="203" height="103"></td>
+          <tr class="default">
+            <td class="default"><h1 id="time1"></h1></td>
+            <td class="default"><img src="niubi.jpg" width="203" height="103"></td>
           </tr>
         </table>
         <h1 id="time2"></h1>
         <h2 id="upload_status" style="display: none;"></h2>
-        <button id="new_game" style="margin: 0 auto; font-size: x-large;" onclick="generate_map(last_rows, last_cols)"></button>
+        <button id="new_game" style="font-size: x-large;" onclick="generate_map(last_rows, last_cols)"></button>
         <a id="scoreboard2" class="link" style="margin: 1em auto 0.5em auto; font-size: larger;" href="https://github.com/plazum/find-keke/issues/5" target="_blank"></a>
-        <a id="github" class="link" style="margin: 0 auto 1.5em auto;" href="https://github.com/plazum/find-keke" target="_blank"></a>
+        <a id="github" class="link" style="margin-bottom: 1.5em;" href="https://github.com/plazum/find-keke" target="_blank"></a>
         <video id="good_video" style="margin: auto;" src="good.mp4" loop></video>
       </div>
       <div id="bubu">
@@ -66,17 +70,18 @@
         <video id="bubu_video" style="margin: auto;" src="bubu.mp4" loop></video>
       </div>
       <div style="margin: 1.5em auto 1.25em auto; font-size: larger;">
-        <div style="display: block; margin-bottom: 0.75em;">
+        <span style=" margin-bottom: 0.75em;">
           <label><input id="zh" type="radio" name="language" onchange="set_language('zh')">中文</label>
           <label><input id="ja" type="radio" name="language" onchange="set_language('ja')">日本語</label>
           <label><input id="en" type="radio" name="language" onchange="set_language('en')">English</label>
-        </div>
-        <a id="scoreboard" class="link" style="margin: 0 auto 0.75em auto;" href="https://github.com/plazum/find-keke/issues/5" target="_blank"></a>
-        <div style="display: block; margin-bottom: 0.75em;">
+        </span>
+        <a id="scoreboard" class="link" style="margin-bottom: 0.75em;" href="https://github.com/plazum/find-keke/issues/5" target="_blank"></a>
+        <span style=" margin-bottom: 0.75em;">
           <span id="filter"></span>
-          <button id="add_image" onclick="open_dialog('add_image3')" hidden></button>
-        </div>
-        <div style="display: block;">
+          <!--<button id="add_image" onclick="open_dialog('add_image3')"></button>-->
+          <button onclick="open_dialog('yugao')">预告</button>
+        </span>
+        <span>
           <button id="classic_mode" onclick="generate_map(14, 10)"></button>
           <button id="extended_mode" onclick="generate_map(14, 14)"></button>
           <button id="hard_mode" onclick="generate_map(20, 14)"></button>
@@ -88,11 +93,11 @@
             <button id="custom_mode" type="submit"></button>
           </form>
           <button id="hint" onclick="hint()"></button>
-        </div>
+        </span>
       </div>
-      <a id="debug_link" href="debug" style="display: contents;" title="" target="_blank">
-        <div id="banner" style="margin: auto; background-image: url(banner-extension.jpg);">
-          <img style="margin: auto;" src="banner.jpg">
+      <a id="debug_link" href="debug" title="" target="_blank">
+        <div id="banner" style="background-image: url(banner-extension.jpg);">
+          <img src="banner.jpg">
         </div>
       </a>
       <table id="map" style="margin: auto;"></table>
@@ -103,8 +108,40 @@
       </div>
       <button style="font-size: 300px;" onclick="close_dialog('bainian')">🧧</button>
     </dialog>
-    <dialog id="add_image3">
+    <!--<dialog id="add_image3" style="font-size: larger;">
       <h2 id="add_image2"></h2>
+      <form onsubmit="return false;">
+        <table style="border-spacing: 1em;">
+          <tr class="default">
+            <td class="default" style="text-align: left;">
+              <input id="radio_url" type="radio" name="custom_image" required onchange="set_input_enabled('url')">
+              <label for="radio_url">URL</label>
+            </td>
+            <td class="default">
+              <input id="url" type="url" style="width: 100%; box-sizing: border-box;" value="fu.jpg" required disabled>
+            </td>
+          </tr>
+          <tr class="default">
+            <td class="default">
+              <input id="radio_file" type="radio" name="custom_image" required onchange="set_input_enabled('file')">
+              <label id="label_file" for="radio_file"></label>
+            </td>
+            <td class="default">
+              <input id="file" type="file" accept="image/*" required disabled>
+            </td>
+          </tr>
+        </table>
+        <span style="display: block; margin: 0.5em auto;">
+          <button id="cancel" type="button" onclick="close_dialog('add_image3')"></button>
+          <button id="OK" type="submit"></button>
+        </span>
+      </form>
+    </dialog>-->
+    <dialog id="yugao" style="font-size: larger;">
+      <h2>新功能即将推出</h2>
+      <button style="font-size: larger;" onclick="close_dialog('yugao')">真的吗？太好了</button>
+      <br><br>
+      <button style="font-size: larger;" onclick="close_dialog('yugao')">可是今天是愚人节……</button>
     </dialog>
     <script src="script-in-body.js"></script>
   </body>

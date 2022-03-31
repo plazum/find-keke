@@ -45,4 +45,7 @@ if (!dialog_supported) {
     document.write('<div class="backdrop" style="z-index: 10000;"></div>');
 }
 
+// const base_url = location.href.substring(0, location.href.lastIndexOf(debug ? "/debug" : "/"));
+// document.getElementById("url").value = base_url + "/fu.jpg";
+
 generate_map(14, 10);

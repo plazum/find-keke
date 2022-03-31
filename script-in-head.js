@@ -356,15 +356,30 @@ const UI_text = {
         zh: "累了，我要重开（指游戏）",
         ja: "もういい、やり直しだ",
         en: "Give Up and New Game"
-    },
+    }/*,
     add_image: {
         zh: "添加自定义图片",
-        ja: "カスタム画像を追加する",
+        ja: "カスタム画像を追加",
         en: "Add custom image"
-    }
+    },
+    label_file: {
+        zh: "本地图片",
+        ja: "ローカル画像",
+        en: "Local image"
+    },
+    cancel: {
+        zh: "取消",
+        ja: "キャンセル",
+        en: "Cancel"
+    },
+    OK: {
+        zh: "确定",
+        ja: "OK",
+        en: "OK"
+    }*/
 };
 const UI_element_id = Object.keys(UI_text).filter(val => val !== "title" && val !== "debug_link");
-const UI_element_id2 = ["scoreboard", "add_image"];
+const UI_element_id2 = ["scoreboard", "add_image"].filter(val => val in UI_text);
 
 function set_language(value) {
     language = value;
@@ -390,4 +405,9 @@ function set_language(value) {
         write_result();
     if (document.getElementById("upload_status").style.display !== "none")
         write_upload_status();
+}
+
+function set_input_enabled(id){
+    document.getElementById("url").disabled = id !== "url";
+    document.getElementById("file").disabled = id !== "file";
 }
