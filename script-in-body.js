@@ -1,6 +1,6 @@
 "use strict";
 // 在此处添加角色信息
-const image = [
+let images = [
     {
         filename: "kotori.jpg",
         name: {
@@ -26,7 +26,7 @@ const image = [
         }
     },
 ];
-document.getElementById("filter").innerHTML = image.map(
+document.getElementById("filter").innerHTML = images.map(
     (val, idx) => '<input id="' + idx + '" type="checkbox"' + (val.filename !== "fu.png" ? ' checked' : '')
         + ' onchange="generate_map(last_rows, last_cols)">'
         + '<label id="label_' + idx + '" for="' + idx + '"></label>'
@@ -42,10 +42,14 @@ set_language(language);
 if (!dialog_supported) {
     document.head.insertAdjacentHTML("beforeend", '<link rel="stylesheet" href="dialog.css">');
     document.getElementById("bainian").style.zIndex = "10001";
+    document.getElementById("add_image3").style.zIndex = "10001";
     document.write('<div class="backdrop" style="z-index: 10000;"></div>');
 }
 
-// const base_url = location.href.substring(0, location.href.lastIndexOf(debug ? "/debug" : "/"));
-// document.getElementById("url").value = base_url + "/fu.jpg";
+const preview_img_initial = document.getElementById('preview_img').outerHTML;
+const base_url = location.href.substring(0, location.href.lastIndexOf(debug ? "/debug" : "/") + 1);
+const example_images = ["fu.jpg", "keke-big.jpg", "good.gif", "bubu.gif"];
+document.getElementById("example_url").innerHTML = example_images.map(val => "<option>" + base_url + val + "</option>").join("");
+document.getElementById("name").value = UI_text.example[language];
 
 generate_map(14, 10);

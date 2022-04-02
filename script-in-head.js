@@ -48,7 +48,7 @@ function write_result() {
                 ja: `${debug ? "（デバッグ用）" : ""}おめでとうございます！三秒以内で唐可可を見つけました。${time_string}秒かかりました。`,
                 en: `${debug ? "(Debug) " : ""}Congratulations! You have found Tang Keke within three seconds. ${time_string} seconds taken.`
             };
-            document.getElementById("time1").innerHTML = text1[language];
+            document.getElementById("time1").textContent = text1[language];
             document.getElementById("niubi").style.display = "";
         } else {
             const text2 = {
@@ -56,7 +56,7 @@ function write_result() {
                 ja: `${debug ? "（デバッグ用）" : ""}おめでとうございます！唐可可を見つけました。${time_string}秒かかりました。`,
                 en: `${debug ? "(Debug) " : ""}Congratulations! You have found Tang Keke. ${time_string} seconds taken.`
             };
-            document.getElementById("time2").innerHTML = text2[language];
+            document.getElementById("time2").textContent = text2[language];
             document.getElementById("time2").style.display = "";
         }
     } else {
@@ -65,7 +65,7 @@ function write_result() {
             ja: `${debug ? "（デバッグ用）" : ""}ヒントを使って、${time_string}秒でようやく唐可可を見つけました。`,
             en: `${debug ? "(Debug) " : ""}You have finally found Tang Keke after hinted at the ${time_string}th second.`
         };
-        document.getElementById("time2").innerHTML = text3[language];
+        document.getElementById("time2").textContent = text3[language];
         document.getElementById("time2").style.display = "";
     }
 }
@@ -88,7 +88,7 @@ function finish() {
     document.getElementById("keke").style.filter = "drop-shadow(2px 4px 6px black)";
     document.getElementById("hint").disabled = true;
     document.getElementById("scoreboard").style.display = "none";
-    setTimeout(() => window.scrollTo({top: 0, behavior: "smooth"}), 1);
+    window.scrollTo({top: 0, behavior: "smooth"});
     if (!debug && !hinted && in_time_limit)
         upload_score(arguments);
 }
@@ -98,9 +98,9 @@ function generate_map(rows, cols) {
     let content = "";
     let selected = [];
 
-    for (let i = 0; i < image.length; i++) {
+    for (let i = 0; i < images.length; i++) {
         if (document.getElementById(i.toString()).checked) {
-            selected.push(image[i].filename);
+            selected.push(images[i]);
         }
     }
     if (selected.length === 0)
@@ -120,10 +120,12 @@ function generate_map(rows, cols) {
             content += "<td>" + (i === x && j === y ?
                 '<img id="keke" onclick="finish(arguments)" src="keke.jpg">'
                 :
-                (selected[board[i][j]] === "fu.png" ?
+                (selected[board[i][j]].filename === "fu.png" ?
                     '<img onclick="open_dialog(\'bainian\')" src="fu.png"' + (Math.random() < 0.5 ? ' style="transform: rotate(180deg);"' : '') + '>'
                     :
-                    '<img onclick="' + (debug ? "finish()" : "show_bubu()") + '" src="' + selected[board[i][j]] + '">'
+                    '<img onclick="' + (debug ? "finish()" : "show_bubu()") + '"'
+                        + (selected[board[i][j]].fit ? ' width="75" height="75" style="object-fit: ' + selected[board[i][j]].fit + ';"' : '')
+                        + ' src="' + selected[board[i][j]].filename + '">'
                 )
             ) + "</td>";
         }
@@ -154,7 +156,7 @@ function hint() {
 }
 
 function get_token() {
-    let e = "!7(!8g!F%!)j!Va qO s/!K$!NC lP!<' Vt!7( Gw d2!SB ym ]S ~l qO!7( `r jp!2)!P#!DE!!L A9!:G [s DX tn!DE!F% <: Gw!:G!!L!Va!8g", d = "";
+    let e = "!8W!:9!Gf!+*!XW rR t4!Lk!P/ mM!=\\ WW!8W HH e%!U4 zz ^>!!  rR!8W aa kk!3R!Qp!F%!\"a Aa!;z \\\\ E% uu!F%!Gf <\\ HH!;z!\"a!XW!:9", d = "";
     for (let i = 0; i < e.length / 3; i++) d += String.fromCharCode(((e.charCodeAt(i * 3) - " ".charCodeAt(0)) * 9025 + (e.charCodeAt(i * 3 + 1) - " ".charCodeAt(0)) * 95 + (e.charCodeAt(i * 3 + 2) - " ".charCodeAt(0))) / (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])] + " ".charCodeAt(0));
     return d;
 }
@@ -216,7 +218,7 @@ async function upload_score(arg) {
         ja: "アップロード中です。お待ちください…",
         en: "Please wait while uploading…"
     }; // 模拟静态局部变量
-    document.getElementById("upload_status").innerHTML = upload_score.text_uploading[language];
+    document.getElementById("upload_status").textContent = upload_score.text_uploading[language];
     document.getElementById("upload_status").style.display = "";
     // 有些人的系统有bug，会把“中国标准时间”写成“北美中部标准时间”，推测是因为它们的缩写都是CST
     let d_string = d.toString();
@@ -282,7 +284,7 @@ async function upload_score(arg) {
             retry = confirm(text_github_rest_api_failed[language]);
         }
     } while (retry);
-    if (document.getElementById("upload_status").innerHTML === upload_score.text_uploading[language])
+    if (document.getElementById("upload_status").textContent === upload_score.text_uploading[language])
         document.getElementById("upload_status").style.display = "none";
 }
 
@@ -356,16 +358,56 @@ const UI_text = {
         zh: "累了，我要重开（指游戏）",
         ja: "もういい、やり直しだ",
         en: "Give Up and New Game"
-    }/*,
+    },
     add_image: {
         zh: "添加自定义图片",
         ja: "カスタム画像を追加",
         en: "Add custom image"
     },
+    disclaimer: {
+        zh: "图片仅在本地使用，不会上传到服务器。",
+        ja: "画像はローカルで使うだけで、アップロードしない。",
+        en: "Images are used locally and not uploaded to the server."
+    },
+    label_name: {
+        zh: "名称",
+        ja: "名前",
+        en: "Name"
+    },
+    example: {
+        zh: "示例",
+        ja: "例",
+        en: "Example"
+    },
     label_file: {
         zh: "本地图片",
         ja: "ローカル画像",
         en: "Local image"
+    },
+    fit: {
+        zh: "图片填充方式",
+        ja: "画像埋める方",
+        en: "Image fitting manner"
+    },
+    label_contain: {
+        zh: "缩小适应",
+        ja: "縮小して適応",
+        en: "Scale down to fit"
+    },
+    label_fill: {
+        zh: "拉伸填充",
+        ja: "引き伸ばして埋める",
+        en: "Stretch to fill"
+    },
+    label_cover: {
+        zh: "放大填充",
+        ja: "拡大して埋める",
+        en: "Scale up to fill"
+    },
+    preview: {
+        zh: "预览",
+        ja: "プレビュー",
+        en: "Preview"
     },
     cancel: {
         zh: "取消",
@@ -376,26 +418,30 @@ const UI_text = {
         zh: "确定",
         ja: "OK",
         en: "OK"
-    }*/
+    }
 };
-const UI_element_id = Object.keys(UI_text).filter(val => val !== "title" && val !== "debug_link");
-const UI_element_id2 = ["scoreboard", "add_image"].filter(val => val in UI_text);
+const UI_text_exclusion = ["title", "debug_link", "example"];
+const UI_element_id = Object.keys(UI_text).filter(val => !UI_text_exclusion.includes(val));
+const UI_element_id2 = ["scoreboard", "add_image"];
 
 function set_language(value) {
     language = value;
 
     document.title = UI_text.title[language];
     for (let id of UI_element_id) {
-        document.getElementById(id).innerHTML = UI_text[id][language];
+        document.getElementById(id).textContent = UI_text[id][language];
     }
     for (let id of UI_element_id2) {
-        document.getElementById(id + "2").innerHTML = UI_text[id][language];
+        document.getElementById(id + "2").textContent = UI_text[id][language];
+    }
+    for (let i = 0; i < images.length; i++) {
+        document.getElementById("label_" + i).textContent = images[i].name[language];
     }
     if (!debug)
         document.getElementById("debug_link").title = UI_text.debug_link[language];
-    for (let i = 0; i < image.length; i++) {
-        document.getElementById("label_" + i).innerHTML = image[i].name[language];
-    }
+    if (Object.values(UI_text.example).includes(document.getElementById("name").value))
+        document.getElementById("name").value = UI_text.example[language];
+
     name_default = location.href.startsWith("https://zrtech.org/") ?
         placeholder[language][Math.floor(Math.random() * placeholder.zh.length)]
         :
@@ -407,7 +453,75 @@ function set_language(value) {
         write_upload_status();
 }
 
-function set_input_enabled(id){
+let url = "";
+let blob_url = "";
+
+function set_input_enabled(id) {
     document.getElementById("url").disabled = id !== "url";
     document.getElementById("file").disabled = id !== "file";
+    preview_image(false);
+}
+
+function preview_image(generate_blob = false) {
+    switch (document.querySelector("input[name='custom_image']:checked").id.substring(6)) {
+        case "url":
+            url = document.getElementById("url").value.replace(base_url, "");
+            set_preview_img(url);
+            break;
+        case "file":
+            if (generate_blob && document.getElementById("file").files.length > 0)
+                blob_url = URL.createObjectURL(document.getElementById("file").files[0]);
+            set_preview_img(blob_url);
+            break;
+    }
+}
+
+function set_preview_img(src) {
+    // 如果将<img>的src属性设置为空字符串，浏览器不会把图片显示为空，而是将src设置为网页所在的路径或网页本身的URL，图片呈现裂开状态，
+    // 所以为了除去图片的src属性，直接重置<img>标签的HTML
+    if (src === "") {
+        document.getElementById('preview_img').outerHTML = preview_img_initial;
+        set_object_fit(document.querySelector("input[name='fit']:checked").id);
+    } else {
+        document.getElementById('preview_img').src = src;
+    }
+}
+
+function set_object_fit(value) {
+    document.getElementById("preview_img").style.objectFit = value;
+}
+
+function add_custom_image() {
+    let src;
+    switch (document.querySelector("input[name='custom_image']:checked").id.substring(6)) {
+        case "url":
+            src = url;
+            break;
+        case "file":
+            src = blob_url;
+            break;
+    }
+    const name = document.getElementById("name").value;
+    const new_image = {
+        filename: src,
+        name: {
+            zh: name,
+            ja: name,
+            en: name
+        },
+        fit: document.querySelector("input[name='fit']:checked").id
+    };
+    const number = images.length;
+    images.push(new_image);
+
+    document.getElementById("filter").insertAdjacentHTML("beforeend",
+        ' <input id="' + number + '" type="checkbox" checked onchange="generate_map(last_rows, last_cols)">'
+        + '<label id="label_' + number + '" for="' + number + '">' + name + '</label>');
+    close_dialog("add_image3");
+    document.getElementById("url").value = "";
+    document.getElementById("file").value = "";
+    set_preview_img("");
+    url = blob_url = "";
+
+    generate_map(last_rows, last_cols);
 }

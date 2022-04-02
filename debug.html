@@ -44,6 +44,15 @@
       .link::after {
         content: "↗";
       }
+      #name, #url, #file {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      #cancel, #OK {
+        width: 20%;
+        height: 2.0em;
+        font-size: inherit;
+      }
     </style>
     <link rel="icon" href="keke-big.jpg">
     <script id="script" src="script-in-head.js" data-debug="true"></script>
@@ -78,10 +87,9 @@
         <a id="scoreboard" class="link" style="margin-bottom: 0.75em;" href="https://github.com/plazum/find-keke/issues/5" target="_blank"></a>
         <span style=" margin-bottom: 0.75em;">
           <span id="filter"></span>
-          <!--<button id="add_image" onclick="open_dialog('add_image3')"></button>-->
-          <button onclick="open_dialog('yugao')">预告</button>
+          <button id="add_image" onclick="open_dialog('add_image3')"></button>
         </span>
-        <span>
+        <div style="display: block;">
           <button id="classic_mode" onclick="generate_map(14, 10)"></button>
           <button id="extended_mode" onclick="generate_map(14, 14)"></button>
           <button id="hard_mode" onclick="generate_map(20, 14)"></button>
@@ -93,7 +101,7 @@
             <button id="custom_mode" type="submit"></button>
           </form>
           <button id="hint" onclick="hint()"></button>
-        </span>
+        </div>
       </div>
       <a id="debug_link" href="debug" title="" target="_blank">
         <div id="banner" style="background-image: url(banner-extension.jpg);">
@@ -108,40 +116,56 @@
       </div>
       <button style="font-size: 300px;" onclick="close_dialog('bainian')">🧧</button>
     </dialog>
-    <!--<dialog id="add_image3" style="font-size: larger;">
+    <dialog id="add_image3" style="font-size: larger;">
       <h2 id="add_image2"></h2>
-      <form onsubmit="return false;">
+      <span id="disclaimer" style="font-size: large;"></span>
+      <form onsubmit="add_custom_image(); return false;">
         <table style="border-spacing: 1em;">
           <tr class="default">
             <td class="default" style="text-align: left;">
-              <input id="radio_url" type="radio" name="custom_image" required onchange="set_input_enabled('url')">
-              <label for="radio_url">URL</label>
+              <label id="label_name" for="name"></label>
             </td>
             <td class="default">
-              <input id="url" type="url" style="width: 100%; box-sizing: border-box;" value="fu.jpg" required disabled>
+              <input id="name" required>
+            </td>
+            <td rowspan="4">
+              <figure>
+                <img id="preview_img" width="75" height="75" style="display: inline; object-fit: contain; background-image: url(image-background.png);">
+                <figcaption id="preview"></figcaption>
+              </figure>
             </td>
           </tr>
           <tr class="default">
-            <td class="default">
-              <input id="radio_file" type="radio" name="custom_image" required onchange="set_input_enabled('file')">
-              <label id="label_file" for="radio_file"></label>
+            <td class="default" style="text-align: left;">
+              <input id="radio_url" type="radio" name="custom_image" required onchange="set_input_enabled('url')"><label for="radio_url">URL</label>
             </td>
             <td class="default">
-              <input id="file" type="file" accept="image/*" required disabled>
+              <input id="url" type="url" list="example_url" required disabled onchange="preview_image()">
+              <datalist id="example_url"></datalist>
+            </td>
+          </tr>
+          <tr class="default">
+            <td class="default" style="text-align: left;">
+              <input id="radio_file" type="radio" name="custom_image" required onchange="set_input_enabled('file')"><label id="label_file" for="radio_file"></label>
+            </td>
+            <td class="default">
+              <input id="file" type="file" accept="image/*" required disabled onchange="preview_image(true)">
+            </td>
+          </tr>
+          <tr class="default">
+            <td class="default" id="fit" style="text-align: left;"></td>
+            <td class="default">
+              <input id="contain" type="radio" name="fit" onchange="set_object_fit('contain')" checked><label id="label_contain" for="contain"></label>
+              <input id="fill" type="radio" name="fit" onchange="set_object_fit('fill')"><label id="label_fill" for="fill"></label>
+              <input id="cover" type="radio" name="fit" onchange="set_object_fit('cover')"><label id="label_cover" for="cover"></label>
             </td>
           </tr>
         </table>
-        <span style="display: block; margin: 0.5em auto;">
+        <span style="display: flex; margin: 0.5em auto; justify-content: space-evenly;">
           <button id="cancel" type="button" onclick="close_dialog('add_image3')"></button>
           <button id="OK" type="submit"></button>
         </span>
       </form>
-    </dialog>-->
-    <dialog id="yugao" style="font-size: larger;">
-      <h2>新功能即将推出</h2>
-      <button style="font-size: larger;" onclick="close_dialog('yugao')">真的吗？太好了</button>
-      <br><br>
-      <button style="font-size: larger;" onclick="close_dialog('yugao')">可是今天是愚人节……</button>
     </dialog>
     <script src="script-in-body.js"></script>
   </body>

@@ -27,23 +27,23 @@
 2. 在`script-in-body.js`的数组`image`中追加一个元素，按照格式填入图片的文件名和角色的中文名、日文名和日文名的罗马字写法（为了避免格式错误，可以先复制一个已有的元素然后再修改）。
    - 示例：
      ```javascript
-     const image = [
-       {
-         filename: "kotori.jpg",
-         name: {
-           zh: "南小鸟",
-           ja: "南ことり",
-           en: "Minami Kotori"
-         }
-       },
-       {
-         filename: "you.jpg",
-         name: {
-           zh: "渡边曜",
-           ja: "渡辺曜",
-           en: "Watanabe You"
-         }
-       },
+     let images = [
+         {
+             filename: "kotori.jpg",
+             name: {
+                 zh: "南小鸟",
+                 ja: "南ことり",
+                 en: "Minami Kotori"
+             }
+         },
+         {
+             filename: "you.jpg",
+             name: {
+                 zh: "渡边曜",
+                 ja: "渡辺曜",
+                 en: "Watanabe You"
+             }
+         },
      ];
      ```
 
