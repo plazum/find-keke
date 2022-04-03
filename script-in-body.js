@@ -41,8 +41,9 @@ set_language(language);
 
 if (!dialog_supported) {
     document.head.insertAdjacentHTML("beforeend", '<link rel="stylesheet" href="dialog.css">');
-    document.getElementById("bainian").style.zIndex = "10001";
-    document.getElementById("add_image3").style.zIndex = "10001";
+    for (const dialog of document.getElementsByTagName("dialog")) {
+        dialog.style.zIndex = "10001";
+    }
     document.write('<div class="backdrop" style="z-index: 10000;"></div>');
 }
 

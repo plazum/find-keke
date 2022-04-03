@@ -366,7 +366,7 @@ const UI_text = {
     },
     disclaimer: {
         zh: "图片仅在本地使用，不会上传到服务器。",
-        ja: "画像はローカルで使うだけで、アップロードしない。",
+        ja: "画像はローカルだけで使われ、サーバーにアップロードしません。",
         en: "Images are used locally and not uploaded to the server."
     },
     label_name: {
@@ -386,7 +386,7 @@ const UI_text = {
     },
     fit: {
         zh: "图片填充方式",
-        ja: "画像埋める方",
+        ja: "画像の填め込む方法",
         en: "Image fitting manner"
     },
     label_contain: {
@@ -396,12 +396,12 @@ const UI_text = {
     },
     label_fill: {
         zh: "拉伸填充",
-        ja: "引き伸ばして埋める",
+        ja: "引き伸ばして填め込む",
         en: "Stretch to fill"
     },
     label_cover: {
         zh: "放大填充",
-        ja: "拡大して埋める",
+        ja: "拡大して填め込む",
         en: "Scale up to fill"
     },
     preview: {
@@ -462,15 +462,20 @@ function set_input_enabled(id) {
     preview_image(false);
 }
 
-function preview_image(generate_blob = false) {
+function preview_image(input_file_onchange = false) {
     switch (document.querySelector("input[name='custom_image']:checked").id.substring(6)) {
         case "url":
             url = document.getElementById("url").value.replace(base_url, "");
             set_preview_img(url);
             break;
         case "file":
-            if (generate_blob && document.getElementById("file").files.length > 0)
-                blob_url = URL.createObjectURL(document.getElementById("file").files[0]);
+            if (input_file_onchange) {
+                if (document.getElementById("file").files.length > 0) {
+                    blob_url = URL.createObjectURL(document.getElementById("file").files[0]);
+                } else {
+                    blob_url = "";
+                }
+            }
             set_preview_img(blob_url);
             break;
     }
@@ -480,10 +485,10 @@ function set_preview_img(src) {
     // 如果将<img>的src属性设置为空字符串，浏览器不会把图片显示为空，而是将src设置为网页所在的路径或网页本身的URL，图片呈现裂开状态，
     // 所以为了除去图片的src属性，直接重置<img>标签的HTML
     if (src === "") {
-        document.getElementById('preview_img').outerHTML = preview_img_initial;
+        document.getElementById("preview_img").outerHTML = preview_img_initial;
         set_object_fit(document.querySelector("input[name='fit']:checked").id);
     } else {
-        document.getElementById('preview_img').src = src;
+        document.getElementById("preview_img").src = src;
     }
 }
 
