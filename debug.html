@@ -94,7 +94,7 @@
           <button id="extended_mode" onclick="generate_map(14, 14)"></button>
           <button id="hard_mode" onclick="generate_map(20, 14)"></button>
           <form style="display: inline-block;"
-                onsubmit="generate_map(document.getElementById('rows').value, document.getElementById('cols').value); return false;">
+                onsubmit="generate_map(document.getElementById('rows').valueAsNumber, document.getElementById('cols').valueAsNumber); return false;">
             <input id="rows" type="number" value="20" min="1" required><label id="row" for="rows"></label>
             ×
             <input id="cols" type="number" value="20" min="1" required><label id="column" for="cols"></label>
