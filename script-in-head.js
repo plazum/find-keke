@@ -473,6 +473,8 @@ function preview_image(input_file_onchange = false) {
                 if (document.getElementById("file").files.length > 0) {
                     blob_url = URL.createObjectURL(document.getElementById("file").files[0]);
                 } else {
+                    if (blob_url !== "")
+                        URL.revokeObjectURL(blob_url);
                     blob_url = "";
                 }
             }
