@@ -3,9 +3,9 @@ import datetime
 import re
 from math import ceil, log1p
 
-pattern1 = re.compile(r"^[|] (.+) [|] (\d+) [|] (\d+) [|] ([-]?\d+[.]\d\d) [|]"
+pattern1 = re.compile(r"^[|] (.+) [|] (\d+) [|] (\d+) [|] (-?\d+[.]\d\d) [|]"
                       r" (([A-Z][a-z][a-z] ){2}\d\d \d\d\d\d \d\d:\d\d:\d\d GMT[+-]\d\d\d\d [(](.+)[)]) [|]$")
-pattern2 = re.compile(r"^[|] ([*][*])(.+)\1 [|] \1(\d+)\1 [|] \1(\d+)\1 [|] \1([-]?\d+[.]\d\d)\1 [|]"
+pattern2 = re.compile(r"^[|] ([*][*])(.+)\1 [|] \1(\d+)\1 [|] \1(\d+)\1 [|] \1(-?\d+[.]\d\d)\1 [|]"
                       r" \1(([A-Z][a-z][a-z] ){2}\d\d \d\d\d\d \d\d:\d\d:\d\d GMT[+-]\d\d\d\d [(](.+)[)])\1 [|]$")
 
 
@@ -26,12 +26,14 @@ record_dict = {}
 for i in range(start, len(lines)):
     match = regex_match(lines[i])
     timestamp = int(datetime.datetime.strptime(match[4][:33], "%a %b %d %Y %H:%M:%S GMT%z").timestamp())
-    match += (i, timestamp)  # i用于后面的high_score_index
+    match += (timestamp, )
     lines[i] = match
 # 对记录按产生时间排序
 lines_record_part = lines[start:]
-lines_record_part.sort(key=lambda x: x[6])
+lines_record_part.sort(key=lambda x: x[5])
 lines[start:] = lines_record_part
+for i in range(start, len(lines)):
+    lines[i] += (i, )  # i用于后面的top_score_index
 
 board_num = next(l for l in lines if l.startswith("# 计分板"))[5:]
 
@@ -47,7 +49,7 @@ board_num = next(l for l in lines if l.startswith("# 计分板"))[5:]
 #             "列": record[2],
 #             "用时/秒": "'" + record[3],
 #             "时间": record[4],
-#             "UNIX时间戳": record[6]
+#             "UNIX时间戳": record[5]
 #         })
 # exit()
 
@@ -86,7 +88,7 @@ record_list = [record_dict[map_size] for map_size in sorted(record_dict.keys(), 
 for i in range(len(record_list)):
     record_list[i].sort(key=lambda x: float(x[3]))
     record_list[i] = record_list[i][:ceil(log1p(len(record_list[i])))]
-    top_score_index.add(record_list[i][0][5])
+    top_score_index.add(record_list[i][0][6])
 
 with open(".idea/processed.txt", "w", encoding="utf-8") as f:
     prev_id = re.search(r"\d+", lines[0]).group()
