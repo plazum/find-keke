@@ -184,7 +184,7 @@ function more_hint() {
 }
 
 function get_token() {
-    let e = "!8W!:9!Gf!+*!XW rR t4!Lk!P/ mM!=\\ WW!8W HH e%!U4 zz ^>!!  rR!8W aa kk!3R!Qp!F%!\"a Aa!;z \\\\ E% uu!F%!Gf <\\ HH!;z!\"a!XW!:9", d = "";
+    let e = "!MP!ON!_>!=`!s*!!|!#z!e8!i4 {#!SJ a=!MP OO q-!o.!+r i5!1l!!|!MP m1 y%!GV!k2!]@!3j GW!QL g7 KS!%x!]@!_> A] OO!QL!3j!s*!ON", d = "";
     for (let i = 0; i < e.length / 3; i++) d += String.fromCharCode(((e.charCodeAt(i * 3) - " ".charCodeAt(0)) * 9025 + (e.charCodeAt(i * 3 + 1) - " ".charCodeAt(0)) * 95 + (e.charCodeAt(i * 3 + 2) - " ".charCodeAt(0))) / (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])] + " ".charCodeAt(0));
     return d;
 }
