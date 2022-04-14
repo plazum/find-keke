@@ -48,6 +48,18 @@
       .link::after {
         content: "↗";
       }
+      .hint {
+        box-shadow: 2px 4px 12px black;
+      }
+      .answer {
+        box-shadow: 2px 4px 12px 3px black;
+      }
+      td.hint, td.answer {
+        position: absolute;
+      }
+      tr.hint, tr.answer {
+        position: relative;
+      }
       #name, #url, #file {
         width: 100%;
         box-sizing: border-box;
@@ -105,6 +117,7 @@
             <button id="custom_mode" type="submit"></button>
           </form>
           <button id="hint" onclick="hint()"></button>
+          <button id="more_hint" onclick="more_hint()" disabled></button>
         </div>
       </div>
       <a id="debug_link" href="debug" title="" target="_blank">

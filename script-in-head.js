@@ -70,6 +70,23 @@ function write_result() {
     }
 }
 
+function set_cross_shadow(className) {
+    const td = document.getElementById("keke").parentElement;
+    const tr = td.parentElement;
+    tr.className = className;
+    let y = 0;
+    for (const element of tr.children) {
+        if (element !== td) {
+            y++;
+        } else {
+            break;
+        }
+    }
+    const head = tr.parentElement.firstElementChild.children[y];
+    head.className = className;
+    head.style.height = last_rows * 75 + "px";
+}
+
 function finish() {
     d = new Date();
     if (document.getElementById("result").style.display !== "none")
@@ -85,8 +102,10 @@ function finish() {
     document.getElementById("good_video").play();
     document.getElementById("bubu").style.display = "none";
     document.getElementById("bubu_video").pause();
-    document.getElementById("keke").style.filter = "drop-shadow(2px 4px 6px black)";
+    document.getElementById("keke").parentElement.className = "answer";
+    set_cross_shadow("answer");
     document.getElementById("hint").disabled = true;
+    document.getElementById("more_hint").disabled = true;
     document.getElementById("scoreboard").style.display = "none";
     window.scrollTo({top: 0, behavior: "smooth"});
     if (!debug && !hinted && in_time_limit)
@@ -146,12 +165,21 @@ function reset() {
     document.getElementById("good_video").pause();
     document.getElementById("bubu_video").pause();
     document.getElementById("hint").disabled = false;
+    document.getElementById("more_hint").disabled = true;
     hinted = false;
 }
 
 function hint() {
-    document.getElementById("keke").style.filter = "drop-shadow(2px 4px 6px black)";
+    document.getElementById("keke").parentElement.className = "hint";
     document.getElementById("hint").disabled = true;
+    document.getElementById("more_hint").disabled = false;
+    hinted = true;
+}
+
+function more_hint() {
+    document.getElementById("keke").parentElement.className = "";
+    set_cross_shadow("hint"); // 这一句要放在上一句的后面，以免当#keke在第一行（即自己是head）的时候把已经设置好的hint给删掉了
+    document.getElementById("more_hint").disabled = true;
     hinted = true;
 }
 
@@ -333,6 +361,11 @@ const UI_text = {
         zh: "来点提示",
         ja: "ヒント頂戴",
         en: "Hint"
+    },
+    more_hint: {
+        zh: "再来点提示",
+        ja: "もっとヒント頂戴",
+        en: "More Hint"
     },
     debug_link: {
         zh: "想要一击必胜？点此前往调试模式",
