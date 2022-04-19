@@ -19,17 +19,31 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
+          async function list_cancelled_workflow_runs() {
+            let r = (await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: "add-score.yml",
+              per_page: 100,
+              page: 1
+            })).data;
+            r.workflow_runs = r.workflow_runs.filter(run => run.conclusion === "cancelled");
+            r.total_count = r.workflow_runs.length;
+            return r;
+          }
+
           for (let i = 0; i < 10; i++) {
             if (i !== 0)
               await new Promise(resolve => setTimeout(resolve, 30000));
-            const r = (await github.rest.actions.listWorkflowRuns({
+            /*const r = (await github.rest.actions.listWorkflowRuns({
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: "add-score.yml",
               status: "cancelled",
               per_page: 100,
               page: 1
-            })).data;
+            })).data;*/
+            const r = await list_cancelled_workflow_runs(); // 最近GitHub Actions查询workflow run有问题，所以手动进行处理
             console.log(r.total_count);
             if (r.total_count === 0)
               return;
