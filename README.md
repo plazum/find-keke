@@ -16,13 +16,8 @@
 1. 准备一张与游戏棋盘中的图片除了角色之外内容完全一致的图片。
    1. 确保其分辨率为75×75。（你可以使用[这个网站](https://www.iloveimg.com/zh-cn/crop-image)对图片进行裁剪。）（另外，如果要进行更复杂的编辑，也可以试试[这个网站](https://www.photopea.com)，它相当于一个在线的Photoshop。）
    2. 确保图片和原有图片对齐（可以通过在浏览器的两个标签页中打开两张图片并来回切换以确定图片是否对齐）。
-   3. 将文件的基本名（文件名由基本名和扩展名两部分组成）设置为角色的名（即，不包括姓）的罗马字写法（可以参考[\[1\]][1]、[\[2\]][2]、[\[3\]][3]、[\[4\]][4]）（对于中文名，使用拼音）。
+   3. 将文件的基本名（文件名由基本名和扩展名两部分组成）设置为角色的名（即，不包括姓）的罗马字写法，具体拼写请与`script-in-head.js`中的`placeholder.en`数组中的拼写保持一致。
       - 示例：`keke.jpg`；`kotori.jpg`；`you.jpg`
-
-[1]:https://en.wikipedia.org/wiki/Love_Live!_School_Idol_Project#μ's
-[2]:https://en.wikipedia.org/wiki/Love_Live!_Sunshine!!#Aqours
-[3]:https://en.wikipedia.org/wiki/Love_Live!_Nijigasaki_High_School_Idol_Club#Nijigasaki_High_School_Idol_Club
-[4]:https://en.wikipedia.org/wiki/Love_Live!_Superstar!!#Liella!
 
 2. 在`script-in-body.js`的数组`image`中追加一个元素，按照格式填入图片的文件名和角色的中文名、日文名和日文名的罗马字写法（为了避免格式错误，可以先复制一个已有的元素然后再修改）。
    - 示例：

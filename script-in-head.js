@@ -190,9 +190,33 @@ function get_token() {
 }
 
 const placeholder = {
-    zh: ["涩谷香音", "唐可可", "岚千砂都", "平安名堇", "叶月恋", "圣泽悠奈", "柊摩央"],
-    ja: ["澁谷かのん", "唐可可", "嵐千砂都", "平安名すみれ", "葉月恋", "聖澤悠奈", "柊摩央"],
-    en: ["Shibuya Kanon", "Tang Keke", "Arashi Chisato", "Heanna Sumire", "Hazuki Ren", "Hijirisawa Yuuna", "Hiiragi Mao"]
+    zh: ["高坂穗乃果", "南小鸟", "园田海未", "西木野真姬", "星空凛", "小泉花阳", "矢泽妮可", "东条希", "绚濑绘里",
+        "绮罗翼", "统堂英玲奈", "优木杏树",
+        "高海千歌", "渡边曜", "樱内梨子", "国木田花丸", "黑泽露比", "津岛善子", "黑泽黛雅", "松浦果南", "小原鞠莉",
+        "鹿角圣良", "鹿角理亚",
+        "高咲侑",
+        "上原步梦", "中须霞", "樱坂雫", "朝香果林", "宫下爱", "近江彼方", "优木雪菜", "艾玛·维尔德", "天王寺璃奈",
+        "三船栞子", "米雅·泰勒", "钟岚珠",
+        "涩谷香音", "唐可可", "岚千砂都", "平安名堇", "叶月恋",
+        "圣泽悠奈", "柊摩央"],
+    ja: ["高坂穂乃果", "南ことり", "園田海未", "西木野真姫", "星空凛", "小泉花陽", "矢澤にこ", "東條希", "絢瀬絵里",
+        "綺羅ツバサ", "統堂英玲奈", "優木あんじゅ",
+        "高海千歌", "渡辺曜", "桜内梨子", "国木田花丸", "黒澤ルビィ", "津島善子", "黒澤ダイヤ", "松浦果南", "小原鞠莉",
+        "鹿角聖良", "鹿角理亞",
+        "高咲侑",
+        "上原歩夢", "中須かすみ", "桜坂しずく", "朝香果林", "宮下愛", "近江彼方", "優木せつ菜", "エマ·ヴェルデ", "天王寺璃奈",
+        "三船栞子", "ミア·テイラー", "鐘嵐珠",
+        "澁谷かのん", "唐可可", "嵐千砂都", "平安名すみれ", "葉月恋",
+        "聖澤悠奈", "柊摩央"],
+    en: ["Kousaka Honoka", "Minami Kotori", "Sonoda Umi", "Nishikino Maki", "Hoshizora Rin", "Koizumi Hanayo", "Yazawa Nico", "Toujou Nozomi", "Ayase Eri",
+        "Kira Tsubasa", "Toudou Erena", "Yuuki Anju",
+        "Takami Chika", "Watanabe You", "Sakurauchi Riko", "Kunikida Hanamaru", "Kurosawa Ruby", "Tsushima Yoshiko", "Kurosawa Dia", "Matsuura Kanan", "Ohara Mari",
+        "Kazuno Sarah", "Kazuno Leah",
+        "Takasaki Yuu",
+        "Uehara Ayumu", "Nakasu Kasumi", "Ousaka Shizuku", "Asaka Karin", "Miyashita Ai", "Konoe Kanata", "Yuuki Setsuna", "Emma Verde", "Tennouji Rina",
+        "Mifune Shioriko", "Mia Taylor", "Zhong Lanzhu",
+        "Shibuya Kanon", "Tang Keke", "Arashi Chisato", "Heanna Sumire", "Hazuki Ren",
+        "Hijirisawa Yuuna", "Hiiragi Mao"]
 };
 let name_default, name_safe_for_html;
 
