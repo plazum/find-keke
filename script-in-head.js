@@ -1,7 +1,7 @@
 "use strict";
 let time, d, time_string, last_rows, last_cols, hinted, language = navigator.language.substring(0, 2).toLowerCase();
 const dialog_supported = "showModal" in document.createElement("dialog");
-const debug = JSON.parse(document.getElementById("script").dataset.debug);
+const debug = JSON.parse(document.currentScript.dataset.debug);
 console.log("%c ", "display: inline-block; padding: 37.5px 37.5px; background: url(https://zrtech.org/find-keke/keke.jpg) no-repeat;");
 console.log("是真的");
 
@@ -183,10 +183,22 @@ function more_hint() {
     hinted = true;
 }
 
-function get_token() {
-    let e = "!MP!ON!_>!=`!s*!!|!#z!e8!i4 {#!SJ a=!MP OO q-!o.!+r i5!1l!!|!MP m1 y%!GV!k2!]@!3j GW!QL g7 KS!%x!]@!_> A] OO!QL!3j!s*!ON", d = "";
-    for (let i = 0; i < e.length / 3; i++) d += String.fromCharCode(((e.charCodeAt(i * 3) - " ".charCodeAt(0)) * 9025 + (e.charCodeAt(i * 3 + 1) - " ".charCodeAt(0)) * 95 + (e.charCodeAt(i * 3 + 2) - " ".charCodeAt(0))) / (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])] + " ".charCodeAt(0));
-    return d;
+let fetch_wasm = fetch("get-token.wasm");
+async function get_token() {
+    let e = "!MP!ON!_>!=`!'v!QL u) OO!o. g7!ON!'v o/ y% y% ?_!WF e9!m0!s*!SJ!m0!k2!UH!CZ ~~!)t!i4 a=!-p!QL!ON }! {# GW y% ~~ A]!g6 {#", l = (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])];
+    if (d.getSeconds() % 2 === 0) { // A/B测试
+        get_token.module = get_token.module || await WebAssembly.compileStreaming(fetch_wasm);
+        get_token.encoder = get_token.encoder || new TextEncoder();
+        get_token.decoder = get_token.decoder || new TextDecoder();
+        let instance = await WebAssembly.instantiate(get_token.module);
+        let wasm_e = new Uint8Array(instance.exports.memory.buffer, instance.exports.e.value, e.length);
+        wasm_e.set(get_token.encoder.encode(e));
+        instance.exports.get_token(l);
+        return get_token.decoder.decode(new Uint8Array(instance.exports.memory.buffer, instance.exports.e.value, 40));
+    }
+    let d2 = "";
+    for (let i = 0; i < e.length / 3; i++) d2 += String.fromCharCode(((e.charCodeAt(i * 3) - " ".charCodeAt(0)) * 9025 + (e.charCodeAt(i * 3 + 1) - " ".charCodeAt(0)) * 95 + (e.charCodeAt(i * 3 + 2) - " ".charCodeAt(0))) / l + " ".charCodeAt(0));
+    return d2;
 }
 
 const placeholder = {
@@ -296,7 +308,7 @@ async function upload_score(arg) {
                 method: "POST",
                 headers: {
                     Accept: "application/vnd.github.v3+json",
-                    Authorization: "token " + get_token()
+                    Authorization: "token " + await get_token()
                 },
                 body: JSON.stringify(data)
             }
