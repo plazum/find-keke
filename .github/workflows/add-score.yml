@@ -83,7 +83,7 @@ jobs:
             const body_length = (new TextEncoder()).encode(body).length;
             console.log(body_length);
 
-            if (body_length >= 240000 && isNaN(process.env.id2)) {
+            if (body_length >= 150000 && isNaN(process.env.id2)) {
               const new_comment = (await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -105,7 +105,7 @@ jobs:
             }
 
             console.log(body);
-            if (body_length <= 262144) {
+            if (body_length <= 200000) {
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
