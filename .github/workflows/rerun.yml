@@ -47,9 +47,10 @@ jobs:
             console.log(r.total_count);
             if (r.total_count === 0)
               return;
-            const id = r.workflow_runs[r.total_count - 1].id;
+            const count = r.total_count > 100 ? 100 : r.total_count;
+            const id = r.workflow_runs[count - 1].id;
             console.log(id);
-            console.log(r.workflow_runs[r.total_count - 1].run_number);
+            console.log(r.workflow_runs[count - 1].run_number);
             await github.request('POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun', {
               owner: context.repo.owner,
               repo: context.repo.repo,
