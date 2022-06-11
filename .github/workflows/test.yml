@@ -68,7 +68,7 @@ jobs:
             await io.mkdirP(".idea");
             fs.writeFileSync(".idea/comment.txt", body);
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
       - name: 生成新评论
         run: |
           wget https://raw.githubusercontent.com/plazum/find-keke/master/high-score.py
