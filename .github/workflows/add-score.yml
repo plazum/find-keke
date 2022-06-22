@@ -35,6 +35,8 @@ jobs:
         with:
           script: |
             const fs = require("fs");
+
+            // 获取当前计分板所使用的评论ID和下一个计分板的评论ID（后者不一定存在）
             const id_list_body = (await github.rest.issues.getComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -85,7 +87,11 @@ jobs:
             const body_length = (new TextEncoder()).encode(body).length;
             console.log(body_length);
 
-            if (body_length >= 150000 && isNaN(process.env.id2)) {
+            const record_count = parseInt(body.match(/<summary>展开(\d+)条记录/)[1]);
+            console.log(record_count);
+
+            // 当记录达到一定数量时，发布新评论，为新计分板作准备
+            if (record_count >= 1800 && isNaN(process.env.id2)) {
               const new_comment = (await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -107,7 +113,7 @@ jobs:
             }
 
             console.log(body);
-            if (body_length <= 200000) {
+            if (record_count <= 2000) {
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -125,6 +131,7 @@ jobs:
               old_body.push("</details>");
               const new_old_body = old_body.join("\n");
 
+              // 启用新计分板
               const new_body = "<!--" + process.env.id1
                 + "-->\n# 计分板" + board_num + "\n| --- | --- | --- | --- | --- |\n" + process.env.line;
               console.log(new_body);
@@ -135,6 +142,7 @@ jobs:
                 body: new_body
               });
 
+              // 更新最新计分板所使用的评论ID
               let id_list_body = process.env.id_list_body.split("\n");
               id_list_body.splice(1, 1);
               const new_id_list_body = id_list_body.join("\n");
@@ -146,6 +154,21 @@ jobs:
                 body: new_id_list_body
               });
 
+              // 更新指向最新计分板的链接
+              let issue_body = (await github.rest.issues.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: 5
+              })).data.body;
+              issue_body = issue_body.replace(/\d+/, process.env.id2);
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: 5,
+                body: issue_body
+              });
+
+              // 给旧的计分板作收尾工作
               console.log(new_old_body);
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
