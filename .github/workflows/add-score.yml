@@ -160,7 +160,9 @@ jobs:
                 repo: context.repo.repo,
                 issue_number: 5
               })).data.body;
+              console.log(issue_body);
               issue_body = issue_body.replace(/\d+/, process.env.id2);
+              console.log(issue_body);
               await github.rest.issues.update({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
