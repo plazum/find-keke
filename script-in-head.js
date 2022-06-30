@@ -102,8 +102,9 @@ function finish() {
     document.getElementById("good_video").play();
     document.getElementById("bubu").style.display = "none";
     document.getElementById("bubu_video").pause();
-    document.getElementById("keke").parentElement.className = "answer";
-    set_cross_shadow("answer");
+    document.getElementById("keke").className = "answer";
+    if (last_cols !== 1 && last_rows !== 1)
+        set_cross_shadow("answer");
     document.getElementById("hint").disabled = true;
     document.getElementById("more_hint").disabled = true;
     document.getElementById("scoreboard").style.display = "none";
@@ -170,14 +171,15 @@ function reset() {
 }
 
 function hint() {
-    document.getElementById("keke").parentElement.className = "hint";
+    document.getElementById("keke").className = "hint";
     document.getElementById("hint").disabled = true;
-    document.getElementById("more_hint").disabled = false;
+    if (last_cols !== 1 && last_rows !== 1)
+        document.getElementById("more_hint").disabled = false;
     hinted = true;
 }
 
 function more_hint() {
-    document.getElementById("keke").parentElement.className = "";
+    document.getElementById("keke").className = "";
     set_cross_shadow("hint"); // 这一句要放在上一句的后面，以免当#keke在第一行（即自己是head）的时候把已经设置好的hint给删掉了
     document.getElementById("more_hint").disabled = true;
     hinted = true;
