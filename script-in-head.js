@@ -187,7 +187,7 @@ function more_hint() {
 
 let fetch_wasm = fetch("get-token.wasm");
 async function get_token() {
-    let e = "!O !Q !a !? !) !S  v  P !q  h !Q !)  p  z  z  @ !Y  f !o !u !U !o !m !W !E !! !+ !k  b !/ !S !Q  ~  |  H  z !!  B !i  | ", l = (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])];
+    let e = "!O !Q !a !?  @ !# !c !] !1  n !M  @  p  z  n !E  H !e !!  j  d !e !% !/ !a !E  r  f !a  L  p  N !/ !k  F  J !Q  l  t  l ", l = (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])];
     if (d.getSeconds() % 2 === 0) { // A/B测试
         get_token.module = get_token.module || await WebAssembly.compileStreaming(fetch_wasm);
         get_token.encoder = get_token.encoder || new TextEncoder();
