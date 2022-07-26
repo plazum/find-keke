@@ -212,6 +212,7 @@ const placeholder = {
         "上原步梦", "中须霞", "樱坂雫", "朝香果林", "宫下爱", "近江彼方", "优木雪菜", "艾玛·维尔德", "天王寺璃奈",
         "三船栞子", "米娅·泰勒", "钟岚珠",
         "涩谷香音", "唐可可", "岚千砂都", "平安名堇", "叶月恋",
+        "樱小路希奈子", "米女芽衣", "若菜四季", "鬼冢夏美",
         "圣泽悠奈", "柊摩央"],
     ja: ["高坂穂乃果", "南ことり", "園田海未", "西木野真姫", "星空凛", "小泉花陽", "矢澤にこ", "東條希", "絢瀬絵里",
         "綺羅ツバサ", "統堂英玲奈", "優木あんじゅ",
@@ -221,6 +222,7 @@ const placeholder = {
         "上原歩夢", "中須かすみ", "桜坂しずく", "朝香果林", "宮下愛", "近江彼方", "優木せつ菜", "エマ·ヴェルデ", "天王寺璃奈",
         "三船栞子", "ミア·テイラー", "鐘嵐珠",
         "澁谷かのん", "唐可可", "嵐千砂都", "平安名すみれ", "葉月恋",
+        "桜小路きな子", "米女メイ", "若菜四季", "鬼塚夏美",
         "聖澤悠奈", "柊摩央"],
     en: ["Kousaka Honoka", "Minami Kotori", "Sonoda Umi", "Nishikino Maki", "Hoshizora Rin", "Koizumi Hanayo", "Yazawa Nico", "Toujou Nozomi", "Ayase Eri",
         "Kira Tsubasa", "Toudou Erena", "Yuuki Anju",
@@ -230,6 +232,7 @@ const placeholder = {
         "Uehara Ayumu", "Nakasu Kasumi", "Ousaka Shizuku", "Asaka Karin", "Miyashita Ai", "Konoe Kanata", "Yuuki Setsuna", "Emma Verde", "Tennouji Rina",
         "Mifune Shioriko", "Mia Taylor", "Zhong Lanzhu",
         "Shibuya Kanon", "Tang Keke", "Arashi Chisato", "Heanna Sumire", "Hazuki Ren",
+        "Sakurakouji Kinako", "Yoneme Mei", "Wakana Shiki", "Onitsuka Natsumi",
         "Hijirisawa Yuuna", "Hiiragi Mao"]
 };
 let name_default, name_safe_for_html;
