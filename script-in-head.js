@@ -559,7 +559,8 @@ function preview_image(input_file_onchange = false) {
 
 function set_preview_img(src) {
     // 如果将<img>的src属性设置为空字符串，浏览器不会把图片显示为空，而是将src设置为网页所在的路径或网页本身的URL，图片呈现裂开状态，
-    // 所以为了除去图片的src属性，直接重置<img>标签的HTML
+    // 如果在src属性被设置过值之后使用removeAttribute("src")，src虽然会被设置为空字符串，但是浏览器仍然显示图片为裂开状态，
+    // 所以为了除去图片的src属性，直接重置<img>标签的HTML代码
     if (src === "") {
         document.getElementById("preview_img").outerHTML = preview_img_initial;
         set_object_fit(document.querySelector("input[name='fit']:checked").id);
