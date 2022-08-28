@@ -34,6 +34,15 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            const line = "| " + context.payload.inputs.player_name
+              + " | " + context.payload.inputs.rows
+              + " | " + context.payload.inputs.cols
+              + " | " + context.payload.inputs.score
+              + " | " + context.payload.inputs.time + " |";
+            console.log(context.payload.inputs);
+            console.log(line);
+            core.exportVariable("line", line);
+
             const fs = require("fs");
 
             // 获取当前计分板所使用的评论ID和下一个计分板的评论ID（后者不一定存在）
@@ -55,14 +64,6 @@ jobs:
               comment_id: id
             })).data.body;
             fs.writeFileSync("old-body.txt", body);
-            const line = "| " + context.payload.inputs.player_name
-              + " | " + context.payload.inputs.rows
-              + " | " + context.payload.inputs.cols
-              + " | " + context.payload.inputs.score
-              + " | " + context.payload.inputs.time + " |";
-            console.log(context.payload.inputs);
-            console.log(line);
-            core.exportVariable("line", line);
             const encoder = new TextEncoder();
             console.log(encoder.encode(body).length);
             body += "\n" + line;
