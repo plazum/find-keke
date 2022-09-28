@@ -144,9 +144,10 @@ jobs:
               });
 
               // 更新最新计分板所使用的评论ID
-              let id_list_body = process.env.id_list_body.split("\n");
+              let id_list_body = process.env.id_list_body.split("\r\n");
+              id_list_body[0] += " " + process.env.id2;
               id_list_body.splice(1, 1);
-              const new_id_list_body = id_list_body.join("\n");
+              const new_id_list_body = id_list_body.join("\r\n");
               console.log(new_id_list_body);
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
