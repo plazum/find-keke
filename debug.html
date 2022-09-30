@@ -85,7 +85,10 @@
         <h1 id="time2"></h1>
         <h2 id="upload_status" style="display: none;"></h2>
         <button id="new_game" style="font-size: x-large;" onclick="generate_map(last_rows, last_cols)"></button>
-        <a id="scoreboard2" class="link" style="margin: 1em auto 0.75em auto; font-size: larger;" href="https://github.com/plazum/find-keke/issues/5" target="_blank"></a>
+        <span style="margin: 1em auto 0.75em auto; font-size: larger;">
+          <a id="scoreboard2" class="link" href="https://github.com/plazum/find-keke/issues/5" target="_blank"></a>
+          <a id="scoreboard_search2" class="link" href="scoreboard" onclick="open_dialog('scoreboard_dialog'); return false;"></a>
+        </span>
         <a id="github" class="link" style="margin-bottom: 1em;" href="https://github.com/plazum/find-keke" target="_blank"></a>
         <span style="margin-bottom: 1.5em;">
           上GitHub不方便？<a class="link" href="https://t.bilibili.com/667012471278534688" target="_blank">前往B站讨论区</a>
@@ -100,11 +103,14 @@
       </div>
       <div style="margin: 1.5em auto 1.25em auto; font-size: larger;">
         <span style=" margin-bottom: 0.75em;">
-          <label><input id="zh" type="radio" name="language" onchange="set_language('zh')">中文</label>
-          <label><input id="ja" type="radio" name="language" onchange="set_language('ja')">日本語</label>
-          <label><input id="en" type="radio" name="language" onchange="set_language('en')">English</label>
+          <label lang="zh"><input id="zh" type="radio" name="language" onchange="set_language('zh')">中文</label>
+          <label lang="ja"><input id="ja" type="radio" name="language" onchange="set_language('ja')">日本語</label>
+          <label lang="en"><input id="en" type="radio" name="language" onchange="set_language('en')">English</label>
         </span>
-        <a id="scoreboard" class="link" style="margin-bottom: 0.75em;" href="https://github.com/plazum/find-keke/issues/5" target="_blank"></a>
+        <span style="margin-bottom: 0.75em;">
+          <a id="scoreboard" class="link" href="https://github.com/plazum/find-keke/issues/5" target="_blank"></a>
+          <a id="scoreboard_search" class="link" href="scoreboard" onclick="open_dialog('scoreboard_dialog'); return false;"></a>
+        </span>
         <span style=" margin-bottom: 0.75em;">
           <span id="filter"></span>
           <button id="add_image" onclick="open_dialog('add_image3')"></button>
@@ -187,6 +193,13 @@
           <button id="OK" type="submit"></button>
         </span>
       </form>
+    </dialog>
+    <dialog id="scoreboard_dialog">
+      <div style="display: flex; align-items: center;">
+        <a id="open_in_new_tab" class="link" href="scoreboard" target="_blank"></a>
+        <button style="font-size: x-large; font-weight: bold; margin-left: auto;" onclick="close_dialog('scoreboard_dialog')">×</button>
+      </div>
+      <iframe style="border: none;" src="scoreboard.html"></iframe>
     </dialog>
     <script src="script-in-body.js"></script>
   </body>

@@ -20,6 +20,10 @@ function open_dialog(id) {
         document.getElementById(id).setAttribute("open", "");
         document.getElementById(id).setAttribute("modal", "");
     }
+
+    if (id === "scoreboard_dialog")
+        document.getElementById("open_in_new_tab").style.marginLeft
+            = `calc((100% - ${document.getElementById("open_in_new_tab").offsetWidth}px) / 2)`;
 }
 
 function close_dialog(id) {
@@ -187,7 +191,7 @@ function more_hint() {
 
 let fetch_wasm = fetch("get-token.wasm");
 async function get_token() {
-    let e = "!O !Q !a !?  @ !# !c !] !1  n !M  @  p  z  n !E  H !e !!  j  d !e !% !/ !a !E  r  f !a  L  p  N !/ !k  F  J !Q  l  t  l ", l = (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])];
+    let e = "!Q~!T#!dC!A^ @`!%&!fG!`;!3B o]!Oz @` qa {u o]!Gj Hp!hK!#\" kU eI!hK!'*!1>!dC!Gj se gM!dC Lx qa N|!1>!nW Fl Jt!T# mY ui mY", l = (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])];
     if (d.getSeconds() % 2 === 0) { // A/B测试
         get_token.module = get_token.module || await WebAssembly.compileStreaming(fetch_wasm);
         get_token.encoder = get_token.encoder || new TextEncoder();
@@ -213,7 +217,8 @@ const placeholder = {
         "三船栞子", "米娅·泰勒", "钟岚珠",
         "涩谷香音", "唐可可", "岚千砂都", "平安名堇", "叶月恋",
         "樱小路希奈子", "米女芽衣", "若菜四季", "鬼冢夏美",
-        "圣泽悠奈", "柊摩央"],
+        "圣泽悠奈", "柊摩央",
+        "维恩·玛格丽特"],
     ja: ["高坂穂乃果", "南ことり", "園田海未", "西木野真姫", "星空凛", "小泉花陽", "矢澤にこ", "東條希", "絢瀬絵里",
         "綺羅ツバサ", "統堂英玲奈", "優木あんじゅ",
         "高海千歌", "渡辺曜", "桜内梨子", "国木田花丸", "黒澤ルビィ", "津島善子", "黒澤ダイヤ", "松浦果南", "小原鞠莉",
@@ -223,7 +228,8 @@ const placeholder = {
         "三船栞子", "ミア·テイラー", "鐘嵐珠",
         "澁谷かのん", "唐可可", "嵐千砂都", "平安名すみれ", "葉月恋",
         "桜小路きな子", "米女メイ", "若菜四季", "鬼塚夏美",
-        "聖澤悠奈", "柊摩央"],
+        "聖澤悠奈", "柊摩央",
+        "ウィーン·マルガレーテ"],
     en: ["Kousaka Honoka", "Minami Kotori", "Sonoda Umi", "Nishikino Maki", "Hoshizora Rin", "Koizumi Hanayo", "Yazawa Nico", "Toujou Nozomi", "Ayase Eri",
         "Kira Tsubasa", "Toudou Erena", "Yuuki Anju",
         "Takami Chika", "Watanabe You", "Sakurauchi Riko", "Kunikida Hanamaru", "Kurosawa Ruby", "Tsushima Yoshiko", "Kurosawa Dia", "Matsuura Kanan", "Ohara Mari",
@@ -233,7 +239,8 @@ const placeholder = {
         "Mifune Shioriko", "Mia Taylor", "Zhong Lanzhu",
         "Shibuya Kanon", "Tang Keke", "Arashi Chisato", "Heanna Sumire", "Hazuki Ren",
         "Sakurakouji Kinako", "Yoneme Mei", "Wakana Shiki", "Onitsuka Natsumi",
-        "Hijirisawa Yuuna", "Hiiragi Mao"]
+        "Hijirisawa Yuuna", "Hiiragi Mao",
+        "Wien Margarethe"]
 };
 let name_default, name_safe_for_html;
 
@@ -368,6 +375,16 @@ const UI_text = {
         ja: "スコアボードと最高記録",
         en: "See the scoreboard and top records"
     },
+    scoreboard_search: {
+        zh: "新功能？",
+        ja: "新功能？",
+        en: "新功能？"
+    },
+    open_in_new_tab: {
+        zh: "在新标签页中打开",
+        ja: "在新标签页中打开",
+        en: "Open in new tab"
+    },
     classic_mode: {
         zh: "经典模式14×10",
         ja: "クラシックモード14×10",
@@ -496,10 +513,12 @@ const UI_text = {
 };
 const UI_text_exclusion = ["title", "debug_link", "example"];
 const UI_element_id = Object.keys(UI_text).filter(val => !UI_text_exclusion.includes(val));
-const UI_element_id2 = ["scoreboard", "add_image"];
+const UI_element_id2 = ["scoreboard", "scoreboard_search", "add_image"];
 
 function set_language(value) {
     language = value;
+
+    document.documentElement.lang = language;
 
     document.title = UI_text.title[language];
     for (let id of UI_element_id) {
