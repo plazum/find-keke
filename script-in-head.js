@@ -1,6 +1,5 @@
 "use strict";
-let time, d, time_string, last_rows, last_cols, hinted, language = navigator.language.substring(0, 2).toLowerCase();
-const dialog_supported = "showModal" in document.createElement("dialog");
+let time, d, time_string, last_rows, last_cols, hinted;
 const debug = JSON.parse(document.currentScript.dataset.debug);
 console.log("%c ", "display: inline-block; padding: 37.5px 37.5px; background: url(https://zrtech.org/find-keke/keke.jpg) no-repeat;");
 console.log("是真的");
@@ -11,28 +10,6 @@ function show_bubu() {
     document.getElementById("bubu").style.display = "";
     document.getElementById("bubu_video").play();
     window.scrollTo({top: 0, behavior: "smooth"});
-}
-
-function open_dialog(id) {
-    if (dialog_supported) {
-        document.getElementById(id).showModal();
-    } else {
-        document.getElementById(id).setAttribute("open", "");
-        document.getElementById(id).setAttribute("modal", "");
-    }
-
-    if (id === "scoreboard_dialog")
-        document.getElementById("open_in_new_tab").style.marginLeft
-            = `calc((100% - ${document.getElementById("open_in_new_tab").offsetWidth}px) / 2)`;
-}
-
-function close_dialog(id) {
-    if (dialog_supported) {
-        document.getElementById(id).close();
-    } else {
-        document.getElementById(id).removeAttribute("open");
-        document.getElementById(id).removeAttribute("modal");
-    }
 }
 
 function start_timing() {
@@ -189,7 +166,7 @@ function more_hint() {
     hinted = true;
 }
 
-let fetch_wasm = fetch("get-token.wasm");
+const fetch_wasm = fetch("get-token.wasm");
 async function get_token() {
     let e = "!Q~!T#!dC!A^ @`!%&!fG!`;!3B o]!Oz @` qa {u o]!Gj Hp!hK!#\" kU eI!hK!'*!1>!dC!Gj se gM!dC Lx qa N|!1>!nW Fl Jt!T# mY ui mY", l = (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])];
     if (d.getSeconds() % 2 === 0) { // A/B测试
@@ -319,7 +296,7 @@ async function upload_score(arg) {
             {
                 method: "POST",
                 headers: {
-                    Accept: "application/vnd.github.v3+json",
+                    Accept: "application/vnd.github+json",
                     Authorization: "token " + await get_token()
                 },
                 body: JSON.stringify(data)
@@ -376,13 +353,13 @@ const UI_text = {
         en: "See the scoreboard and top records"
     },
     scoreboard_search: {
-        zh: "新功能？",
-        ja: "新功能？",
-        en: "新功能？"
+        zh: "计分板搜索",
+        ja: "スコアボード検索",//TODO
+        en: "Scoreboard Search"
     },
     open_in_new_tab: {
         zh: "在新标签页中打开",
-        ja: "在新标签页中打开",
+        ja: "新しいタブで開く",//TODO
         en: "Open in new tab"
     },
     classic_mode: {
@@ -512,19 +489,20 @@ const UI_text = {
     }
 };
 const UI_text_exclusion = ["title", "debug_link", "example"];
-const UI_element_id = Object.keys(UI_text).filter(val => !UI_text_exclusion.includes(val));
+const UI_element_id = Object.keys(UI_text).filter(value => !UI_text_exclusion.includes(value));
 const UI_element_id2 = ["scoreboard", "scoreboard_search", "add_image"];
 
 function set_language(value) {
     language = value;
 
     document.documentElement.lang = language;
+    localStorage.language = language;
 
     document.title = UI_text.title[language];
-    for (let id of UI_element_id) {
+    for (const id of UI_element_id) {
         document.getElementById(id).textContent = UI_text[id][language];
     }
-    for (let id of UI_element_id2) {
+    for (const id of UI_element_id2) {
         document.getElementById(id + "2").textContent = UI_text[id][language];
     }
     for (let i = 0; i < images.length; i++) {
@@ -618,7 +596,7 @@ function add_custom_image() {
     document.getElementById("filter").insertAdjacentHTML("beforeend",
         ' <input id="' + number + '" type="checkbox" checked onchange="generate_map(last_rows, last_cols)">'
         + '<label id="label_' + number + '" for="' + number + '">' + name + '</label>');
-    close_dialog("add_image3");
+    close_dialog("add_image_dialog");
     document.getElementById("url").value = "";
     document.getElementById("file").value = "";
     set_preview_img("");

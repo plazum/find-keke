@@ -4,9 +4,9 @@ import re
 from math import ceil, log1p
 
 pattern1 = re.compile(r"^[|] (.+) [|] (\d+) [|] (\d+) [|] (-?\d+[.]\d\d) [|]"
-                      r" (([A-Z][a-z][a-z] ){2}\d\d \d\d\d\d \d\d:\d\d:\d\d GMT[+-]\d\d\d\d [(](.+)[)]) [|]$")
+                      r" (([A-Z][a-z][a-z] ){2}\d\d \d\d\d\d \d\d:\d\d:\d\d GMT[+-]\d\d\d\d [(].+[)]) [|]$")
 pattern2 = re.compile(r"^[|] ([*][*])(.+)\1 [|] \1(\d+)\1 [|] \1(\d+)\1 [|] \1(-?\d+[.]\d\d)\1 [|]"
-                      r" \1(([A-Z][a-z][a-z] ){2}\d\d \d\d\d\d \d\d:\d\d:\d\d GMT[+-]\d\d\d\d [(](.+)[)])\1 [|]$")
+                      r" \1(([A-Z][a-z][a-z] ){2}\d\d \d\d\d\d \d\d:\d\d:\d\d GMT[+-]\d\d\d\d [(].+[)])\1 [|]$")
 
 
 def regex_match(line):

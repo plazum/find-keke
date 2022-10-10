@@ -72,6 +72,7 @@
     </style>
     <link rel="icon" href="keke-big.jpg">
     <script src="script-in-head.js" data-debug="true"></script>
+    <script src="common.js"></script>
   </head>
   <body>
     <div>
@@ -85,7 +86,7 @@
         <h1 id="time2"></h1>
         <h2 id="upload_status" style="display: none;"></h2>
         <button id="new_game" style="font-size: x-large;" onclick="generate_map(last_rows, last_cols)"></button>
-        <span style="margin: 1em auto 0.75em auto; font-size: larger;">
+        <span style="font-size: larger; margin: 1em auto 0.75em auto;">
           <a id="scoreboard2" class="link" href="https://github.com/plazum/find-keke/issues/5" target="_blank"></a>
           <a id="scoreboard_search2" class="link" href="scoreboard" onclick="open_dialog('scoreboard_dialog'); return false;"></a>
         </span>
@@ -98,11 +99,11 @@
       </div>
       <div id="bubu">
         <h1 id="wrong"></h1>
-        <button id="give_up" style="margin: auto auto 1em auto; font-size: x-large;" onclick="generate_map(last_rows, last_cols)"></button>
+        <button id="give_up" style="font-size: x-large; margin: auto auto 1em auto;" onclick="generate_map(last_rows, last_cols)"></button>
         <video id="bubu_video" style="margin: auto;" src="bubu.mp4" loop></video>
       </div>
-      <div style="margin: 1.5em auto 1.25em auto; font-size: larger;">
-        <span style=" margin-bottom: 0.75em;">
+      <div style="font-size: larger; margin: 1.5em auto 1.25em auto;">
+        <span style="margin-bottom: 0.75em;">
           <label lang="zh"><input id="zh" type="radio" name="language" onchange="set_language('zh')">中文</label>
           <label lang="ja"><input id="ja" type="radio" name="language" onchange="set_language('ja')">日本語</label>
           <label lang="en"><input id="en" type="radio" name="language" onchange="set_language('en')">English</label>
@@ -111,9 +112,9 @@
           <a id="scoreboard" class="link" href="https://github.com/plazum/find-keke/issues/5" target="_blank"></a>
           <a id="scoreboard_search" class="link" href="scoreboard" onclick="open_dialog('scoreboard_dialog'); return false;"></a>
         </span>
-        <span style=" margin-bottom: 0.75em;">
+        <span style="margin-bottom: 0.75em;">
           <span id="filter"></span>
-          <button id="add_image" onclick="open_dialog('add_image3')"></button>
+          <button id="add_image" onclick="open_dialog('add_image_dialog')"></button>
         </span>
         <div style="display: block;">
           <button id="classic_mode" onclick="generate_map(14, 10)"></button>
@@ -143,7 +144,7 @@
       </div>
       <button style="font-size: 300px;" onclick="close_dialog('bainian')">🧧</button>
     </dialog>
-    <dialog id="add_image3" style="font-size: larger;">
+    <dialog id="add_image_dialog" style="font-size: larger;">
       <h2 id="add_image2"></h2>
       <span id="disclaimer" style="font-size: large;"></span>
       <form autocomplete="off" onsubmit="add_custom_image(); return false;">
@@ -189,17 +190,17 @@
           </tr>
         </table>
         <span style="display: flex; margin: 0.5em auto; justify-content: space-evenly;">
-          <button id="cancel" type="button" onclick="close_dialog('add_image3')"></button>
+          <button id="cancel" type="button" onclick="close_dialog('add_image_dialog')"></button>
           <button id="OK" type="submit"></button>
         </span>
       </form>
     </dialog>
-    <dialog id="scoreboard_dialog">
-      <div style="display: flex; align-items: center;">
+    <dialog id="scoreboard_dialog" style="width: 75%; height: 75%;">
+      <div id="dialog_title_bar" style="display: flex; align-items: center;">
         <a id="open_in_new_tab" class="link" href="scoreboard" target="_blank"></a>
         <button style="font-size: x-large; font-weight: bold; margin-left: auto;" onclick="close_dialog('scoreboard_dialog')">×</button>
       </div>
-      <iframe style="border: none;" src="scoreboard.html"></iframe>
+      <iframe id="scoreboard_iframe" style="border: none; width: 100%;"></iframe>
     </dialog>
     <script src="script-in-body.js"></script>
   </body>

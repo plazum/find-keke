@@ -2,17 +2,129 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>新功能</title>
+    <title></title>
     <meta name="author" content="https://github.com/plazum/find-keke">
     <style>
       body {
         text-align: center;
+        margin-top: 0;
+      }
+      table {
+        border-collapse: collapse;
+      }
+      table th, table td {
+        border: 1px solid gray;
+        padding: 0.5em;
+      }
+      #scoreboard_filter td {
+        border-style: dashed;
+      }
+      #result tr:nth-child(2n) {
+        background-color: lightgray;
+      }
+      input[type="radio"], input[type="checkbox"] {
+        transform: scale(1.2);
+      }
+      input[type="search"] {
+        font-size: large;
+      }
+      input:invalid {
+        border: 2px dashed red;
+      }
+      button:lang(zh), button:lang(en) {
+        font-size: x-large;
+      }
+      button:lang(ja) {
+        font-size: larger;
+      }
+      #relation:lang(en) {
+        margin-right: 0.5em;
+      }
+      .options {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 1.5em;
       }
     </style>
     <link rel="icon" href="keke-big.jpg">
+    <script src="scoreboard.js"></script>
+    <script src="common.js"></script>
   </head>
   <body>
-    <h1>新功能，敬请期待</h1>
-    为庆祝本游戏即将上线一周年，近期将推出新功能。
+    <div style="display: grid; justify-items: center;">
+      <span id="language_selector" style="font-size: larger; margin-top: 1.5em;">
+        <label lang="zh"><input id="zh" type="radio" name="language" onchange="set_language('zh')">中文</label>
+        <label lang="ja"><input id="ja" type="radio" name="language" onchange="set_language('ja')">日本語</label>
+        <label lang="en"><input id="en" type="radio" name="language" onchange="set_language('en')">English</label>
+      </span>
+      <h1 id="title"></h1>
+      <form style="font-size: large;" autocomplete="off" onsubmit="window.search(); return false;">
+        <div id="introduction" style="margin-bottom: 1em;"></div>
+        <table style="margin: auto;">
+          <thead>
+            <tr>
+              <th><label id="player_name_header" for="player_name"></label></th>
+              <th><label id="rows_header" for="rows"></label></th>
+              <th><label id="cols_header" for="cols"></label></th>
+              <th><label id="score_header" for="score"></label></th>
+              <th><label id="time_header" for="time"></label></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input id="player_name" type="search" onchange="validate(this)"></td>
+              <td><input id="rows" type="search" size="10" onchange="validate(this)"></td>
+              <td><input id="cols" type="search" size="10" onchange="validate(this)"></td>
+              <td><input id="score" type="search" size="10" onchange="validate(this)"></td>
+              <td><input id="time" type="search" onchange="validate(this)"></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="options">
+          <span id="relation"></span>
+          <input id="and" type="radio" name="and_or" checked><label id="and_label" for="and"></label>
+          <input id="or" type="radio" name="and_or"><label id="or_label" for="or" style="margin-right: 1em;"></label>
+          <input id="use_regex" type="checkbox" onchange="validate_all()"><label id="use_regex_label" for="use_regex" style="margin-right: 1em;"></label>
+          <input id="case_sensitive" type="checkbox"><label id="case_sensitive_label" for="case_sensitive"></label>
+        </div>
+        <table id="scoreboard_filter" style="font-size: smaller; margin: auto;"></table>
+        <div class="options">
+          <button id="reset" type="reset"></button>
+          <button id="update" type="button" style="margin: 0 1em;" onclick="window.update()"></button>
+          <button id="search" type="submit"></button>
+        </div>
+      </form>
+      <table>
+        <thead>
+          <tr>
+            <th id="scoreboard"></th>
+            <th id="player_name_header2"></th>
+            <th id="rows_header2"></th>
+            <th id="cols_header2"></th>
+            <th id="score_header2"></th>
+            <th id="time_header2"></th>
+          </tr>
+        </thead>
+        <tbody id="result"></tbody>
+      </table>
+    </div>
+    <dialog id="loading_dialog" style="padding-top: 0;">
+      <h1 id="loading"></h1>
+      <progress id="progress_bar"></progress>
+      <span id="buttons" style="display: none;">
+        <button id="retry" onclick="retry()"></button>
+        <button id="cancel" onclick="close_dialog('loading_dialog')"></button>
+      </span>
+    </dialog>
+    <script>
+      "use strict";
+      if (window.self !== window.top)
+        document.getElementById("language_selector").style.display = "none";
+
+      init();
+
+      prepare();
+    </script>
   </body>
 </html>
