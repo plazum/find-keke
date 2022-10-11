@@ -9,7 +9,7 @@ function show_bubu() {
         return;
     document.getElementById("bubu").style.display = "";
     document.getElementById("bubu_video").play();
-    window.scrollTo({top: 0, behavior: "smooth"});
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function start_timing() {
@@ -26,7 +26,7 @@ function write_result() {
         if (time <= 300) {
             const text1 = {
                 zh: `${debug ? "（调试用）" : ""}恭喜你在三秒内找到了唐可可！用时${time_string}秒。`,
-                ja: `${debug ? "（デバッグ用）" : ""}おめでとうございます！三秒以内で唐可可を見つけました。${time_string}秒かかりました。`,
+                ja: `${debug ? "（デバッグ用）" : ""}おめでとうございます！3秒以内で唐可可を見つけました。${time_string}秒かかりました。`,
                 en: `${debug ? "(Debug) " : ""}Congratulations! You have found Tang Keke within three seconds. ${time_string} seconds taken.`
             };
             document.getElementById("time1").textContent = text1[language];
@@ -89,7 +89,7 @@ function finish() {
     document.getElementById("hint").disabled = true;
     document.getElementById("more_hint").disabled = true;
     document.getElementById("scoreboard").style.display = "none";
-    window.scrollTo({top: 0, behavior: "smooth"});
+    window.scrollTo({ top: 0, behavior: "smooth" });
     if (!debug && !hinted && in_time_limit)
         upload_score(arguments);
 }
@@ -113,7 +113,7 @@ function generate_map(rows, cols) {
     const x = Math.floor(Math.random() * rows);
     const y = Math.floor(Math.random() * cols);
     for (let i = 0; i < rows; i++) {
-        board[i] = Array.from({length: cols}, () => Math.floor(Math.random() * selected.length));
+        board[i] = Array.from({ length: cols }, () => Math.floor(Math.random() * selected.length));
     }
     for (let i = 0; i < rows; i++) {
         content += "<tr>";
@@ -125,8 +125,8 @@ function generate_map(rows, cols) {
                     '<img onclick="open_dialog(\'bainian\')" src="fu.png"' + (Math.random() < 0.5 ? ' style="transform: rotate(180deg);"' : '') + '>'
                     :
                     '<img onclick="' + (debug ? "finish()" : "show_bubu()") + '"'
-                        + (selected[board[i][j]].fit ? ' width="75" height="75" style="object-fit: ' + selected[board[i][j]].fit + ';"' : '')
-                        + ' src="' + selected[board[i][j]].filename + '">'
+                    + (selected[board[i][j]].fit ? ' width="75" height="75" style="object-fit: ' + selected[board[i][j]].fit + ';"' : '')
+                    + ' src="' + selected[board[i][j]].filename + '">'
                 )
             ) + "</td>";
         }
@@ -224,7 +224,7 @@ let name_default, name_safe_for_html;
 function write_upload_status() {
     const text_uploaded = {
         zh: `分数已上传：${name_safe_for_html}；${last_rows}行×${last_cols}列；用时${time_string}秒<br>${d}`,
-        ja: `点数がアップロードしました：${name_safe_for_html}；${last_rows}行×${last_cols}列；${time_string}秒かかりました<br>${d}`,
+        ja: `記録をアップロードしました：${name_safe_for_html}；${last_rows}行×${last_cols}列；${time_string}秒かかりました<br>${d}`,
         en: `Score uploaded: ${name_safe_for_html}; ${last_rows} rows × ${last_cols} columns; ${time_string} seconds taken<br>${d}`
     };
     document.getElementById("upload_status").innerHTML = text_uploaded[language];
@@ -247,7 +247,7 @@ async function upload_score(arg) {
             + "（等価時間というのは、かかった時間にボードのサイズに対する14×10ボードのサイズの比率をかけた時間です。）\n"
             + `（今回かかった時間は${time_string}秒、ボードのサイズは${last_rows}×${last_cols}で、`
             + `等価時間が3秒以下になる場合、かかった時間が${time_limit_string}秒以下にならなければなりません。）\n\n`
-            + "プレイヤーネームを入力してください（もし点数をアップロードしたくないなら、キャンセルをクリック、あるいは入力しないでください）",
+            + "プレイヤー名を入力してください（もし点数をアップロードしたくないなら、キャンセルをクリック、あるいは入力しないでください）",
         en: "Congratulations! The time you spent is equivalently less than or equal to 3 seconds.\n"
             + "(The equivalently-taken time means the time you spent after proportionally converting the board to the 14×10 board based on the board size.)\n"
             + `(You have spent ${time_string} seconds, and the board size is ${last_rows}×${last_cols}, `
@@ -268,7 +268,7 @@ async function upload_score(arg) {
         .replaceAll("|", "\\|"); // 防止用户输入Markdown表格分列符、反斜杠和百分号
     upload_score.text_uploading = upload_score.text_uploading || {
         zh: "上传中，请稍候……",
-        ja: "アップロード中です。お待ちください…",
+        ja: "アップロード中です。しばらくお待ちください…",
         en: "Please wait while uploading…"
     }; // 模拟静态局部变量
     document.getElementById("upload_status").textContent = upload_score.text_uploading[language];
@@ -306,7 +306,7 @@ async function upload_score(arg) {
                 fetch_fail = true;
                 const text_fetch_error = {
                     zh: `Fetch API抛出错误“${error}”，是否重试？`,
-                    ja: `Fetch APIに「${error}」というエラーが発生しました。再試行しますか？`,
+                    ja: `Fetch APIで「${error}」というエラーが発生しました。再試行しますか？`,
                     en: `Fetch API throws error "${error}", retry?`
                 };
                 retry = confirm(text_fetch_error[language]);
@@ -369,12 +369,12 @@ const UI_text = {
     },
     extended_mode: {
         zh: "扩展模式14×14",
-        ja: "広がりモード14×14",
+        ja: "拡張モード14×14",
         en: "Extended Mode 14×14"
     },
     hard_mode: {
         zh: "困难模式20×14",
-        ja: "困難モード20×14",
+        ja: "ハードモード20×14",
         en: "Hard Mode 20×14"
     },
     row: {
@@ -394,22 +394,22 @@ const UI_text = {
     },
     hint: {
         zh: "来点提示",
-        ja: "ヒント頂戴",
+        ja: "ヒントを頂戴！",
         en: "Hint"
     },
     more_hint: {
         zh: "再来点提示",
-        ja: "もっとヒント頂戴",
+        ja: "もっとヒントを頂戴！",
         en: "More Hint"
     },
     debug_link: {
         zh: "想要一击必胜？点此前往调试模式",
-        ja: "ワンクリックで勝ちたい？ここにデバッグモードへ",
+        ja: "ワンクリックで勝ちたい？ デバッグモードを使うにはここをクリック",
         en: "Want to win at a single click? Click here for Debug Mode"
     },
     new_game: {
         zh: "再来一局",
-        ja: "もう一回",
+        ja: "もう一回プレイ",
         en: "New Game"
     },
     github: {
@@ -419,12 +419,12 @@ const UI_text = {
     },
     wrong: {
         zh: "不是这个哦，请再试一次。",
-        ja: "間違ったよ。もう一度お試しください。",
+        ja: "間違いました。もう一度お試しください。",
         en: "Wrong. Please try again."
     },
     give_up: {
         zh: "累了，我要重开（指游戏）",
-        ja: "もういい、やり直しだ",
+        ja: "諦めてやり直す",
         en: "Give Up and New Game"
     },
     add_image: {
@@ -434,7 +434,7 @@ const UI_text = {
     },
     disclaimer: {
         zh: "图片仅在本地使用，不会上传到服务器。",
-        ja: "画像はローカルだけで使われ、サーバーにアップロードしません。",
+        ja: "画像はローカルだけで使われ、サーバーにアップロードされることはありません。",
         en: "Images are used locally and not uploaded to the server."
     },
     label_name: {
@@ -454,22 +454,22 @@ const UI_text = {
     },
     fit: {
         zh: "图片填充方式",
-        ja: "画像の填め込む方法",
+        ja: "画像の当てはめ方",
         en: "Image fitting manner"
     },
     label_contain: {
         zh: "缩小适应",
-        ja: "縮小して適応",
+        ja: "縮小する",
         en: "Scale down to fit"
     },
     label_fill: {
         zh: "拉伸填充",
-        ja: "引き伸ばして填め込む",
+        ja: "引き伸ばす",
         en: "Stretch to fill"
     },
     label_cover: {
         zh: "放大填充",
-        ja: "拡大して填め込む",
+        ja: "拡大する",
         en: "Scale up to fill"
     },
     preview: {
@@ -517,7 +517,7 @@ function set_language(value) {
         placeholder[language][Math.floor(Math.random() * placeholder.zh.length)]
         :
         "test（本地开发测试用）"
-    ;
+        ;
     if (document.getElementById("result").style.display !== "none")
         write_result();
     if (document.getElementById("upload_status").style.display !== "none")

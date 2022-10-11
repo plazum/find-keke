@@ -6,97 +6,97 @@ let csv_file_count = parseInt(localStorage.csv_file_count) || 0;
 const UI_text = {
     title: {
         zh: "计分板全量数据库搜索",
-        ja: "",//TODO
+        ja: "スコアボード 全データベース検索",
         en: "Scoreboard Full Database Search"
     },
     introduction: {
         zh: "请在文本框中输入查询条件，支持正则表达式。",
-        ja: "",//TODO
+        ja: "検索条件を入力してください。正規表現が使えます。",
         en: "Please enter query conditions, regular expressions supported."
     },
     player_name_header: {
         zh: "玩家名",
-        ja: "プレイヤー名",//TODO
+        ja: "プレイヤー名",
         en: "Player name"
     },
     rows_header: {
         zh: "行",
-        ja: "行",//TODO
+        ja: "行",
         en: "Rows"
     },
     cols_header: {
         zh: "列",
-        ja: "列",//TODO
+        ja: "列",
         en: "Columns"
     },
     score_header: {
         zh: "用时/秒",
-        ja: "",//TODO
+        ja: "経過時間 (秒)",
         en: "Time spent (second)"
     },
     time_header: {
         zh: "时间",
-        ja: "",//TODO
+        ja: "時間",
         en: "Time"
     },
     relation: {
         zh: "各查询条件之间的关系：",
-        ja: "各検索条件間の関係：",//TODO
+        ja: "各検索条件間の関係: ",
         en: "The relation among the query conditions:"
     },
     and_label: {
         zh: "AND（与）",
-        ja: "AND（論理積）",//TODO
+        ja: "AND（論理積）",
         en: "AND"
     },
     or_label: {
         zh: "OR（或）",
-        ja: "OR（論理和）",//TODO
+        ja: "OR（論理和）",
         en: "OR"
     },
     use_regex_label: {
         zh: "使用正则表达式",
-        ja: "",//TODO
+        ja: "正規表現を使う",
         en: "Use regular expressions"
     },
     case_sensitive_label: {
         zh: "区分大小写",
-        ja: "",//TODO
+        ja: "大文字と小文字を区別する",
         en: "Case sensitive"
     },
     scoreboard: {
         zh: "计分板",
-        ja: "スコアボード",//TODO
+        ja: "スコアボード",
         en: "Scoreboard"
     },
     reset: {
         zh: "重置",
-        ja: "リセット",//TODO
+        ja: "リセット",
         en: "Reset"
     },
     update: {
         zh: "更新数据",
-        ja: "データを更新する",//TODO
+        ja: "データを更新する",
         en: "Update the data"
     },
     search: {
         zh: "搜索",
-        ja: "検索",//TODO
+        ja: "検索",
         en: "Search"
     },
     loading: {
         zh: "加载中……",
-        ja: "読み込み中……",//TODO
+        ja: "読み込み中……",
         en: "Loading..."
     },
     retry: {
         zh: "重试",
-        ja: "再試行",//TODO
+        ja: "再試行",
         en: "Retry"
     },
     cancel: {
         zh: "取消",
-        ja: "キャンセル",//TODO
+        ja: "キャンセル",
         en: "Cancel"
     }
 };
@@ -299,18 +299,18 @@ function match(record) {
 
     if (document.getElementById("use_regex").checked) {
         player_name_matched = player_name_regex === null || player_name_regex.test(record[0]);
-               rows_matched =        rows_regex === null ||        rows_regex.test(record[1]);
-               cols_matched =        cols_regex === null ||        cols_regex.test(record[2]);
-              score_matched =       score_regex === null ||       score_regex.test(record[3]);
-               time_matched =        time_regex === null ||        time_regex.test(record[4]);
+        rows_matched = rows_regex === null || rows_regex.test(record[1]);
+        cols_matched = cols_regex === null || cols_regex.test(record[2]);
+        score_matched = score_regex === null || score_regex.test(record[3]);
+        time_matched = time_regex === null || time_regex.test(record[4]);
     } else {
         if (!document.getElementById("case_sensitive").checked)
             record = record.map(value => value.toUpperCase());
         player_name_matched = player_name === "" || record[0].includes(player_name);
-               rows_matched =        rows === "" || record[1].includes(rows);
-               cols_matched =        cols === "" || record[2].includes(cols);
-              score_matched =       score === "" || record[3].includes(score);
-               time_matched =        time === "" || record[4].includes(time);
+        rows_matched = rows === "" || record[1].includes(rows);
+        cols_matched = cols === "" || record[2].includes(cols);
+        score_matched = score === "" || record[3].includes(score);
+        time_matched = time === "" || record[4].includes(time);
     }
 
     switch (and_or) {
@@ -318,10 +318,10 @@ function match(record) {
             return player_name_matched && rows_matched && cols_matched && score_matched && time_matched;
         case "or":
             return (player_name !== "" && player_name_matched)
-                || (       rows !== "" && rows_matched)
-                || (       cols !== "" && cols_matched)
-                || (      score !== "" && score_matched)
-                || (       time !== "" && time_matched);
+                || (rows !== "" && rows_matched)
+                || (cols !== "" && cols_matched)
+                || (score !== "" && score_matched)
+                || (time !== "" && time_matched);
     }
 }
 
@@ -340,10 +340,10 @@ function search() {
     if (document.getElementById("use_regex").checked) {
         const flags = document.getElementById("case_sensitive").checked ? "" : "i";
         player_name_regex = player_name !== "" ? new RegExp(player_name, flags) : null;
-               rows_regex =        rows !== "" ? new RegExp(rows, flags) : null;
-               cols_regex =        cols !== "" ? new RegExp(cols, flags) : null;
-              score_regex =       score !== "" ? new RegExp(score, flags) : null;
-               time_regex =        time !== "" ? new RegExp(time, flags) : null;
+        rows_regex = rows !== "" ? new RegExp(rows, flags) : null;
+        cols_regex = cols !== "" ? new RegExp(cols, flags) : null;
+        score_regex = score !== "" ? new RegExp(score, flags) : null;
+        time_regex = time !== "" ? new RegExp(time, flags) : null;
     } else {
         if (!document.getElementById("case_sensitive").checked)
             [player_name, rows, cols, score, time] = [player_name, rows, cols, score, time].map(value => value.toUpperCase());
