@@ -6,97 +6,97 @@ let csv_file_count = parseInt(localStorage.csv_file_count) || 0;
 const UI_text = {
     title: {
         zh: "计分板全量数据库搜索",
-        ja: "",//TODO
+        ja: "スコアボード 全データベース検索",
         en: "Scoreboard Full Database Search"
     },
     introduction: {
         zh: "请在文本框中输入查询条件，支持正则表达式。",
-        ja: "",//TODO
+        ja: "検索条件を入力してください。正規表現が使えます。",
         en: "Please enter query conditions, regular expressions supported."
     },
     player_name_header: {
         zh: "玩家名",
-        ja: "プレイヤー名",//TODO
+        ja: "プレイヤー名",
         en: "Player name"
     },
     rows_header: {
         zh: "行",
-        ja: "行",//TODO
+        ja: "行",
         en: "Rows"
     },
     cols_header: {
         zh: "列",
-        ja: "列",//TODO
+        ja: "列",
         en: "Columns"
     },
     score_header: {
         zh: "用时/秒",
-        ja: "",//TODO
+        ja: "かかった時間（秒）",
         en: "Time spent (second)"
     },
     time_header: {
         zh: "时间",
-        ja: "",//TODO
+        ja: "時間",
         en: "Time"
     },
     relation: {
         zh: "各查询条件之间的关系：",
-        ja: "各検索条件間の関係：",//TODO
+        ja: "各検索条件間の関係: ",
         en: "The relation among the query conditions:"
     },
     and_label: {
         zh: "AND（与）",
-        ja: "AND（論理積）",//TODO
+        ja: "AND（論理積）",
         en: "AND"
     },
     or_label: {
         zh: "OR（或）",
-        ja: "OR（論理和）",//TODO
+        ja: "OR（論理和）",
         en: "OR"
     },
     use_regex_label: {
         zh: "使用正则表达式",
-        ja: "",//TODO
+        ja: "正規表現を使う",
         en: "Use regular expressions"
     },
     case_sensitive_label: {
         zh: "区分大小写",
-        ja: "",//TODO
+        ja: "大文字と小文字を区別する",
         en: "Case sensitive"
     },
     scoreboard: {
         zh: "计分板",
-        ja: "スコアボード",//TODO
+        ja: "スコアボード",
         en: "Scoreboard"
     },
     reset: {
         zh: "重置",
-        ja: "リセット",//TODO
+        ja: "リセット",
         en: "Reset"
     },
     update: {
         zh: "更新数据",
-        ja: "データを更新する",//TODO
+        ja: "データを更新する",
         en: "Update the data"
     },
     search: {
         zh: "搜索",
-        ja: "検索",//TODO
+        ja: "検索",
         en: "Search"
     },
     loading: {
         zh: "加载中……",
-        ja: "読み込み中……",//TODO
+        ja: "読み込み中……",
         en: "Loading..."
     },
     retry: {
         zh: "重试",
-        ja: "再試行",//TODO
+        ja: "再試行",
         en: "Retry"
     },
     cancel: {
         zh: "取消",
-        ja: "キャンセル",//TODO
+        ja: "キャンセル",
         en: "Cancel"
     }
 };
@@ -152,7 +152,7 @@ async function fetch_url(url, cancellable) {
                 fetch_fail = true;
                 const text_fetch_error = {
                     zh: `Fetch API抛出错误“${error}”，是否重试？`,
-                    ja: `Fetch APIに「${error}」というエラーが発生しました。再試行しますか？`,//TODO
+                    ja: `Fetch APIで「${error}」というエラーが発生しました。再試行しますか？`,
                     en: `Fetch API throws error "${error}", retry?`
                 };
                 retry = confirm(text_fetch_error[language]);
