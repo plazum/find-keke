@@ -2,6 +2,7 @@
 let issue_comments;
 let database = localStorage.database ? JSON.parse(localStorage.database) : false;
 let csv_file_count = parseInt(localStorage.csv_file_count) || 0;
+let database_uppercase;
 
 const UI_text = {
     title: {
@@ -89,6 +90,11 @@ const UI_text = {
         ja: "読み込み中……",
         en: "Loading..."
     },
+    failed: {
+        zh: "加载失败",
+        ja: "読み込みに失敗しました",
+        en: "Failed to load"
+    },
     retry: {
         zh: "重试",
         ja: "再試行",
@@ -100,7 +106,8 @@ const UI_text = {
         en: "Cancel"
     }
 };
-const UI_element_id = Object.keys(UI_text);
+const UI_text_exclusion = ["loading", "failed"];
+const UI_element_id = Object.keys(UI_text).filter(value => !UI_text_exclusion.includes(value));
 const UI_element_id2 = ["player_name_header", "rows_header", "cols_header", "score_header", "time_header"];
 
 function set_language(value) {
@@ -131,6 +138,7 @@ function set_language(value) {
 window.addEventListener("message", event => set_language(event.data), false);
 
 async function fetch_url(url, cancellable) {
+    document.getElementById("status").textContent = UI_text.loading[language];
     document.getElementById("progress_bar").style.display = "";
     document.getElementById("buttons").style.display = "none";
     document.getElementById("cancel").style.display = cancellable ? "" : "none";
@@ -178,6 +186,7 @@ async function fetch_url(url, cancellable) {
         }
     } while (retry);
     if (result === null) {
+        document.getElementById("status").textContent = UI_text.failed[language];
         document.getElementById("progress_bar").style.display = "none";
         document.getElementById("buttons").style.display = "";
     } else {
@@ -239,9 +248,23 @@ function render() {
     set_language(language);
 }
 
+function cache_database_uppercase() {
+    database_uppercase = [];
+    for (let i = 0; i < database.length; i++) {
+        database_uppercase.push([]);
+        for (let j = 0; j < database[i].length; j++) {
+            database_uppercase[i].push(database[i][j].map(value => value.toUpperCase()));
+        }
+    }
+}
+
 async function prepare() {
-    if (!localStorage.latest_update_time || (Date.now() - parseInt(localStorage.latest_update_time) >= 86400000)) {
-        const comments = await fetch_url("https://api.github.com/repos/plazum/find-keke/issues/5/comments", false);
+    if (!database || (Date.now() - parseInt(localStorage.latest_update_time) >= 86400000)) {
+        const comments = database ?
+            await fetch_url("https://api.github.com/repos/plazum/find-keke/issues/5/comments", true)
+            :
+            await fetch_url("https://api.github.com/repos/plazum/find-keke/issues/5/comments", false)
+        ;
         if (comments) {
             issue_comments = comments;
             compute();
@@ -250,6 +273,7 @@ async function prepare() {
         }
     }
     render();
+    cache_database_uppercase();
 }
 
 // 因为按钮的id为update，所以在onclick函数中的名字update将指向button#update，而不是函数update()，
@@ -261,11 +285,12 @@ async function update() {
         issue_comments = comments;
         compute();
         render();
+        cache_database_uppercase();
     }
 }
 
 function retry() {
-    if (!localStorage.latest_update_time)
+    if (!database)
         prepare();
     else
         update();
@@ -304,8 +329,6 @@ function match(record) {
               score_matched =       score_regex === null ||       score_regex.test(record[3]);
                time_matched =        time_regex === null ||        time_regex.test(record[4]);
     } else {
-        if (!document.getElementById("case_sensitive").checked)
-            record = record.map(value => value.toUpperCase());
         player_name_matched = player_name === "" || record[0].includes(player_name);
                rows_matched =        rows === "" || record[1].includes(rows);
                cols_matched =        cols === "" || record[2].includes(cols);
@@ -350,11 +373,13 @@ function search() {
     }
 
     let result = "";
+    const database_used = document.getElementById("case_sensitive").checked ? database : database_uppercase;
     for (let i = 0; i < database.length; i++) {
         if (!document.getElementById(i.toString()).checked)
             continue;
-        for (const record of database[i]) {
-            if (match(record)) {
+        for (let j = 0; j < database[i].length; j++) {
+            if (match(database_used[i][j])) {
+                const record = database[i][j];
                 if (record[5] === "best")
                     result += `<tr><td><b>${i + 1}</b></td><td><b>${record[0]}</b></td><td><b>${record[1]}</b></td>`
                         + `<td><b>${record[2]}</b></td><td><b>${record[3]}</b></td><td><b>${record[4]}</b></td></tr>`;
