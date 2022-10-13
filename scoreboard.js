@@ -31,7 +31,7 @@ const UI_text = {
     },
     score_header: {
         zh: "用时/秒",
-        ja: "経過時間 (秒)",
+        ja: "かかった時間（秒）",
         en: "Time spent (second)"
     },
     time_header: {
@@ -152,7 +152,7 @@ async function fetch_url(url, cancellable) {
                 fetch_fail = true;
                 const text_fetch_error = {
                     zh: `Fetch API抛出错误“${error}”，是否重试？`,
-                    ja: `Fetch APIに「${error}」というエラーが発生しました。再試行しますか？`,//TODO
+                    ja: `Fetch APIで「${error}」というエラーが発生しました。再試行しますか？`,
                     en: `Fetch API throws error "${error}", retry?`
                 };
                 retry = confirm(text_fetch_error[language]);
@@ -299,18 +299,18 @@ function match(record) {
 
     if (document.getElementById("use_regex").checked) {
         player_name_matched = player_name_regex === null || player_name_regex.test(record[0]);
-        rows_matched = rows_regex === null || rows_regex.test(record[1]);
-        cols_matched = cols_regex === null || cols_regex.test(record[2]);
-        score_matched = score_regex === null || score_regex.test(record[3]);
-        time_matched = time_regex === null || time_regex.test(record[4]);
+               rows_matched =        rows_regex === null ||        rows_regex.test(record[1]);
+               cols_matched =        cols_regex === null ||        cols_regex.test(record[2]);
+              score_matched =       score_regex === null ||       score_regex.test(record[3]);
+               time_matched =        time_regex === null ||        time_regex.test(record[4]);
     } else {
         if (!document.getElementById("case_sensitive").checked)
             record = record.map(value => value.toUpperCase());
         player_name_matched = player_name === "" || record[0].includes(player_name);
-        rows_matched = rows === "" || record[1].includes(rows);
-        cols_matched = cols === "" || record[2].includes(cols);
-        score_matched = score === "" || record[3].includes(score);
-        time_matched = time === "" || record[4].includes(time);
+               rows_matched =        rows === "" || record[1].includes(rows);
+               cols_matched =        cols === "" || record[2].includes(cols);
+              score_matched =       score === "" || record[3].includes(score);
+               time_matched =        time === "" || record[4].includes(time);
     }
 
     switch (and_or) {
@@ -318,10 +318,10 @@ function match(record) {
             return player_name_matched && rows_matched && cols_matched && score_matched && time_matched;
         case "or":
             return (player_name !== "" && player_name_matched)
-                || (rows !== "" && rows_matched)
-                || (cols !== "" && cols_matched)
-                || (score !== "" && score_matched)
-                || (time !== "" && time_matched);
+                || (       rows !== "" && rows_matched)
+                || (       cols !== "" && cols_matched)
+                || (      score !== "" && score_matched)
+                || (       time !== "" && time_matched);
     }
 }
 
@@ -340,10 +340,10 @@ function search() {
     if (document.getElementById("use_regex").checked) {
         const flags = document.getElementById("case_sensitive").checked ? "" : "i";
         player_name_regex = player_name !== "" ? new RegExp(player_name, flags) : null;
-        rows_regex = rows !== "" ? new RegExp(rows, flags) : null;
-        cols_regex = cols !== "" ? new RegExp(cols, flags) : null;
-        score_regex = score !== "" ? new RegExp(score, flags) : null;
-        time_regex = time !== "" ? new RegExp(time, flags) : null;
+               rows_regex =        rows !== "" ? new RegExp(rows, flags) : null;
+               cols_regex =        cols !== "" ? new RegExp(cols, flags) : null;
+              score_regex =       score !== "" ? new RegExp(score, flags) : null;
+               time_regex =        time !== "" ? new RegExp(time, flags) : null;
     } else {
         if (!document.getElementById("case_sensitive").checked)
             [player_name, rows, cols, score, time] = [player_name, rows, cols, score, time].map(value => value.toUpperCase());

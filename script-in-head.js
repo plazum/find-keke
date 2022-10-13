@@ -354,12 +354,12 @@ const UI_text = {
     },
     scoreboard_search: {
         zh: "计分板搜索",
-        ja: "スコアボード検索",//TODO
+        ja: "スコアボード検索",
         en: "Scoreboard Search"
     },
     open_in_new_tab: {
         zh: "在新标签页中打开",
-        ja: "新しいタブで開く",//TODO
+        ja: "新しいタブで開く",
         en: "Open in new tab"
     },
     classic_mode: {
@@ -404,7 +404,7 @@ const UI_text = {
     },
     debug_link: {
         zh: "想要一击必胜？点此前往调试模式",
-        ja: "ワンクリックで勝ちたい？ デバッグモードを使うにはここをクリック",
+        ja: "ワンクリックで勝ちたい？ここをクリックしてデバッグモードへ",
         en: "Want to win at a single click? Click here for Debug Mode"
     },
     new_game: {
@@ -419,7 +419,7 @@ const UI_text = {
     },
     wrong: {
         zh: "不是这个哦，请再试一次。",
-        ja: "間違いました。もう一度お試しください。",
+        ja: "間違っちゃったよ。もう一度やってみてね。",
         en: "Wrong. Please try again."
     },
     give_up: {
@@ -517,7 +517,7 @@ function set_language(value) {
         placeholder[language][Math.floor(Math.random() * placeholder.zh.length)]
         :
         "test（本地开发测试用）"
-        ;
+    ;
     if (document.getElementById("result").style.display !== "none")
         write_result();
     if (document.getElementById("upload_status").style.display !== "none")
