@@ -37,7 +37,7 @@
       button:lang(ja) {
         font-size: larger;
       }
-      #relation:lang(en) {
+      #relation:lang(en), #and_label:lang(en) {
         margin-right: 0.5em;
       }
       .options {
@@ -45,6 +45,17 @@
         align-items: center;
         justify-content: center;
         margin: 1.5em;
+      }
+      #previous_page, #next_page {
+        font-size: larger;
+      }
+      #previous_page::before {
+        content: "←";
+        font-size: x-large;
+      }
+      #next_page::after {
+        content: "→";
+        font-size: x-large;
       }
     </style>
     <link rel="icon" href="keke-big.jpg">
@@ -104,6 +115,18 @@
             <th id="cols_header2"></th>
             <th id="score_header2"></th>
             <th id="time_header2"></th>
+          </tr>
+          <tr>
+            <th id="total" colspan="6">-</th>
+          </tr>
+          <tr>
+            <td colspan="6">
+              <span style="display: flex; justify-content: space-between; align-items: center;">
+                <button id="previous_page" onclick="render_result(current_page - 1)" disabled></button>
+                <span id="page"></span>
+                <button id="next_page" onclick="render_result(current_page + 1)" disabled></button>
+              </span>
+            </td>
           </tr>
         </thead>
         <tbody id="result"></tbody>

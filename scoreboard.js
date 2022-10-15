@@ -3,6 +3,7 @@ let issue_comments;
 let database = localStorage.database ? JSON.parse(localStorage.database) : false;
 let csv_file_count = parseInt(localStorage.csv_file_count) || 0;
 let database_uppercase;
+let result, count, current_page;
 
 const UI_text = {
     title: {
@@ -42,7 +43,7 @@ const UI_text = {
     },
     relation: {
         zh: "各查询条件之间的关系：",
-        ja: "各検索条件間の関係: ",
+        ja: "各検索条件間の関係：",
         en: "The relation among the query conditions:"
     },
     and_label: {
@@ -104,6 +105,16 @@ const UI_text = {
         zh: "取消",
         ja: "キャンセル",
         en: "Cancel"
+    },
+    previous_page: {
+        zh: "上一页",
+        ja: "前へ",
+        en: "Previous page"
+    },
+    next_page: {
+        zh: "下一页",
+        ja: "次へ",
+        en: "Next page"
     }
 };
 const UI_text_exclusion = ["loading", "failed"];
@@ -123,16 +134,10 @@ function set_language(value) {
     for (const id of UI_element_id2) {
         document.getElementById(id + "2").textContent = UI_text[id][language];
     }
-    if (document.getElementById("label_0")) {
-        for (let i = 0; i < database.length; i++) {
-            const scoreboard_checkbox_label = {
-                zh: `${UI_text.scoreboard.zh}${i + 1}（${database[i].length}）`,
-                ja: `${UI_text.scoreboard.ja}${i + 1}（${database[i].length}）`,
-                en: `${UI_text.scoreboard.en} ${i + 1} (${database[i].length})`
-            };
-            document.getElementById("label_" + i).textContent = scoreboard_checkbox_label[language];
-        }
-    }
+    if (document.getElementById("label_0"))
+        write_filter_label();
+    if (document.getElementById("total").textContent !== "-")
+        write_result_count();
 }
 
 window.addEventListener("message", event => set_language(event.data), false);
@@ -232,7 +237,18 @@ function compute() {
     localStorage.latest_update_time = Date.now();
 }
 
-function render() {
+function write_filter_label() {
+    for (let i = 0; i < database.length; i++) {
+        const scoreboard_checkbox_label = {
+            zh: `${UI_text.scoreboard.zh}${i + 1}（${database[i].length}）`,
+            ja: `${UI_text.scoreboard.ja}${i + 1}（${database[i].length}）`,
+            en: `${UI_text.scoreboard.en} ${i + 1} (${database[i].length})`
+        };
+        document.getElementById("label_" + i).textContent = scoreboard_checkbox_label[language];
+    }
+}
+
+function render_filter() {
     let scoreboard_filter = "";
 
     for (let i = 0; i < database.length; i++) {
@@ -245,7 +261,7 @@ function render() {
     }
 
     document.getElementById("scoreboard_filter").innerHTML = scoreboard_filter;
-    set_language(language);
+    write_filter_label();
 }
 
 function cache_database_uppercase() {
@@ -272,7 +288,7 @@ async function prepare() {
             return;
         }
     }
-    render();
+    render_filter();
     cache_database_uppercase();
 }
 
@@ -284,7 +300,7 @@ async function update() {
     if (comments) {
         issue_comments = comments;
         compute();
-        render();
+        render_filter();
         cache_database_uppercase();
     }
 }
@@ -348,6 +364,40 @@ function match(record) {
     }
 }
 
+function write_result_count() {
+    const total = {
+        zh: `共找到${count}个结果。`,
+        ja: `${count}件の結果が見つかりました。`,
+        en: `${count} result${count === 1 ? "" : "s"} in total.`
+    };
+    document.getElementById("total").textContent = total[language];
+}
+
+function render_result(page) {
+    current_page = page;
+    let result_html = "";
+    for (let i = page * 1000; i < count && i < (page + 1) * 1000; i++) {
+        const record = result[i];
+        if (record[6] === "best")
+            result_html += `<tr><td><b>${record[0]}</b></td><td><b>${record[1]}</b></td><td><b>${record[2]}</b></td>`
+                + `<td><b>${record[3]}</b></td><td><b>${record[4]}</b></td><td><b>${record[5]}</b></td></tr>`;
+        else
+            result_html += `<tr><td>${record[0]}</td><td>${record[1]}</td><td>${record[2]}</td>`
+                + `<td>${record[3]}</td><td>${record[4]}</td><td>${record[5]}</td></tr>`;
+    }
+    let page_html = [];
+    for (let i = 0; i < Math.ceil(count / 1000); i++) {
+        if (i !== page)
+            page_html.push(`<a href="javascript:void(0);" onclick="render_result(${i})">${i + 1}</a>`);
+        else
+            page_html.push(`<b>${i + 1}</b>`);
+    }
+    document.getElementById("result").innerHTML = result_html;
+    document.getElementById("previous_page").disabled = page <= 0;
+    document.getElementById("next_page").disabled = page >= Math.ceil(count / 1000) - 1;
+    document.getElementById("page").innerHTML = page_html.join(" ");
+}
+
 // 和上面的update()同样理由，因为和<form>当中的button#search重名了，所以要用window.search()的方式调用
 function search() {
     [player_name, rows, cols, score, time] = [
@@ -372,22 +422,17 @@ function search() {
             [player_name, rows, cols, score, time] = [player_name, rows, cols, score, time].map(value => value.toUpperCase());
     }
 
-    let result = "";
+    result = [];
     const database_used = document.getElementById("case_sensitive").checked ? database : database_uppercase;
     for (let i = 0; i < database.length; i++) {
         if (!document.getElementById(i.toString()).checked)
             continue;
         for (let j = 0; j < database[i].length; j++) {
-            if (match(database_used[i][j])) {
-                const record = database[i][j];
-                if (record[5] === "best")
-                    result += `<tr><td><b>${i + 1}</b></td><td><b>${record[0]}</b></td><td><b>${record[1]}</b></td>`
-                        + `<td><b>${record[2]}</b></td><td><b>${record[3]}</b></td><td><b>${record[4]}</b></td></tr>`;
-                else
-                    result += `<tr><td>${i + 1}</td><td>${record[0]}</td><td>${record[1]}</td>`
-                        + `<td>${record[2]}</td><td>${record[3]}</td><td>${record[4]}</td></tr>`;
-            }
+            if (match(database_used[i][j]))
+                result.push([i + 1].concat(database[i][j]));
         }
     }
-    document.getElementById("result").innerHTML = result;
+    count = result.length;
+    write_result_count();
+    render_result(0);
 }
