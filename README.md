@@ -8,6 +8,8 @@
 
 计分板和最高纪录：https://github.com/plazum/find-keke/issues/5
 
+计分板数据搜索：https://zrtech.org/find-keke/scoreboard
+
 ## 添加角色
 欢迎给本游戏添加角色！
 
