@@ -246,6 +246,9 @@ function write_filter_label() {
         };
         document.getElementById("label_" + i).textContent = scoreboard_checkbox_label[language];
     }
+    if (Math.ceil(database.length / 5) !== Math.ceil(csv_file_count / 5))
+        document.querySelector("#scoreboard_filter tr:last-child td").style.height
+            = `calc(${document.querySelector("#scoreboard_filter td").clientHeight}px - 1em)`;
 }
 
 function render_filter() {
