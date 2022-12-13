@@ -3,7 +3,7 @@ let issue_comments;
 let database = localStorage.database ? JSON.parse(localStorage.database) : false;
 let csv_file_count = parseInt(localStorage.csv_file_count) || 0;
 let database_uppercase;
-let result, count, current_page;
+let result, result_count, current_page;
 
 const UI_text = {
     title: {
@@ -71,10 +71,15 @@ const UI_text = {
         ja: "スコアボード",
         en: "Scoreboard"
     },
-    reset: {
-        zh: "重置",
-        ja: "リセット",
-        en: "Reset"
+    select_all: {
+        zh: "全选",
+        ja: "全選択",
+        en: "Select All"
+    },
+    deselect_all: {
+        zh: "全不选",
+        ja: "全解除",
+        en: "Deselect All"
     },
     update: {
         zh: "更新数据",
@@ -82,9 +87,14 @@ const UI_text = {
         en: "Update the data"
     },
     search: {
-        zh: "搜索",
-        ja: "検索",
-        en: "Search"
+        zh: "🔍搜索",
+        ja: "🔍検索",
+        en: "🔍Search"
+    },
+    reset: {
+        zh: "重置",
+        ja: "リセット",
+        en: "Reset"
     },
     loading: {
         zh: "加载中……",
@@ -246,6 +256,7 @@ function write_filter_label() {
         };
         document.getElementById("label_" + i).textContent = scoreboard_checkbox_label[language];
     }
+
     if (Math.ceil(database.length / 5) !== Math.ceil(csv_file_count / 5))
         document.querySelector("#scoreboard_filter tr:last-child td").style.height
             = `calc(${document.querySelector("#scoreboard_filter td").clientHeight}px - 1em)`;
@@ -334,6 +345,18 @@ function validate_all() {
     }
 }
 
+function select_all() {
+    for (let i = 0; i < database.length; i++) {
+        document.getElementById(i.toString()).checked = true;
+    }
+}
+
+function deselect_all() {
+    for (let i = 0; i < database.length; i++) {
+        document.getElementById(i.toString()).checked = false;
+    }
+}
+
 let player_name, rows, cols, score, time;
 let player_name_regex, rows_regex, cols_regex, score_regex, time_regex;
 
@@ -369,9 +392,9 @@ function match(record) {
 
 function write_result_count() {
     const total = {
-        zh: `共找到${count}个结果。`,
-        ja: `${count}件の結果が見つかりました。`,
-        en: `${count} result${count === 1 ? "" : "s"} in total.`
+        zh: `共找到${result_count}个结果。`,
+        ja: `${result_count}件の結果が見つかりました。`,
+        en: `${result_count} result${result_count === 1 ? "" : "s"} in total.`
     };
     document.getElementById("total").textContent = total[language];
 }
@@ -379,7 +402,7 @@ function write_result_count() {
 function render_result(page) {
     current_page = page;
     let result_html = "";
-    for (let i = page * 1000; i < count && i < (page + 1) * 1000; i++) {
+    for (let i = page * 1000; i < result_count && i < (page + 1) * 1000; i++) {
         const record = result[i];
         if (record[6] === "best")
             result_html += `<tr><td><b>${record[0]}</b></td><td><b>${record[1]}</b></td><td><b>${record[2]}</b></td>`
@@ -389,7 +412,7 @@ function render_result(page) {
                 + `<td>${record[3]}</td><td>${record[4]}</td><td>${record[5]}</td></tr>`;
     }
     let page_html = [];
-    for (let i = 0; i < Math.ceil(count / 1000); i++) {
+    for (let i = 0; i < Math.ceil(result_count / 1000); i++) {
         if (i !== page)
             page_html.push(`<a href="javascript:void(0);" onclick="render_result(${i})">${i + 1}</a>`);
         else
@@ -397,7 +420,7 @@ function render_result(page) {
     }
     document.getElementById("result").innerHTML = result_html;
     document.getElementById("previous_page").disabled = page <= 0;
-    document.getElementById("next_page").disabled = page >= Math.ceil(count / 1000) - 1;
+    document.getElementById("next_page").disabled = page >= Math.ceil(result_count / 1000) - 1;
     document.getElementById("page").innerHTML = page_html.join(" ");
 }
 
@@ -411,6 +434,10 @@ function search() {
         document.getElementById("time").value
     ];
     if (player_name === "" && rows === "" && cols === "" && score === "" && time === "")
+        return;
+    const selected_scoreboard_count = Array.from(document.getElementById("scoreboard_filter").getElementsByTagName("input"))
+        .reduce((sum, current) => sum + current.checked, 0);
+    if (selected_scoreboard_count === 0)
         return;
 
     if (document.getElementById("use_regex").checked) {
@@ -435,7 +462,7 @@ function search() {
                 result.push([i + 1].concat(database[i][j]));
         }
     }
-    count = result.length;
+    result_count = result.length;
     write_result_count();
     render_result(0);
 }

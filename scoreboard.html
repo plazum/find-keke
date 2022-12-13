@@ -31,10 +31,7 @@
       input:invalid {
         border: 2px dashed red;
       }
-      button:lang(zh), button:lang(en) {
-        font-size: x-large;
-      }
-      button:lang(ja) {
+      button {
         font-size: larger;
       }
       #relation:lang(en), #and_label:lang(en) {
@@ -101,9 +98,13 @@
         </div>
         <table id="scoreboard_filter" style="font-size: smaller; margin: auto;"></table>
         <div class="options">
-          <button id="reset" type="reset"></button>
-          <button id="update" type="button" style="margin: 0 1em;" onclick="window.update()"></button>
+          <button id="select_all" type="button" onclick="window.select_all()"></button>
+          <button id="deselect_all" type="button" style="margin: 0 1em;" onclick="window.deselect_all()"></button>
+          <button id="update" type="button" onclick="window.update()"></button>
+        </div>
+        <div class="options">
           <button id="search" type="submit"></button>
+          <button id="reset" type="reset" style="margin-left: 1em;"></button>
         </div>
       </form>
       <table>
