@@ -1,0 +1,69 @@
+# 在添加新的计分板csv文件时，更新计分板评论，在评论中添加指向csv文件的链接
+
+name: 更新csv文件链接
+
+permissions:
+  issues: write
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - '*.csv'
+
+jobs:
+  update-comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 更新计分板评论
+        uses: actions/github-script@v6
+        with:
+          script: |
+            // 获取csv文件的列表
+            const content = (await github.rest.repos.getContent({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            })).data;
+            console.log(content);
+            const csv = content.filter(v => v.name.endsWith(".csv"));
+            console.log(csv.length);
+            console.log(csv);
+
+            // 获取计分板评论ID列表和对应最新csv文件的评论ID
+            const id_list_body = (await github.rest.issues.getComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: 998955288
+            })).data.body;
+            console.log(id_list_body);
+            const id_list_line = id_list_body.split("\r\n", 1)[0];
+            console.log(id_list_line);
+            console.log(id_list_line.match(/\d+/g));
+            const id_list = Array.from(id_list_line.match(/\d+/g), v => parseInt(v));
+            console.log(id_list);
+            const id = id_list[csv.length - 1];
+            console.log(id);
+
+            // 获取对应最新csv文件的计分板评论，如果尚未取消对csv链接部分的注释，则取消注释并更新评论
+            let body = (await github.rest.issues.getComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: id
+            })).data.body;
+            console.log(body);
+            body = body.split("\n");
+            console.log(body);
+            if (body[2].startsWith("<!--")) {
+              body.splice(4, 1); // 如果先删前面的，后面的坐标会偏移
+              body.splice(2, 1);
+              body = body.join("\n");
+              console.log(body);
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: id,
+                body: body
+              });
+            }
