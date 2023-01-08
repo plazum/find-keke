@@ -168,7 +168,7 @@ function more_hint() {
 
 const fetch_wasm = fetch("get-token.wasm");
 async function get_token() {
-    let e = "!@l!BY!Q !2F!VF B3!Z !c !X3!_F!X3![l M  h  o3 mF!Z  q !Q !Q !BY!DF!a3 tY ]3!VF!DF {l!H  vF!KY!)F!BY z  B3!DF!BY!c !%l o3", l = (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])];
+    let e = "!@l!DF!X3!BY!Z !7l!2F!Q !6 !X3!2F >Y >Y [F il dF x3 vF IF x3 <l!DF IF!@l!)F B3 El!VF!MF h  [F rl El!2F!_F ]3!F3!X3!;F!Il M  <l!VF!]Y!=3 K3 `l kY >Y K3 @F!BY q  {l vF!\"3!Q !DF q !VF q !Rl dF!;F!_F!c !)F vF [F!%l ]3!_F _ !6 !]Y!;F IF mF mF x3!\"3 mF IF il mF mF El!BY!Il!=3 @F!$ !%l", l = (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])];
     if (d.getSeconds() % 2 === 0) { // A/B测试
         get_token.module = get_token.module || await WebAssembly.compileStreaming(fetch_wasm);
         get_token.encoder = get_token.encoder || new TextEncoder();
@@ -297,7 +297,8 @@ async function upload_score(arg) {
                 method: "POST",
                 headers: {
                     Accept: "application/vnd.github+json",
-                    Authorization: "token " + await get_token()
+                    Authorization: "token " + await get_token(),
+                    "X-GitHub-Api-Version": "2022-11-28"
                 },
                 body: JSON.stringify(data)
             }

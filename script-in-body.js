@@ -26,8 +26,25 @@ let images = [
         }
     },
 ];
+
+// 在春节期间（从腊月二十三到元宵节）默认勾选福字
+function during_the_spring_festival() {
+    // 北京时间的零点是协调世界时的负八点
+    const spring_festival = [
+        {
+            begin: Date.UTC(2023, 0, 14, -8),
+            end: Date.UTC(2023, 1, 6, -8)
+        }
+    ];
+    const now = Date.now();
+    for (const period of spring_festival)
+        if (period.begin <= now && now <= period.end)
+            return true;
+    return false;
+}
+
 document.getElementById("filter").innerHTML = images.map(
-    (val, idx) => '<input id="' + idx + '" type="checkbox"' + (val.filename !== "fu.png" ? ' checked' : '')
+    (val, idx) => '<input id="' + idx + '" type="checkbox"' + (val.filename !== "fu.png" || during_the_spring_festival() ? ' checked' : '')
         + ' onchange="generate_map(last_rows, last_cols)">'
         + '<label id="label_' + idx + '" for="' + idx + '"></label>'
 ).join(" ");
