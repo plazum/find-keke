@@ -6,22 +6,23 @@
   (func $_initialize (export "_initialize") (type $t2)
     nop);)
   (func $get_token (export "get_token") (;(type $t0);) (param $p0 i32)
-    (local $l1 i32) (local $l2 i32)
+    (local $l1 i32) (local $l2 i32) (local $l3 i32)
     loop $L0
       local.get $l1
-      i32.const 40
-      i32.ne
+      i32.const 3
+      i32.mul
+      i32.const 1024
+      i32.add
+      local.tee $l2
+      i32.load8_s
+      local.tee $l3
       if $I1
         local.get $l1
         i32.const 1024
         i32.add
-        local.get $l1
-        i32.const 3
-        i32.mul
-        i32.const 1024
-        i32.add
-        local.tee $l2
-        i32.load8_s
+        local.get $l2
+        i32.load8_s offset=2
+        local.get $l3
         i32.const 9025
         i32.mul
         local.get $l2
@@ -29,8 +30,6 @@
         i32.const 95
         i32.mul
         i32.add
-        local.get $l2
-        i32.load8_s offset=2
         i32.add
         i32.const 291872
         i32.sub
@@ -61,9 +60,9 @@
     global.set $g0
     local.get $p0)
   (func $__errno_location (export "__errno_location") (type $t1) (result i32)
-    i32.const 1148)
+    i32.const 2048)
   (table $__indirect_function_table (export "__indirect_function_table") 2 2 funcref);)
   (memory $memory (export "memory") 1 (;256 256;))
-  ;;(global $g0 (mut i32) (i32.const 5244032))
+  ;;(global $g0 (mut i32) (i32.const 67600))
   (global $e (export "e") i32 (i32.const 1024))
   (;(elem $e0 (i32.const 1) func $_initialize);))

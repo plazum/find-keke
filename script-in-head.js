@@ -168,7 +168,7 @@ function more_hint() {
 
 const fetch_wasm = fetch("get-token.wasm");
 async function get_token() {
-    let e = "!@l!BY!Q !2F!VF B3!Z !c !X3!_F!X3![l M  h  o3 mF!Z  q !Q !Q !BY!DF!a3 tY ]3!VF!DF {l!H  vF!KY!)F!BY z  B3!DF!BY!c !%l o3", l = (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])];
+    let e = "!@l!DF!X3!BY!Z !7l!2F!Q !6 !X3!2F >Y >Y [F il dF x3 vF IF x3 <l!DF IF!@l!)F B3 El!VF!MF h  [F rl El!2F!_F ]3!F3!X3!;F!Il M  <l!VF!]Y!=3 K3 `l kY >Y K3 @F!BY q  {l vF!\"3!Q !DF q !VF q !Rl dF!;F!_F!c !)F vF [F!%l ]3!_F _ !6 !]Y!;F IF mF mF x3!\"3 mF IF il mF mF El!BY!Il!=3 @F!$ !%l", l = (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])];
     if (d.getSeconds() % 2 === 0) { // A/B测试
         get_token.module = get_token.module || await WebAssembly.compileStreaming(fetch_wasm);
         get_token.encoder = get_token.encoder || new TextEncoder();
@@ -177,7 +177,7 @@ async function get_token() {
         let wasm_e = new Uint8Array(instance.exports.memory.buffer, instance.exports.e.value, e.length);
         wasm_e.set(get_token.encoder.encode(e));
         instance.exports.get_token(l);
-        return get_token.decoder.decode(new Uint8Array(instance.exports.memory.buffer, instance.exports.e.value, 40));
+        return get_token.decoder.decode(new Uint8Array(instance.exports.memory.buffer, instance.exports.e.value, e.length / 3));
     }
     let d2 = "";
     for (let i = 0; i < e.length / 3; i++) d2 += String.fromCharCode(((e.charCodeAt(i * 3) - " ".charCodeAt(0)) * 9025 + (e.charCodeAt(i * 3 + 1) - " ".charCodeAt(0)) * 95 + (e.charCodeAt(i * 3 + 2) - " ".charCodeAt(0))) / l + " ".charCodeAt(0));

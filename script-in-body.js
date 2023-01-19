@@ -27,24 +27,24 @@ let images = [
     },
 ];
 
+// 北京时间的零点是协调世界时的负八点
+const spring_festival = [
+    {
+        begin: Date.UTC(2023, 0, 14, -8),
+        end: Date.UTC(2023, 1, 6, -8)
+    }
+];
 // 在春节期间（从腊月二十三到元宵节）默认勾选福字
-function during_the_spring_festival() {
-    // 北京时间的零点是协调世界时的负八点
-    const spring_festival = [
-        {
-            begin: Date.UTC(2023, 0, 14, -8),
-            end: Date.UTC(2023, 1, 6, -8)
-        }
-    ];
+const during_the_spring_festival = (() => {
     const now = Date.now();
     for (const period of spring_festival)
         if (period.begin <= now && now <= period.end)
             return true;
     return false;
-}
+})();
 
 document.getElementById("filter").innerHTML = images.map(
-    (val, idx) => '<input id="' + idx + '" type="checkbox"' + (val.filename !== "fu.png" || during_the_spring_festival() ? ' checked' : '')
+    (val, idx) => '<input id="' + idx + '" type="checkbox"' + (val.filename !== "fu.png" || during_the_spring_festival ? ' checked' : '')
         + ' onchange="generate_map(last_rows, last_cols)">'
         + '<label id="label_' + idx + '" for="' + idx + '"></label>'
 ).join(" ");
@@ -58,5 +58,19 @@ const base_url = location.href.substring(0, location.href.lastIndexOf(debug ? "/
 const example_images = ["fu.jpg", "keke-big.jpg", "good.gif", "bubu.gif"];
 document.getElementById("example_url").innerHTML = example_images.map(value => "<option>" + base_url + value + "</option>").join("");
 document.getElementById("name").value = UI_text.example[language];
+
+const animals_of_the_years = [
+    ["🐭", "🐀"], ["🐮", "🐂"], ["🐯", "🐅"], ["🐰", "🐇"],
+    ["🐲", "🐉"], ["🐍", "🐍"], ["🐴", "🐎"], ["🐐", "🐏"],
+    ["🐵", "🐒"], ["🐔", "🐓"], ["🐶", "🐕"], ["🐷", "🐖"]
+];
+(() => {
+    // 计算当前是哪个生肖年，以2020年鼠年为基点
+    const shengxiao_index = (((new Date()).getFullYear() - 2020) % 12 + 12) % 12;
+    document.getElementById("bainian").firstElementChild.firstElementChild.textContent
+        = animals_of_the_years[shengxiao_index][0]
+        + document.getElementById("bainian").firstElementChild.firstElementChild.textContent
+        + animals_of_the_years[shengxiao_index][1];
+})();
 
 generate_map(14, 10);
