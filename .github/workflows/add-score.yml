@@ -49,7 +49,7 @@ jobs:
             const id_list_body = (await github.rest.issues.getComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              comment_id: 998955288
+              comment_id: 1605261184
             })).data.body;
             const id_list = id_list_body.split("\r\n", 3);
             console.log(id_list);
@@ -96,7 +96,7 @@ jobs:
               const new_comment = (await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: 5,
+                issue_number: 10,
                 body: "<!-->"
               })).data;
               console.log(new_comment);
@@ -108,7 +108,7 @@ jobs:
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                comment_id: 998955288,
+                comment_id: 1605261184,
                 body: new_id_list_body
               });
             }
@@ -152,7 +152,7 @@ jobs:
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                comment_id: 998955288,
+                comment_id: 1605261184,
                 body: new_id_list_body
               });
 
@@ -160,7 +160,7 @@ jobs:
               let issue_body = (await github.rest.issues.get({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: 5
+                issue_number: 10
               })).data.body;
               console.log(issue_body);
               issue_body = issue_body.replace(/\d+/, process.env.id2);
@@ -168,7 +168,7 @@ jobs:
               await github.rest.issues.update({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: 5,
+                issue_number: 10,
                 body: issue_body
               });
 

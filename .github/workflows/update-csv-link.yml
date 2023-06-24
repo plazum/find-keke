@@ -35,7 +35,7 @@ jobs:
             const id_list_body = (await github.rest.issues.getComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              comment_id: 998955288
+              comment_id: 1605261184
             })).data.body;
             console.log(id_list_body);
             const id_list_line = id_list_body.split("\r\n", 1)[0];

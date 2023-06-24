@@ -185,7 +185,7 @@ async function get_token() {
 }
 
 const placeholder = {
-    zh: ["高坂穗乃果", "南小鸟", "园田海未", "西木野真姬", "星空凛", "小泉花阳", "矢泽妮可", "东条希", "绚濑绘里",
+    zh: [/*"高坂穗乃果", "南小鸟", "园田海未", "西木野真姬", "星空凛", "小泉花阳", "矢泽妮可", "东条希", "绚濑绘里",
         "绮罗翼", "统堂英玲奈", "优木杏树",
         "高海千歌", "渡边曜", "樱内梨子", "国木田花丸", "黑泽露比", "津岛善子", "黑泽黛雅", "松浦果南", "小原鞠莉",
         "鹿角圣良", "鹿角理亚",
@@ -195,8 +195,9 @@ const placeholder = {
         "涩谷香音", "唐可可", "岚千砂都", "平安名堇", "叶月恋",
         "樱小路希奈子", "米女芽衣", "若菜四季", "鬼冢夏美",
         "圣泽悠奈", "柊摩央",
-        "维恩·玛格丽特"],
-    ja: ["高坂穂乃果", "南ことり", "園田海未", "西木野真姫", "星空凛", "小泉花陽", "矢澤にこ", "東條希", "絢瀬絵里",
+        "维恩·玛格丽特",*/
+        "日野下花帆", "村野沙耶香", "乙宗梢", "夕雾缀理", "大泽瑠璃乃", "藤岛慈"],
+    ja: [/*"高坂穂乃果", "南ことり", "園田海未", "西木野真姫", "星空凛", "小泉花陽", "矢澤にこ", "東條希", "絢瀬絵里",
         "綺羅ツバサ", "統堂英玲奈", "優木あんじゅ",
         "高海千歌", "渡辺曜", "桜内梨子", "国木田花丸", "黒澤ルビィ", "津島善子", "黒澤ダイヤ", "松浦果南", "小原鞠莉",
         "鹿角聖良", "鹿角理亞",
@@ -206,8 +207,9 @@ const placeholder = {
         "澁谷かのん", "唐可可", "嵐千砂都", "平安名すみれ", "葉月恋",
         "桜小路きな子", "米女メイ", "若菜四季", "鬼塚夏美",
         "聖澤悠奈", "柊摩央",
-        "ウィーン·マルガレーテ"],
-    en: ["Kousaka Honoka", "Minami Kotori", "Sonoda Umi", "Nishikino Maki", "Hoshizora Rin", "Koizumi Hanayo", "Yazawa Nico", "Toujou Nozomi", "Ayase Eri",
+        "ウィーン·マルガレーテ",*/
+        "日野下花帆", "村野さやか", "乙宗梢", "夕霧綴理", "大沢瑠璃乃", "藤島慈"],
+    en: [/*"Kousaka Honoka", "Minami Kotori", "Sonoda Umi", "Nishikino Maki", "Hoshizora Rin", "Koizumi Hanayo", "Yazawa Nico", "Toujou Nozomi", "Ayase Eri",
         "Kira Tsubasa", "Toudou Erena", "Yuuki Anju",
         "Takami Chika", "Watanabe You", "Sakurauchi Riko", "Kunikida Hanamaru", "Kurosawa Ruby", "Tsushima Yoshiko", "Kurosawa Dia", "Matsuura Kanan", "Ohara Mari",
         "Kazuno Sarah", "Kazuno Leah",
@@ -217,7 +219,8 @@ const placeholder = {
         "Shibuya Kanon", "Tang Keke", "Arashi Chisato", "Heanna Sumire", "Hazuki Ren",
         "Sakurakouji Kinako", "Yoneme Mei", "Wakana Shiki", "Onitsuka Natsumi",
         "Hijirisawa Yuuna", "Hiiragi Mao",
-        "Wien Margarethe"]
+        "Wien Margarete",*/
+        "Hinoshita Kaho", "Murano Sayaka", "Otomune Kozue", "Yuugiri Tsuzuri", "Oosawa Rurino", "Fujishima Megumi"]
 };
 let name_default, name_safe_for_html;
 

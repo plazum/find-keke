@@ -217,7 +217,7 @@ function compute() {
     database = [];
     csv_file_count = 0;
 
-    const scoreboard_comment_ids = issue_comments[14].body.split("\r\n", 1)[0].match(/\d+/g).map(value => parseInt(value));
+    const scoreboard_comment_ids = issue_comments[0].body.split("\r\n", 1)[0].match(/\d+/g).map(value => parseInt(value));
     for (const comment of issue_comments) {
         if (scoreboard_comment_ids.includes(comment.id)) {
             const index = database.length;
@@ -291,9 +291,9 @@ function cache_database_uppercase() {
 async function prepare() {
     if (!database || (Date.now() - parseInt(localStorage.latest_update_time) >= 86400000)) {
         const comments = database ?
-            await fetch_url("https://api.github.com/repos/plazum/find-keke/issues/5/comments", true)
+            await fetch_url("https://api.github.com/repos/plazum/find-keke/issues/11/comments", true)
             :
-            await fetch_url("https://api.github.com/repos/plazum/find-keke/issues/5/comments", false)
+            await fetch_url("https://api.github.com/repos/plazum/find-keke/issues/11/comments", false)
         ;
         if (comments) {
             issue_comments = comments;
@@ -310,7 +310,7 @@ async function prepare() {
 // 这是因为onclick函数with了所在的<form>，而<form>.update即为该按钮，
 // 所以在onclick函数中调用的时候要用window.update()
 async function update() {
-    const comments = await fetch_url("https://api.github.com/repos/plazum/find-keke/issues/5/comments", true);
+    const comments = await fetch_url("https://api.github.com/repos/plazum/find-keke/issues/11/comments", true);
     if (comments) {
         issue_comments = comments;
         compute();
