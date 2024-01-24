@@ -6,7 +6,9 @@
 - （短网址：[zrtech.org/tkk_debug](https://zrtech.org/tkk_debug)）
 - 后者跟前者唯一的不同是无论点哪个都能赢。设计这个一开始是为了测试网速的影响（有人反映图片加载慢导致他的计时不准），但是现在由于可以在不刷新页面的情况下开始一局新的游戏，所以这个的作用也就没有那么大了。
 
-计分板和最高纪录：https://github.com/plazum/find-keke/issues/5
+计分板和最高纪录（二代目，最新）：https://github.com/plazum/find-keke/issues/10
+
+计分板和最高纪录（一代目）：https://github.com/plazum/find-keke/issues/11
 
 计分板数据搜索：https://zrtech.org/find-keke/scoreboard
 

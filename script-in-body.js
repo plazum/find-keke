@@ -27,20 +27,16 @@ let images = [
     },
 ];
 
-// 北京时间的零点是协调世界时的负八点
-const spring_festival = [
-    {
-        begin: Date.UTC(2023, 0, 14, -8),
-        end: Date.UTC(2023, 1, 6, -8)
-    }
-];
 // 在春节期间（从腊月二十三到元宵节）默认勾选福字
 const during_the_spring_festival = (() => {
-    const now = Date.now();
-    for (const period of spring_festival)
-        if (period.begin <= now && now <= period.end)
-            return true;
-    return false;
+    const date = new Date();
+    const spring_festival = /腊月((廿[三四五六七八九])|三十)|正月(初[一二三四五六七八九十]|十[一二三四五])/;
+    const date_in_Chinese_calendar = date.toLocaleString("zh-CN", {
+        dateStyle: "long",
+        calendar: "chinese",
+        timeZone: "Asia/Shanghai"
+    });
+    return spring_festival.test(date_in_Chinese_calendar);
 })();
 
 document.getElementById("filter").innerHTML = images.map(

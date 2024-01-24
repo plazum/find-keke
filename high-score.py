@@ -92,7 +92,7 @@ for i in range(len(record_list)):
 
 with open(".idea/processed.txt", "w", encoding="utf-8") as f:
     prev_id = re.search(r"\d+", lines[0]).group()
-    f.write("# 查看其他计分板：<!--[下一个](#issuecomment-next_id)、-->[上一个](#issuecomment-" + prev_id + ")\n")
+    f.write("# 查看其他计分板：[上一个](#issuecomment-" + prev_id + ")<!--、[下一个](#issuecomment-next_id)-->\n")
     f.write("<!--\n本计分板已经达到长度限制，无法继续更新。感谢大家的热情支持！\n")
     f.write("为了供有需要的人更方便地研究数据，在此提供以CSV格式存储的数据，文件编码为GBK，可以直接在Excel中打开：")
     f.write("https://zrtech.org/find-keke/scoreboard-" + board_num + ".csv\n-->\n")

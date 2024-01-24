@@ -88,7 +88,7 @@ function finish() {
         set_cross_shadow("answer");
     document.getElementById("hint").disabled = true;
     document.getElementById("more_hint").disabled = true;
-    document.getElementById("scoreboard").style.display = "none";
+    document.getElementById("scoreboard_and_search").style.display = "none";
     window.scrollTo({ top: 0, behavior: "smooth" });
     if (!debug && !hinted && in_time_limit)
         upload_score(arguments);
@@ -143,7 +143,7 @@ function reset() {
     document.getElementById("time2").style.display = "none";
     document.getElementById("bubu").style.display = "none";
     document.getElementById("upload_status").style.display = "none";
-    document.getElementById("scoreboard").style.display = "";
+    document.getElementById("scoreboard_and_search").style.display = "";
     document.getElementById("good_video").pause();
     document.getElementById("bubu_video").pause();
     document.getElementById("hint").disabled = false;
