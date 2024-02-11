@@ -71,7 +71,7 @@ jobs:
             await io.mkdirP(".idea");
             fs.writeFileSync(".idea/comment.txt", body);
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
       - name: 生成新评论
