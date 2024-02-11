@@ -30,13 +30,17 @@ let images = [
 // 在春节期间（从腊月二十三到元宵节）默认勾选福字
 const during_the_spring_festival = (() => {
     const date = new Date();
-    const spring_festival = /腊月((廿[三四五六七八九])|三十)|正月(初[一二三四五六七八九十]|十[一二三四五])/;
+    const spring_festival_chromium = /腊月((廿[三四五六七八九])|三十)|正月(初[一二三四五六七八九十]|十[一二三四五])/;
+    const spring_festival_firefox = /\d\d(12(23|24|25|26|27|28|29|30)|01(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15))/;
+    const spring_festival_safari = /腊月(23|24|25|26|27|28|29|30)$|正月(1|2|3|4|5|6|7|8|9|10|11|12|13|14|15)$/;
     const date_in_Chinese_calendar = date.toLocaleString("zh-CN", {
         dateStyle: "long",
         calendar: "chinese",
         timeZone: "Asia/Shanghai"
     });
-    return spring_festival.test(date_in_Chinese_calendar);
+    return spring_festival_chromium.test(date_in_Chinese_calendar)
+        || spring_festival_firefox.test(date_in_Chinese_calendar)
+        || spring_festival_safari.test(date_in_Chinese_calendar);
 })();
 
 document.getElementById("filter").innerHTML = images.map(
