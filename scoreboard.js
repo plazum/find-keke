@@ -1,9 +1,17 @@
 "use strict";
 let issue_comments;
-let database = localStorage.database ? JSON.parse(localStorage.database) : false;
+let database = [];
 let csv_file_count = parseInt(localStorage.csv_file_count) || 0;
 let database_uppercase;
 let result, result_count, current_page;
+
+const issue_comments_urls = [
+    "https://api.github.com/repos/plazum/find-keke/issues/11/comments",
+    "https://api.github.com/repos/plazum/find-keke/issues/10/comments"
+];
+
+for (let i = 1; localStorage["database_" + i]; i++)
+    database.push(JSON.parse(localStorage["database_" + i]));
 
 const UI_text = {
     title: {
@@ -152,22 +160,28 @@ function set_language(value) {
 
 window.addEventListener("message", event => set_language(event.data), false);
 
-async function fetch_url(url, cancellable) {
+async function fetch_urls(urls, cancellable) {
     document.getElementById("status").textContent = UI_text.loading[language];
     document.getElementById("progress_bar").style.display = "";
     document.getElementById("buttons").style.display = "none";
     document.getElementById("cancel").style.display = cancellable ? "" : "none";
     if (!document.getElementById("loading_dialog").hasAttribute("open"))
         open_dialog("loading_dialog");
+
     let retry = true;
-    let result = null;
+    let result = [];
+    let index = 0;
+
     do {
+        document.getElementById("progress_bar").value = index + 1;
+
         let fetch_fail = false;
         const response = await fetch(
-            url,
+            urls[index],
             {
                 headers: {
-                    Accept: "application/vnd.github+json"
+                    Accept: "application/vnd.github+json",
+                    "X-GitHub-Api-Version": "2022-11-28"
                 }
             }
         )
@@ -188,25 +202,30 @@ async function fetch_url(url, cancellable) {
         }
 
         if (response.ok) {
-            result = await response.json();
-            break;
+            const comments_json = await response.json();
+            result = result.concat(comments_json);
+            index++;
         } else {
             const text = await response.text();
             const text_github_rest_api_failed = {
                 zh: `GitHub REST API失败，返回如下\n${response.status} ${response.statusText}\n${text}是否重试？`,
-                ja: `GitHub REST APIが失敗しました。戻り値は以下になります\n${response.status} ${response.statusText}\n${text}再試行しますか？`,//TODO
+                ja: `GitHub REST APIが失敗しました。戻り値は以下になります\n${response.status} ${response.statusText}\n${text}再試行しますか？`,
                 en: `GitHub REST API fails, returning as follows\n${response.status} ${response.statusText}\n${text}Retry?`
             };
             retry = confirm(text_github_rest_api_failed[language]);
+            if (!retry)
+                break;
         }
-    } while (retry);
-    if (result === null) {
+    } while (index !== issue_comments_urls.length);
+
+    if (result.length === 0 || index !== issue_comments_urls.length) {
         document.getElementById("status").textContent = UI_text.failed[language];
         document.getElementById("progress_bar").style.display = "none";
         document.getElementById("buttons").style.display = "";
     } else {
         close_dialog("loading_dialog");
     }
+
     return result;
 }
 
@@ -240,9 +259,10 @@ function compute() {
                 record.push("best");
                 database[index].push(record);
             }
+
+            localStorage["database_" + (index + 1)] = JSON.stringify(database[index]);
         }
     }
-    localStorage.database = JSON.stringify(database);
     localStorage.csv_file_count = csv_file_count.toString();
     localStorage.latest_update_time = Date.now();
 }
@@ -289,13 +309,15 @@ function cache_database_uppercase() {
 }
 
 async function prepare() {
-    if (!database || (Date.now() - parseInt(localStorage.latest_update_time) >= 86400000)) {
-        const comments = database ?
-            await fetch_url("https://api.github.com/repos/plazum/find-keke/issues/11/comments", true)
+    document.getElementById("progress_bar").max = issue_comments_urls.length + 1;
+
+    if (database.length === 0 || (Date.now() - parseInt(localStorage.latest_update_time) >= 86400000)) {
+        const comments = database.length !== 0 ?
+            await fetch_urls(issue_comments_urls, true)
             :
-            await fetch_url("https://api.github.com/repos/plazum/find-keke/issues/11/comments", false)
+            await fetch_urls(issue_comments_urls, false)
         ;
-        if (comments) {
+        if (comments.length !== 0) {
             issue_comments = comments;
             compute();
         } else {
@@ -310,8 +332,8 @@ async function prepare() {
 // 这是因为onclick函数with了所在的<form>，而<form>.update即为该按钮，
 // 所以在onclick函数中调用的时候要用window.update()
 async function update() {
-    const comments = await fetch_url("https://api.github.com/repos/plazum/find-keke/issues/11/comments", true);
-    if (comments) {
+    const comments = await fetch_urls(issue_comments_urls, true);
+    if (comments.length !== 0) {
         issue_comments = comments;
         compute();
         render_filter();
@@ -320,7 +342,7 @@ async function update() {
 }
 
 function retry() {
-    if (!database)
+    if (database.length === 0)
         prepare();
     else
         update();

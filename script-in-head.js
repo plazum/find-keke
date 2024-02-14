@@ -300,7 +300,8 @@ async function upload_score(arg) {
                 method: "POST",
                 headers: {
                     Accept: "application/vnd.github+json",
-                    Authorization: "token " + await get_token()
+                    Authorization: "token " + await get_token(),
+                    "X-GitHub-Api-Version": "2022-11-28"
                 },
                 body: JSON.stringify(data)
             }
