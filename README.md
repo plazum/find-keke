@@ -10,7 +10,8 @@
 
 计分板和最高纪录（一代目）：https://github.com/plazum/find-keke/issues/11
 
-计分板数据搜索：https://zrtech.org/find-keke/scoreboard
+计分板全量数据库搜索：https://zrtech.org/find-keke/scoreboard
+- （短网址：[zrtech.org/tkk_score](https://zrtech.org/tkk_score)）
 
 ## 添加角色
 欢迎给本游戏添加角色！
