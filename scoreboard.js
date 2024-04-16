@@ -137,7 +137,7 @@ const UI_text = {
 };
 const UI_text_exclusion = ["loading", "failed"];
 const UI_element_id = Object.keys(UI_text).filter(value => !UI_text_exclusion.includes(value));
-const UI_element_id2 = ["player_name_header", "rows_header", "cols_header", "score_header", "time_header"];
+const UI_element_id2 = ["player_name_header", "rows_header", "cols_header", "score_header", "time_header", "previous_page", "next_page"];
 
 function set_language(value) {
     language = value;
@@ -441,9 +441,15 @@ function render_result(page) {
             page_html.push(`<b>${i + 1}</b>`);
     }
     document.getElementById("result").innerHTML = result_html;
-    document.getElementById("previous_page").disabled = page <= 0;
-    document.getElementById("next_page").disabled = page >= Math.ceil(result_count / 1000) - 1;
-    document.getElementById("page").innerHTML = page_html.join(" ");
+    document.getElementById("previous_page").disabled
+        = document.getElementById("previous_page2").disabled
+        = page <= 0;
+    document.getElementById("next_page").disabled
+        = document.getElementById("next_page2").disabled
+        = page >= Math.ceil(result_count / 1000) - 1;
+    document.getElementById("page").innerHTML
+        = document.getElementById("page2").innerHTML
+        = page_html.join(" ");
 }
 
 // 和上面的update()同样理由，因为和<form>当中的button#search重名了，所以要用window.search()的方式调用

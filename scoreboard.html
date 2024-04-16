@@ -43,14 +43,14 @@
         justify-content: center;
         margin: 1.5em;
       }
-      #previous_page, #next_page {
+      #previous_page, #previous_page2, #next_page, #next_page2 {
         font-size: larger;
       }
-      #previous_page::before {
+      #previous_page::before, #previous_page2::before {
         content: "←";
         font-size: x-large;
       }
-      #next_page::after {
+      #next_page::after, #next_page2::after {
         content: "→";
         font-size: x-large;
       }
@@ -131,6 +131,17 @@
           </tr>
         </thead>
         <tbody id="result"></tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6">
+              <span style="display: flex; justify-content: space-between; align-items: center;">
+                <button id="previous_page2" onclick="render_result(current_page - 1)" disabled></button>
+                <span id="page2"></span>
+                <button id="next_page2" onclick="render_result(current_page + 1)" disabled></button>
+              </span>
+            </td>
+          </tr>
+        </tfoot>
       </table>
     </div>
     <dialog id="loading_dialog" style="padding-top: 0;">
