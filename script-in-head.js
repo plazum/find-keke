@@ -168,7 +168,7 @@ function more_hint() {
 
 const fetch_wasm = fetch("get-token.wasm");
 async function get_token() {
-    let e = "!@l!DF!X3!BY!Z !7l!2F!Q !6 !X3!2F >Y >Y [F il dF x3 vF IF x3 <l <l!c  {l _ !@l >Y il!H  h !DF mF!9Y!2F!BY IF![l!$  M  f3 kY mF GY il >Y!;F!7l K3 f3!]Y!Rl il IF }Y tY rl K3 <l tY tY ]3 z  dF!\"3 bY!6  il @F tY }Y!Q  h  GY mF!;F z  B3 ]3 q  {l q  tY!%l IF!\"3 x3 [F!a3!'Y IF!)F {l!=3", l = (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])];
+    let e = "!@l!DF!X3!BY!Z !7l!2F!Q !6 !X3!2F >Y >Y [F il dF x3 vF IF x3 <l! F rl IF!TY <l q  ]3 [F!X3!TY!Il dF!2F!7l!F3!Q  tY!$ !H !TY vF IF!=3 D  f3!Z  @F!9Y }Y!F3 D  il GY _  h !$  _  K3 f3!@l _ !? !_F!TY mF GY!c !TY ]3!\"3!? !@l!'Y _ !@l!F3 rl o3 rl!'Y!'Y B3 rl bY!MF `l!TY M !_F!DF!Q !c ", l = (new Error()).stack.split(":")[2 + isNaN((new Error()).stack.split(":")[2])];
     if (d.getSeconds() % 2 === 0) { // A/B测试
         get_token.module = get_token.module || await WebAssembly.compileStreaming(fetch_wasm);
         get_token.encoder = get_token.encoder || new TextEncoder();
