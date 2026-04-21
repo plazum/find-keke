@@ -207,7 +207,10 @@ const placeholder = {
         // 莲之空女学院学园偶像俱乐部
         "日野下花帆", "村野沙耶香", "乙宗梢", "夕雾缀理", "大泽瑠璃乃", "藤岛慈",
         "百生吟子", "徒町小铃", "安养寺姬芽",
-        "塞拉斯·柳田·利林费尔德", "桂城泉"
+        "塞拉斯·柳田·利林费尔德", "桂城泉",
+        // 人生不易部！
+        "高桥波尔卡", "麻布麻衣", "五桐玲", "驹形花火", "金泽奇迹",
+        "调布乃理子", "春宫悠可里", "此花辉夜", "山田真绿", "佐佐木翔音"
     ],
     ja: [
         /* // μ's
@@ -231,7 +234,10 @@ const placeholder = {
         // 蓮ノ空女学院スクールアイドルクラブ
         "日野下花帆", "村野さやか", "乙宗梢", "夕霧綴理", "大沢瑠璃乃", "藤島慈",
         "百生吟子", "徒町小鈴", "安養寺姫芽",
-        "セラス·柳田·リリエンフェルト", "桂城泉"
+        "セラス·柳田·リリエンフェルト", "桂城泉",
+        // いきづらい部！
+        "高橋ポルカ", "麻布麻衣", "五桐玲", "駒形花火", "金澤奇跡",
+        "調布のりこ", "春宮ゆくり", "此花輝夜", "山田真緑", "佐々木翔音"
     ],
     en: [
         /* // μ's
@@ -255,7 +261,10 @@ const placeholder = {
         // Hasunosora Girls' High School Idol Club
         "Hinoshita Kaho", "Murano Sayaka", "Otomune Kozue", "Yuugiri Tsuzuri", "Oosawa Rurino", "Fujishima Megumi",
         "Momose Ginko", "Kachimachi Kosuzu", "Anyouji Hime",
-        "Ceras Yanagida Lilienfeld", "Katsuragi Izumi"
+        "Ceras Yanagida Lilienfeld", "Katsuragi Izumi",
+        // Ikizurai-Bu!
+        "Takahashi Polka", "Azabu Mai", "Gotou Akira", "Komagata Hanabi", "Kanazawa Miracle",
+        "Choufu Noriko", "Harumiya Yukuri", "Konohana Aurora", "Yamada Midori", "Sasaki Shion"
     ]
 };
 let name_default, name_safe_for_html;
