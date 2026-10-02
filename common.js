@@ -11,13 +11,14 @@ function open_dialog(id) {
     }
 
     if (id === "scoreboard_dialog") {
-        if (!document.getElementById("scoreboard_iframe").src.includes("scoreboard.html"))
-            document.getElementById("scoreboard_iframe").src = "scoreboard.html"; // lazy loading
+        const scoreboard_iframe = document.getElementById("scoreboard_iframe");
+        if (!scoreboard_iframe.src.includes("scoreboard.html"))
+            scoreboard_iframe.src = "scoreboard.html"; // lazy loading
         document.getElementById("open_in_new_tab").style.marginLeft
             = `calc((100% - ${document.getElementById("open_in_new_tab").offsetWidth}px) / 2)`;
-        document.getElementById("scoreboard_iframe").style.height
+        scoreboard_iframe.style.height
             = `calc(98% - ${document.getElementById("dialog_title_bar").offsetHeight}px)`; // 用100%或者99%的话这里会溢出一点点（其中日语界面溢出得最多）
-        window.frames[0].postMessage(language, "*");
+        scoreboard_iframe.contentWindow.postMessage(language, "*");
     }
 }
 

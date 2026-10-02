@@ -42,7 +42,9 @@ board_num = next(l for l in lines if l.startswith("# 计分板"))[5:]
 #     fieldnames = ("玩家名", "行", "列", "用时/秒", "时间", "UNIX时间戳")
 #     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 #     writer.writeheader()
-#     for record in lines[start:]:
+#     failed = 0
+#     for i in range(start, len(lines)):
+#         record = lines[i]
 #         try:
 #             writer.writerow({
 #                 "玩家名": record[0],
@@ -52,10 +54,10 @@ board_num = next(l for l in lines if l.startswith("# 计分板"))[5:]
 #                 "时间": record[4],
 #                 "UNIX时间戳": record[5]
 #             })
-#         except UnicodeEncodeError as e:
-#             print(f"出现GBK无法编码的字符")
-#             print(f"原始数据：{record}")
-#             raise
+#         except UnicodeEncodeError:
+#             failed += 1
+#             print("GBK无法编码，comment.txt第%d行：%s" % (i + 1, str(record).encode("gbk", "backslashreplace").decode("gbk")))
+#     print("写出%d条，因GBK无法编码跳过%d条%s" % (len(lines) - start - failed, failed, "（CSV文件内容不完整，请改完再跑）" if failed else ""))
 # exit()
 
 # # 统计各内置玩家名出现次数
